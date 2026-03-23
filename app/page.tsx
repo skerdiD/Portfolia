@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { auth } from "@clerk/nextjs/server";
+import { redirect } from "next/navigation";
 import {
   ArrowRight,
   BarChart3,
@@ -8,7 +10,6 @@ import {
   Sparkles,
   Wallet2,
 } from "lucide-react";
-import { Show } from "@clerk/nextjs";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -29,13 +30,13 @@ const featureCards = [
   {
     title: "Premium UI System",
     description:
-      "Modern fintech styling with elegant cards, refined typography, and polished spacing.",
+      "Modern fintech styling with elegant dashboards, refined typography, and polished spacing.",
     icon: Sparkles,
   },
   {
     title: "Secure Account Layer",
     description:
-      "Clerk authentication, protected dashboard flows, and isolated user data architecture.",
+      "Clerk authentication, protected routes, and isolated user-level access by default.",
     icon: ShieldCheck,
   },
 ];
@@ -46,7 +47,13 @@ const previewStats = [
   { label: "Return", value: "+9.50%" },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const { userId } = await auth();
+
+  if (userId) {
+    redirect("/dashboard");
+  }
+
   return (
     <div className="relative min-h-screen overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
@@ -71,26 +78,18 @@ export default function HomePage() {
         </Link>
 
         <div className="flex items-center gap-3">
-          <Show when="signed-out">
-            <Link
-              href="/sign-in"
-              className={cn(
-                buttonVariants({ variant: "ghost", size: "sm" }),
-                "hidden sm:inline-flex",
-              )}
-            >
-              Sign in
-            </Link>
-            <Link href="/sign-up" className={buttonVariants({ size: "sm" })}>
-              Get started
-            </Link>
-          </Show>
-
-          <Show when="signed-in">
-            <Link href="/dashboard" className={buttonVariants({ size: "sm" })}>
-              Open dashboard
-            </Link>
-          </Show>
+          <Link
+            href="/sign-in"
+            className={cn(
+              buttonVariants({ variant: "ghost", size: "sm" }),
+              "hidden sm:inline-flex",
+            )}
+          >
+            Sign in
+          </Link>
+          <Link href="/sign-up" className={buttonVariants({ size: "sm" })}>
+            Get started
+          </Link>
         </div>
       </header>
 
@@ -113,31 +112,20 @@ export default function HomePage() {
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Show when="signed-out">
-                <Link
-                  href="/sign-up"
-                  className={cn(buttonVariants({ size: "lg" }), "gap-2")}
-                >
-                  Start free
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  href="/sign-in"
-                  className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
-                >
-                  Sign in to continue
-                </Link>
-              </Show>
+              <Link
+                href="/sign-up"
+                className={cn(buttonVariants({ size: "lg" }), "gap-2")}
+              >
+                Create account
+                <ArrowRight className="h-4 w-4" />
+              </Link>
 
-              <Show when="signed-in">
-                <Link
-                  href="/dashboard"
-                  className={cn(buttonVariants({ size: "lg" }), "gap-2")}
-                >
-                  Go to dashboard
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Show>
+              <Link
+                href="/sign-in"
+                className={cn(buttonVariants({ variant: "outline", size: "lg" }))}
+              >
+                Sign in
+              </Link>
             </div>
 
             <div className="mt-12 grid gap-4 sm:grid-cols-3">
@@ -280,6 +268,7 @@ export default function HomePage() {
         <section className="mt-20 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
           {featureCards.map((feature) => {
             const Icon = feature.icon;
+
             return (
               <Card
                 key={feature.title}

@@ -1,11 +1,11 @@
 "use client";
 
+import Link from "next/link";
 import {
   Show,
   UserButton,
   useUser,
 } from "@clerk/nextjs";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Bell, Menu, Search } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 const titleMap: Record<string, { title: string; description: string }> = {
   "/dashboard": {
     title: "Dashboard",
-    description: "Portfolio summary and performance",
+    description: "Portfolio setup and private workspace overview",
   },
   "/holdings": {
     title: "Holdings",
@@ -81,7 +81,11 @@ export function AppTopbar({
           </button>
 
           <Show when="signed-out">
-            <Link href="/sign-in" className={buttonVariants({ size: "sm" })}>
+            <Link
+              href="/sign-in"
+              prefetch={false}
+              className={buttonVariants({ size: "sm" })}
+            >
               Sign in
             </Link>
           </Show>

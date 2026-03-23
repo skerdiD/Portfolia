@@ -29,7 +29,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      afterSignOutUrl="/"
+      signInUrl="/sign-in"
+      signUpUrl="/sign-up"
+      signInFallbackRedirectUrl="/dashboard"
+      signInForceRedirectUrl="/dashboard"
+      signUpFallbackRedirectUrl="/dashboard"
+      signUpForceRedirectUrl="/dashboard"
+    >
       <html lang="en" suppressHydrationWarning>
         <body
           className={cn(
