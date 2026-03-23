@@ -7,8 +7,8 @@ import {
   deleteHoldingForCurrentUser,
   getCurrentUserHoldingById,
   updateHoldingForCurrentUser,
-  type HoldingRecord,
 } from "@/lib/db/queries";
+import type { HoldingRecord } from "@/lib/portfolio/calculations";
 import {
   createHoldingSchema,
   deleteHoldingActionSchema,

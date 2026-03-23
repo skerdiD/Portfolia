@@ -17,12 +17,35 @@ const trimmedString = (min: number, max: number) =>
 
 const nonNegativeFiniteNumber = z.coerce
   .number({
-    invalid_type_error: "Enter a valid number",
+    message: "Enter a valid number",
   })
   .finite("Enter a valid number")
   .min(0, "Value must be zero or greater");
 
+const nonNegativeNumberString = z
+  .string()
+  .trim()
+  .min(1, "This field is required")
+  .refine((value) => {
+    const parsed = Number(value);
+    return Number.isFinite(parsed) && parsed >= 0;
+  }, "Enter a valid number");
+
 export const holdingCategorySchema = z.enum(assetCategoryEnum.enumValues);
+
+export const holdingFormSchema = z.object({
+  assetName: trimmedString(1, 160),
+  symbol: trimmedString(1, 32),
+  category: holdingCategorySchema,
+  quantity: nonNegativeNumberString,
+  averageBuyPrice: nonNegativeNumberString,
+  currentPrice: nonNegativeNumberString,
+  purchaseDate: z
+    .string()
+    .trim()
+    .refine(isValidIsoDate, "Purchase date must be in YYYY-MM-DD format"),
+  notes: z.string().max(4000, "Notes must be 4000 characters or less"),
+});
 
 export const holdingInputSchema = z.object({
   assetName: trimmedString(1, 160),
@@ -76,6 +99,7 @@ export const portfolioSnapshotInputSchema = z.object({
   investedAmount: nonNegativeFiniteNumber,
 });
 
+export type HoldingFormValues = z.infer<typeof holdingFormSchema>;
 export type HoldingInput = z.infer<typeof holdingInputSchema>;
 export type CreateHoldingInput = z.infer<typeof createHoldingSchema>;
 export type UpdateHoldingInput = z.infer<typeof updateHoldingSchema>;

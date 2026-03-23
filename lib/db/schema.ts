@@ -1,19 +1,65 @@
-import { defineConfig } from "drizzle-kit";
-import dotenv from "dotenv";
+import {
+  date,
+  numeric,
+  pgEnum,
+  pgTable,
+  text,
+  timestamp,
+  uniqueIndex,
+  uuid,
+} from "drizzle-orm/pg-core";
 
-dotenv.config({ path: ".env.local" });
+export const assetCategoryEnum = pgEnum("asset_category", [
+  "stock",
+  "crypto",
+  "etf",
+  "cash",
+  "other",
+]);
 
-if (!process.env.DATABASE_URL) {
-  throw new Error("DATABASE_URL is not set in .env.local");
-}
+export type AssetCategory = (typeof assetCategoryEnum.enumValues)[number];
 
-export default defineConfig({
-  schema: "./lib/db/schema.ts",
-  out: "./drizzle",
-  dialect: "postgresql",
-  dbCredentials: {
-    url: process.env.DATABASE_URL,
-  },
-  strict: true,
-  verbose: true,
+export const holdings = pgTable("holdings", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: text("user_id").notNull(),
+  assetName: text("asset_name").notNull(),
+  symbol: text("symbol").notNull(),
+  category: assetCategoryEnum("category").notNull(),
+  quantity: numeric("quantity", { precision: 20, scale: 8 }).notNull(),
+  averageBuyPrice: numeric("average_buy_price", {
+    precision: 20,
+    scale: 8,
+  }).notNull(),
+  currentPrice: numeric("current_price", { precision: 20, scale: 8 }).notNull(),
+  purchaseDate: date("purchase_date").notNull(),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
+
+export const portfolioSnapshots = pgTable(
+  "portfolio_snapshots",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: text("user_id").notNull(),
+    date: date("date").notNull(),
+    totalValue: numeric("total_value", { precision: 20, scale: 2 }).notNull(),
+    investedAmount: numeric("invested_amount", {
+      precision: 20,
+      scale: 2,
+    }).notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => ({
+    userDateUnique: uniqueIndex("portfolio_snapshots_user_date_unique").on(
+      table.userId,
+      table.date,
+    ),
+  }),
+);
+
+export type Holding = typeof holdings.$inferSelect;
+export type NewHolding = typeof holdings.$inferInsert;
+export type PortfolioSnapshot = typeof portfolioSnapshots.$inferSelect;
+export type NewPortfolioSnapshot = typeof portfolioSnapshots.$inferInsert;
