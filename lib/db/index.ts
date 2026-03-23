@@ -1,5 +1,19 @@
-import { drizzle } from "drizzle-orm/neon-http";
-import { neon } from "@neondatabase/serverless";
+import { defineConfig } from "drizzle-kit";
+import dotenv from "dotenv";
 
-const sql = neon(process.env.DATABASE_URL!);
-export const db = drizzle(sql);
+dotenv.config({ path: ".env.local" });
+
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL is not set in .env.local");
+}
+
+export default defineConfig({
+  schema: "./lib/db/schema.ts",
+  out: "./drizzle",
+  dialect: "postgresql",
+  dbCredentials: {
+    url: process.env.DATABASE_URL,
+  },
+  strict: true,
+  verbose: true,
+});

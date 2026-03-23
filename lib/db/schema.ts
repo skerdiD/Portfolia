@@ -1,13 +1,19 @@
-import { pgTable, text, timestamp, uuid, numeric } from "drizzle-orm/pg-core";
+import { defineConfig } from "drizzle-kit";
+import dotenv from "dotenv";
 
-export const holdings = pgTable("holdings", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  userId: text("user_id").notNull(),
-  assetName: text("asset_name").notNull(),
-  symbol: text("symbol").notNull(),
-  category: text("category").notNull(),
-  quantity: numeric("quantity", { precision: 12, scale: 4 }).notNull(),
-  avgBuyPrice: numeric("avg_buy_price", { precision: 12, scale: 2 }).notNull(),
-  currentPrice: numeric("current_price", { precision: 12, scale: 2 }).notNull(),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
+dotenv.config({ path: ".env.local" });
+
+if (!process.env.DATABASE_URL) {
+  throw new Error("DATABASE_URL is not set in .env.local");
+}
+
+export default defineConfig({
+  schema: "./lib/db/schema.ts",
+  out: "./drizzle",
+  dialect: "postgresql",
+  dbCredentials: {
+    url: process.env.DATABASE_URL,
+  },
+  strict: true,
+  verbose: true,
 });
