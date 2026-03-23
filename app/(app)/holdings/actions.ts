@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { ZodError } from "zod";
+import { protectMutationRequest } from "@/lib/security/arcjet";
 import {
   createHoldingForCurrentUser,
   deleteHoldingForCurrentUser,
@@ -111,11 +112,30 @@ function fromZodError(error: ZodError, message: string): HoldingActionState {
   };
 }
 
+async function guardMutation() {
+  const protection = await protectMutationRequest();
+
+  if (!protection.allowed) {
+    return {
+      status: "error" as const,
+      message: protection.message,
+    };
+  }
+
+  return null;
+}
+
 export async function createHoldingAction(
   _prevState: HoldingActionState,
   formData: FormData,
 ): Promise<HoldingActionState> {
   try {
+    const blocked = await guardMutation();
+
+    if (blocked) {
+      return blocked;
+    }
+
     const parsed = createHoldingSchema.safeParse(toCreatePayload(formData));
 
     if (!parsed.success) {
@@ -149,6 +169,12 @@ export async function updateHoldingAction(
   formData: FormData,
 ): Promise<HoldingActionState> {
   try {
+    const blocked = await guardMutation();
+
+    if (blocked) {
+      return blocked;
+    }
+
     const parsed = updateHoldingActionSchema.safeParse(
       normalizePartialUpdatePayload(toUpdatePayload(formData)),
     );
@@ -201,6 +227,12 @@ export async function deleteHoldingAction(
   formData: FormData,
 ): Promise<DeleteHoldingActionState> {
   try {
+    const blocked = await guardMutation();
+
+    if (blocked) {
+      return blocked;
+    }
+
     const parsed = deleteHoldingActionSchema.safeParse(toDeletePayload(formData));
 
     if (!parsed.success) {

@@ -17,7 +17,7 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: {
     default: "Portfolia",
-    template: "%s • Portfolia",
+    template: "%s | Portfolia",
   },
   description:
     "Portfolia is a premium personal investment dashboard for tracking holdings, portfolio performance, and financial analytics.",

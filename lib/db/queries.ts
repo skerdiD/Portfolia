@@ -1,5 +1,6 @@
 import "server-only";
 
+import { cache } from "react";
 import { auth } from "@clerk/nextjs/server";
 import { and, asc, desc, eq } from "drizzle-orm";
 import { db } from "@/lib/db";
@@ -40,7 +41,7 @@ function mapHoldingRows(rows: Holding[]) {
   return rows.map(mapHoldingRowToRecord);
 }
 
-export async function listHoldingsByUser(userId: string): Promise<HoldingRecord[]> {
+const getHoldingsByUserCached = cache(async (userId: string): Promise<HoldingRecord[]> => {
   const rows = await db
     .select()
     .from(holdings)
@@ -48,14 +49,18 @@ export async function listHoldingsByUser(userId: string): Promise<HoldingRecord[
     .orderBy(desc(holdings.purchaseDate), desc(holdings.createdAt));
 
   return mapHoldingRows(rows);
+});
+
+export async function listHoldingsByUser(userId: string): Promise<HoldingRecord[]> {
+  return getHoldingsByUserCached(userId);
 }
 
 export async function listCurrentUserHoldings() {
   const userId = await requireAuthenticatedUserId();
-  return listHoldingsByUser(userId);
+  return getHoldingsByUserCached(userId);
 }
 
-export async function getHoldingByIdForUser(userId: string, holdingId: string) {
+const getHoldingByIdForUserCached = cache(async (userId: string, holdingId: string) => {
   const [row] = await db
     .select()
     .from(holdings)
@@ -67,11 +72,15 @@ export async function getHoldingByIdForUser(userId: string, holdingId: string) {
   }
 
   return mapHoldingRowToRecord(row);
+});
+
+export async function getHoldingByIdForUser(userId: string, holdingId: string) {
+  return getHoldingByIdForUserCached(userId, holdingId);
 }
 
 export async function getCurrentUserHoldingById(holdingId: string) {
   const userId = await requireAuthenticatedUserId();
-  return getHoldingByIdForUser(userId, holdingId);
+  return getHoldingByIdForUserCached(userId, holdingId);
 }
 
 export async function createHoldingForUser(
@@ -207,84 +216,117 @@ export async function upsertPortfolioSnapshotForUser(
   return row;
 }
 
+const getPortfolioSnapshotsByUserCached = cache(
+  async (
+    userId: string,
+    limit: number,
+  ) => {
+    const rows = await db
+      .select()
+      .from(portfolioSnapshots)
+      .where(eq(portfolioSnapshots.userId, userId))
+      .orderBy(asc(portfolioSnapshots.date))
+      .limit(limit);
+
+    return rows;
+  },
+);
+
 export async function getPortfolioSnapshotsByUser(
   userId: string,
   options?: {
     limit?: number;
   },
 ) {
-  const rows = await db
-    .select()
-    .from(portfolioSnapshots)
-    .where(eq(portfolioSnapshots.userId, userId))
-    .orderBy(asc(portfolioSnapshots.date))
-    .limit(options?.limit ?? 180);
-
-  return rows;
+  return getPortfolioSnapshotsByUserCached(userId, options?.limit ?? 180);
 }
 
 export async function getCurrentUserPortfolioSnapshots(options?: {
   limit?: number;
 }) {
   const userId = await requireAuthenticatedUserId();
-  return getPortfolioSnapshotsByUser(userId, options);
+  return getPortfolioSnapshotsByUserCached(userId, options?.limit ?? 180);
 }
 
-export async function getDashboardSummaryDataByUser(userId: string): Promise<{
-  summary: PortfolioSummaryData;
-  allocation: AllocationPoint[];
-}> {
-  const userHoldings = await listHoldingsByUser(userId);
+const getDashboardSummaryDataByUserCached = cache(
+  async (
+    userId: string,
+  ): Promise<{
+    summary: PortfolioSummaryData;
+    allocation: AllocationPoint[];
+  }> => {
+    const userHoldings = await getHoldingsByUserCached(userId);
 
-  return {
-    summary: calculatePortfolioSummary(userHoldings),
-    allocation: calculateAllocationByCategory(userHoldings),
-  };
+    return {
+      summary: calculatePortfolioSummary(userHoldings),
+      allocation: calculateAllocationByCategory(userHoldings),
+    };
+  },
+);
+
+export async function getDashboardSummaryDataByUser(userId: string) {
+  return getDashboardSummaryDataByUserCached(userId);
 }
 
 export async function getCurrentUserDashboardSummaryData() {
   const userId = await requireAuthenticatedUserId();
-  return getDashboardSummaryDataByUser(userId);
+  return getDashboardSummaryDataByUserCached(userId);
 }
 
-export async function getHoldingsTableDataByUser(userId: string): Promise<{
-  holdings: HoldingRecord[];
-  summary: PortfolioSummaryData;
-}> {
-  const userHoldings = await listHoldingsByUser(userId);
+const getHoldingsTableDataByUserCached = cache(
+  async (
+    userId: string,
+  ): Promise<{
+    holdings: HoldingRecord[];
+    summary: PortfolioSummaryData;
+  }> => {
+    const userHoldings = await getHoldingsByUserCached(userId);
 
-  return {
-    holdings: userHoldings,
-    summary: calculatePortfolioSummary(userHoldings),
-  };
+    return {
+      holdings: userHoldings,
+      summary: calculatePortfolioSummary(userHoldings),
+    };
+  },
+);
+
+export async function getHoldingsTableDataByUser(userId: string) {
+  return getHoldingsTableDataByUserCached(userId);
 }
 
 export async function getCurrentUserHoldingsTableData() {
   const userId = await requireAuthenticatedUserId();
-  return getHoldingsTableDataByUser(userId);
+  return getHoldingsTableDataByUserCached(userId);
 }
 
-export async function getAnalyticsChartDataByUser(userId: string): Promise<{
-  summary: PortfolioSummaryData;
-  allocation: AllocationPoint[];
-  performanceHistory: PerformanceHistoryPoint[];
-}> {
-  const [userHoldings, snapshots] = await Promise.all([
-    listHoldingsByUser(userId),
-    getPortfolioSnapshotsByUser(userId),
-  ]);
+const getAnalyticsChartDataByUserCached = cache(
+  async (
+    userId: string,
+  ): Promise<{
+    summary: PortfolioSummaryData;
+    allocation: AllocationPoint[];
+    performanceHistory: PerformanceHistoryPoint[];
+  }> => {
+    const [userHoldings, snapshots] = await Promise.all([
+      getHoldingsByUserCached(userId),
+      getPortfolioSnapshotsByUserCached(userId, 180),
+    ]);
 
-  return {
-    summary: calculatePortfolioSummary(userHoldings),
-    allocation: calculateAllocationByCategory(userHoldings),
-    performanceHistory: buildPerformanceHistory({
-      snapshots,
-      holdings: userHoldings,
-    }),
-  };
+    return {
+      summary: calculatePortfolioSummary(userHoldings),
+      allocation: calculateAllocationByCategory(userHoldings),
+      performanceHistory: buildPerformanceHistory({
+        snapshots,
+        holdings: userHoldings,
+      }),
+    };
+  },
+);
+
+export async function getAnalyticsChartDataByUser(userId: string) {
+  return getAnalyticsChartDataByUserCached(userId);
 }
 
 export async function getCurrentUserAnalyticsChartData() {
   const userId = await requireAuthenticatedUserId();
-  return getAnalyticsChartDataByUser(userId);
+  return getAnalyticsChartDataByUserCached(userId);
 }
