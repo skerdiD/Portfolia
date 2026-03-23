@@ -42,19 +42,21 @@ export function StatCard({
       <CardContent className="p-5 sm:p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-2">
-            <p className="text-sm font-medium text-slate-500">{title}</p>
-            <div className="font-heading text-3xl font-semibold tracking-tight text-slate-950">
+            <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500">
+              {title}
+            </p>
+            <div className="font-heading text-[1.85rem] font-semibold tracking-tight text-slate-950 sm:text-3xl">
               {value}
             </div>
           </div>
 
           <div
             className={cn(
-              "flex h-14 w-14 items-center justify-center rounded-2xl shadow-sm",
+              "flex h-12 w-12 items-center justify-center rounded-2xl shadow-sm sm:h-14 sm:w-14",
               styles.iconWrap,
             )}
           >
-            <Icon className="h-6 w-6" />
+            <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
           </div>
         </div>
 

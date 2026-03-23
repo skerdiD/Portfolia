@@ -26,6 +26,7 @@ import { RecentActivityCard } from "@/components/dashboard/recent-activity-card"
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 type DashboardPageClientProps = {
   holdings: HoldingRecord[];
@@ -203,10 +204,12 @@ export function DashboardPageClient({
           <div className="flex flex-wrap gap-2">
             {(["all", "stock", "crypto", "etf", "cash", "other"] as CategoryFilter[]).map(
               (value) => (
-                <Badge
+                <Button
                   key={value}
+                  type="button"
                   variant={category === value ? "secondary" : "outline"}
-                  className="cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition hover:bg-slate-50"
+                  size="sm"
+                  className={cn(category === value ? "ring-2 ring-blue-100" : "")}
                   onClick={() => setCategory(value)}
                 >
                   {value === "all"
@@ -214,7 +217,7 @@ export function DashboardPageClient({
                     : value === "etf"
                       ? "ETF"
                       : value.charAt(0).toUpperCase() + value.slice(1)}
-                </Badge>
+                </Button>
               ),
             )}
           </div>

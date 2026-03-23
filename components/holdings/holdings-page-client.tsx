@@ -176,7 +176,12 @@ export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
           </div>
 
           <div className="space-y-2">
-            <div className="text-sm font-medium text-slate-700">Categories</div>
+            <div className="flex items-center justify-between gap-2 text-sm font-medium text-slate-700">
+              <span>Categories</span>
+              <span className="text-xs text-slate-500">
+                {filteredHoldings.length} matching {filteredHoldings.length === 1 ? "asset" : "assets"}
+              </span>
+            </div>
             <div className="flex flex-wrap gap-2">
               {categoryOptions.map((option) => {
                 const isActive = category === option.value;
@@ -186,10 +191,11 @@ export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
                     key={option.value}
                     type="button"
                     onClick={() => setCategory(option.value)}
+                    aria-pressed={isActive}
                     className={cn(
                       "inline-flex h-11 items-center rounded-2xl border px-4 text-sm font-medium transition",
                       isActive
-                        ? "border-blue-200 bg-blue-50 text-blue-700 shadow-sm"
+                        ? "border-blue-200 bg-blue-50 text-blue-700 shadow-sm ring-2 ring-blue-100"
                         : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50",
                     )}
                   >

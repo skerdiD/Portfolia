@@ -24,7 +24,7 @@ import { AdvancedPerformanceChart } from "@/components/analytics/advanced-perfor
 import { CategoryAnalysisCards } from "@/components/analytics/category-analysis-cards";
 import { PerformerSpotlight } from "@/components/analytics/performer-spotlight";
 import { AssetPerformanceTable } from "@/components/analytics/asset-performance-table";
-import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
@@ -128,6 +128,7 @@ export function AnalyticsPageClient({
   const [timeRange, setTimeRange] = useState<TimeRange>("all");
   const [category, setCategory] = useState<CategoryFilter>("all");
   const [assetQuery, setAssetQuery] = useState("");
+  const hasFilters = category !== "all" || assetQuery.trim().length > 0;
 
   const filteredHoldings = useMemo(() => {
     const query = assetQuery.trim().toLowerCase();
@@ -203,14 +204,16 @@ export function AnalyticsPageClient({
         actions={
           <div className="flex flex-wrap items-center gap-2">
             {(["all", "90d", "30d", "7d"] as TimeRange[]).map((value) => (
-              <Badge
+              <Button
                 key={value}
+                type="button"
                 variant={timeRange === value ? "secondary" : "outline"}
-                className="cursor-pointer rounded-full px-3 py-1.5 text-xs font-medium transition hover:bg-slate-50"
+                size="sm"
+                className={cn(timeRange === value ? "ring-2 ring-blue-100" : "")}
                 onClick={() => setTimeRange(value)}
               >
                 {value === "all" ? "All time" : value.toUpperCase()}
-              </Badge>
+              </Button>
             ))}
           </div>
         }
@@ -246,10 +249,11 @@ export function AnalyticsPageClient({
                     key={value}
                     type="button"
                     onClick={() => setCategory(value)}
+                    aria-pressed={category === value}
                     className={cn(
                       "inline-flex h-11 items-center rounded-2xl border px-4 text-sm font-medium transition",
                       category === value
-                        ? "border-blue-200 bg-blue-50 text-blue-700 shadow-sm"
+                        ? "border-blue-200 bg-blue-50 text-blue-700 shadow-sm ring-2 ring-blue-100"
                         : "border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50",
                     )}
                   >
@@ -261,6 +265,20 @@ export function AnalyticsPageClient({
                   </button>
                 ),
               )}
+
+              {hasFilters ? (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setCategory("all");
+                    setAssetQuery("");
+                  }}
+                >
+                  Reset
+                </Button>
+              ) : null}
             </div>
           </div>
         </CardContent>

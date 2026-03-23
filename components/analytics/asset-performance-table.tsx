@@ -6,6 +6,7 @@ import {
   formatNumber,
   formatPercentage,
 } from "@/lib/portfolio/formatters";
+import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
@@ -21,9 +22,15 @@ const categoryLabel: Record<HoldingRecord["category"], string> = {
   other: "Other",
 };
 
-export function AssetPerformanceTable({
-  holdings,
-}: AssetPerformanceTableProps) {
+const categoryBadgeStyle: Record<HoldingRecord["category"], string> = {
+  stock: "border-blue-200 bg-blue-50 text-blue-700",
+  crypto: "border-violet-200 bg-violet-50 text-violet-700",
+  etf: "border-emerald-200 bg-emerald-50 text-emerald-700",
+  cash: "border-amber-200 bg-amber-50 text-amber-700",
+  other: "border-slate-200 bg-slate-100 text-slate-700",
+};
+
+export function AssetPerformanceTable({ holdings }: AssetPerformanceTableProps) {
   const sorted = [...holdings].sort((a, b) => b.currentValue - a.currentValue);
 
   return (
@@ -63,8 +70,13 @@ export function AssetPerformanceTable({
                   <div className="mt-1 text-sm text-slate-500">{holding.symbol}</div>
                 </div>
 
-                <div className="text-sm font-medium text-slate-700">
-                  {categoryLabel[holding.category]}
+                <div>
+                  <Badge
+                    variant="outline"
+                    className={cn("border", categoryBadgeStyle[holding.category])}
+                  >
+                    {categoryLabel[holding.category]}
+                  </Badge>
                 </div>
 
                 <div className="text-right font-medium text-slate-800">
@@ -113,7 +125,7 @@ export function AssetPerformanceTable({
                   <div>
                     <div className="font-semibold text-slate-950">{holding.assetName}</div>
                     <div className="mt-1 text-sm text-slate-500">
-                      {holding.symbol} • {categoryLabel[holding.category]}
+                      {holding.symbol} | {categoryLabel[holding.category]}
                     </div>
                   </div>
 
