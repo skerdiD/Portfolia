@@ -248,11 +248,12 @@ export function AnalyticsPageClient({
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       <PageHeader
         eyebrow="Deep portfolio analysis"
         title="Analytics"
         description="Explore performance trends, asset-level return behavior, and category concentration through a sharper, more detailed analytics experience."
+        density="compact"
         actions={
           <div className="flex flex-wrap items-center gap-2">
             {(["all", "90d", "30d", "7d"] as TimeRange[]).map((value) => (

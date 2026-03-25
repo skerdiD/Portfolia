@@ -5,32 +5,54 @@ export function PageHeader({
   title,
   description,
   actions,
+  density = "default",
   className,
 }: {
   eyebrow?: string;
   title: string;
   description?: string;
   actions?: React.ReactNode;
+  density?: "default" | "compact";
   className?: string;
 }) {
+  const isCompact = density === "compact";
+
   return (
     <div
       className={cn(
-        "surface-muted flex flex-col gap-5 rounded-[1.6rem] border-white/80 px-5 py-5 sm:flex-row sm:items-end sm:justify-between sm:px-6 sm:py-6",
+        "surface-muted flex flex-col rounded-[1.6rem] border-white/80 sm:flex-row sm:items-end sm:justify-between",
+        isCompact
+          ? "gap-3 px-5 py-4 sm:px-6 sm:py-[1.125rem]"
+          : "gap-5 px-5 py-5 sm:px-6 sm:py-6",
         className,
       )}
     >
       <div className="max-w-3xl min-w-0">
         {eyebrow ? (
-          <div className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-blue-600 sm:text-sm">
+          <div
+            className={cn(
+              "text-xs font-semibold uppercase tracking-[0.18em] text-blue-600 sm:text-sm",
+              isCompact ? "mb-1.5" : "mb-2",
+            )}
+          >
             {eyebrow}
           </div>
         ) : null}
-        <h1 className="font-heading text-[2rem] font-semibold tracking-tight text-slate-950 sm:text-[2.45rem]">
+        <h1
+          className={cn(
+            "font-heading font-semibold tracking-tight text-slate-950",
+            isCompact ? "text-[1.75rem] sm:text-[2.05rem]" : "text-[2rem] sm:text-[2.45rem]",
+          )}
+        >
           {title}
         </h1>
         {description ? (
-          <p className="mt-2.5 max-w-2xl text-sm leading-7 text-muted-foreground sm:text-base">
+          <p
+            className={cn(
+              "max-w-2xl text-sm text-muted-foreground sm:text-base",
+              isCompact ? "mt-2 leading-[1.65]" : "mt-2.5 leading-7",
+            )}
+          >
             {description}
           </p>
         ) : null}

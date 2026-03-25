@@ -116,19 +116,16 @@ export function HoldingsTable({
   return (
     <Card className="surface overflow-hidden rounded-[1.75rem] border-white/80 p-0 shadow-[0_20px_50px_-30px_rgba(15,23,42,0.25)]">
       <div className="hidden xl:block">
-        <Table className="min-w-[1080px]">
+        <Table className="min-w-[960px]">
           <TableHeader>
             <TableRow className="border-b border-slate-200/80 bg-slate-50/70">
-              <TableHead className="px-5 py-3">Asset</TableHead>
-              <TableHead className="px-5 py-3">Category</TableHead>
-              <TableHead className="px-5 py-3 text-right">Quantity</TableHead>
-              <TableHead className="px-5 py-3 text-right">Avg. Buy</TableHead>
-              <TableHead className="px-5 py-3 text-right">Current</TableHead>
-              <TableHead className="px-5 py-3 text-right">Invested</TableHead>
-              <TableHead className="px-5 py-3 text-right">Value</TableHead>
-              <TableHead className="px-5 py-3 text-right">Return</TableHead>
-              <TableHead className="px-5 py-3 text-right">Purchase Date</TableHead>
-              <TableHead className="px-5 py-3 text-right">Actions</TableHead>
+              <TableHead className="w-[23rem] px-5 py-3">Asset</TableHead>
+              <TableHead className="w-[12rem] px-4 py-3">Position</TableHead>
+              <TableHead className="w-[12rem] px-4 py-3 text-right">Pricing</TableHead>
+              <TableHead className="w-[13rem] px-4 py-3 text-right">Capital</TableHead>
+              <TableHead className="w-[10rem] px-4 py-3 text-right">Return</TableHead>
+              <TableHead className="w-[10rem] px-4 py-3 text-right">Purchased</TableHead>
+              <TableHead className="w-[12rem] px-5 py-3 text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -143,44 +140,46 @@ export function HoldingsTable({
                     {holding.symbol}
                   </div>
                   {holding.notes ? (
-                    <div className="mt-2 max-w-[280px] truncate text-xs text-slate-500">
+                    <div className="mt-2 max-w-[320px] truncate text-xs text-slate-500">
                       {holding.notes}
                     </div>
                   ) : null}
                 </TableCell>
-                <TableCell className="px-5 py-4 align-top">
-                  <Badge
-                    variant="outline"
-                    className={cn("border", categoryBadgeStyle[holding.category])}
-                  >
+                <TableCell className="px-4 py-4 align-top">
+                  <Badge variant="outline" className={cn("border", categoryBadgeStyle[holding.category])}>
                     {categoryLabelMap[holding.category]}
                   </Badge>
+                  <div className="mt-2 text-sm font-medium text-slate-800">
+                    {formatNumber(holding.quantity, 8)}
+                  </div>
+                  <div className="text-xs text-slate-500">Units</div>
                 </TableCell>
-                <TableCell className="px-5 py-4 text-right align-top text-slate-700">
-                  {formatNumber(holding.quantity, 8)}
+                <TableCell className="px-4 py-4 text-right align-top">
+                  <div className="text-sm font-semibold text-slate-900">
+                    {formatCurrency(holding.currentPrice)}
+                  </div>
+                  <div className="mt-1 text-xs text-slate-500">
+                    Avg {formatCurrency(holding.averageBuyPrice)}
+                  </div>
                 </TableCell>
-                <TableCell className="px-5 py-4 text-right align-top text-slate-700">
-                  {formatCurrency(holding.averageBuyPrice)}
+                <TableCell className="px-4 py-4 text-right align-top">
+                  <div className="text-sm font-semibold text-slate-900">
+                    {formatCurrency(holding.currentValue)}
+                  </div>
+                  <div className="mt-1 text-xs text-slate-500">
+                    Invested {formatCurrency(holding.investedAmount)}
+                  </div>
                 </TableCell>
-                <TableCell className="px-5 py-4 text-right align-top text-slate-700">
-                  {formatCurrency(holding.currentPrice)}
-                </TableCell>
-                <TableCell className="px-5 py-4 text-right align-top font-medium text-slate-800">
-                  {formatCurrency(holding.investedAmount)}
-                </TableCell>
-                <TableCell className="px-5 py-4 text-right align-top font-medium text-slate-900">
-                  {formatCurrency(holding.currentValue)}
-                </TableCell>
-                <TableCell className="px-5 py-4 text-right align-top">
+                <TableCell className="px-4 py-4 text-right align-top">
                   <div className={cn("font-semibold", getPnlClassName(holding.gainLoss))}>
                     {formatPercentage(holding.returnPercentage)}
                   </div>
-                  <div className={cn("text-xs", getPnlClassName(holding.gainLoss))}>
+                  <div className={cn("mt-1 text-xs", getPnlClassName(holding.gainLoss))}>
                     {holding.gainLoss >= 0 ? "+" : ""}
                     {formatCurrency(holding.gainLoss)}
                   </div>
                 </TableCell>
-                <TableCell className="px-5 py-4 text-right align-top text-slate-600">
+                <TableCell className="px-4 py-4 text-right align-top text-sm text-slate-600">
                   {formatDate(holding.purchaseDate)}
                 </TableCell>
                 <TableCell className="px-5 py-4 text-right align-top">
