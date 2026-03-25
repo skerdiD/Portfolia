@@ -95,7 +95,7 @@ export function AppTopbar({
         <div className="flex items-center gap-3">
           <div className="hidden items-center gap-2 rounded-2xl border border-slate-200 bg-white/90 px-3 py-2 text-sm text-slate-600 shadow-sm xl:flex">
             <CalendarDays className="h-4 w-4 text-slate-400" />
-            {today}
+            <span suppressHydrationWarning>{today}</span>
           </div>
 
           <div className="relative hidden w-[250px] xl:block">

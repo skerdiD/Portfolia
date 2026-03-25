@@ -1,27 +1,42 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { AppTopbar } from "@/components/layout/app-topbar";
 
 const SIDEBAR_COLLAPSED_STORAGE_KEY = "portfolia.sidebar.collapsed";
+const SIDEBAR_PREFERENCE_EVENT = "portfolia.sidebar.preference";
+
+function subscribeSidebarPreference(onStoreChange: () => void) {
+  window.addEventListener("storage", onStoreChange);
+  window.addEventListener(SIDEBAR_PREFERENCE_EVENT, onStoreChange);
+
+  return () => {
+    window.removeEventListener("storage", onStoreChange);
+    window.removeEventListener(SIDEBAR_PREFERENCE_EVENT, onStoreChange);
+  };
+}
+
+function getSidebarPreferenceSnapshot() {
+  return window.localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY) === "1";
+}
+
+function getSidebarPreferenceServerSnapshot() {
+  return false;
+}
+
+function setSidebarPreference(collapsed: boolean) {
+  window.localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, collapsed ? "1" : "0");
+  window.dispatchEvent(new Event(SIDEBAR_PREFERENCE_EVENT));
+}
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
-  const [desktopSidebarCollapsed, setDesktopSidebarCollapsed] = useState(() => {
-    if (typeof window === "undefined") {
-      return false;
-    }
-
-    return window.localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY) === "1";
-  });
-
-  useEffect(() => {
-    window.localStorage.setItem(
-      SIDEBAR_COLLAPSED_STORAGE_KEY,
-      desktopSidebarCollapsed ? "1" : "0",
-    );
-  }, [desktopSidebarCollapsed]);
+  const desktopSidebarCollapsed = useSyncExternalStore(
+    subscribeSidebarPreference,
+    getSidebarPreferenceSnapshot,
+    getSidebarPreferenceServerSnapshot,
+  );
 
   useEffect(() => {
     if (!mobileSidebarOpen) {
@@ -77,7 +92,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         <AppTopbar
           onOpenSidebar={() => setMobileSidebarOpen(true)}
           sidebarCollapsed={desktopSidebarCollapsed}
-          onToggleSidebar={() => setDesktopSidebarCollapsed((current) => !current)}
+          onToggleSidebar={() => setSidebarPreference(!desktopSidebarCollapsed)}
         />
         <main className="px-4 pb-8 pt-3 sm:px-6 lg:px-8 lg:pb-10 lg:pt-4">
           <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-6">
