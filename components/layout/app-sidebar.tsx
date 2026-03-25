@@ -6,7 +6,6 @@ import {
   BarChart3,
   CircleDollarSign,
   X,
-  ShieldCheck,
   LayoutDashboard,
   Settings,
   WalletCards,
@@ -129,23 +128,7 @@ export function AppSidebar({
       </div>
 
       <div className="border-t border-slate-200/70 p-4">
-        <div className="rounded-[1.5rem] border border-blue-100 bg-gradient-to-br from-blue-50 to-cyan-50 p-4">
-          <div className="flex items-center gap-2 text-sm font-semibold text-slate-950">
-            <ShieldCheck className="h-4 w-4 text-blue-600" />
-            Security posture
-          </div>
-          <p className="mt-1 text-sm leading-6 text-slate-600">
-            Clerk auth, Arcjet rate limiting, and user-scoped queries are active for this workspace.
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2 text-xs font-medium">
-            <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-emerald-700">
-              Protected routes
-            </span>
-            <span className="rounded-full border border-blue-200 bg-blue-50 px-2.5 py-1 text-blue-700">
-              Mutation guardrails
-            </span>
-          </div>
-        </div>
+        <div className="min-h-[170px]" />
       </div>
     </aside>
   );

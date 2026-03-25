@@ -20,17 +20,26 @@ function SettingRow({
   label,
   value,
   helper,
+  valueClassName,
 }: {
   label: string;
   value: string;
   helper?: string;
+  valueClassName?: string;
 }) {
   return (
-    <div className="rounded-2xl border border-slate-200/80 bg-white/90 px-4 py-3">
+    <div className="min-w-0 rounded-2xl border border-slate-200/80 bg-white/90 px-4 py-3">
       <div className="text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
         {label}
       </div>
-      <div className="mt-1 text-sm font-semibold text-slate-950 sm:text-base">{value}</div>
+      <div
+        className={cn(
+          "mt-1 min-w-0 text-sm font-semibold text-slate-950 sm:text-base",
+          valueClassName,
+        )}
+      >
+        {value}
+      </div>
       {helper ? <div className="mt-1 text-xs text-slate-500">{helper}</div> : null}
     </div>
   );
@@ -120,7 +129,11 @@ export default async function SettingsPage() {
             </div>
 
             <div className="grid gap-4 sm:grid-cols-2">
-              <SettingRow label="User ID" value={userId || "Unknown"} />
+              <SettingRow
+                label="User ID"
+                value={userId || "Unknown"}
+                valueClassName="break-all font-mono text-[0.95rem] sm:text-sm"
+              />
               <SettingRow
                 label="Member since"
                 value={

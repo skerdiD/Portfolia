@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { ClerkProvider } from "@clerk/nextjs";
 import { Inter, Manrope } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -23,7 +22,7 @@ export const metadata: Metadata = {
     "Portfolia is a premium personal investment dashboard for tracking holdings, portfolio performance, and financial analytics.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -43,6 +42,8 @@ export default function RootLayout({
       </html>
     );
   }
+
+  const { ClerkProvider } = await import("@clerk/nextjs");
 
   return (
     <ClerkProvider

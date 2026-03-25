@@ -7,10 +7,9 @@ import {
   useUser,
 } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
-import { Bell, CalendarDays, Menu, Search } from "lucide-react";
+import { CalendarDays, Menu, Search } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
 
 const titleMap: Record<string, { title: string; description: string }> = {
   "/dashboard": {
@@ -42,6 +41,8 @@ export function AppTopbar({
   const current =
     Object.entries(titleMap).find(([route]) => pathname.startsWith(route))?.[1] ??
     titleMap["/dashboard"];
+  const displayName = user?.fullName || user?.username || "Portfolio User";
+  const primaryEmail = user?.primaryEmailAddress?.emailAddress || "Secure session";
   const today = new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
@@ -70,7 +71,7 @@ export function AppTopbar({
           </div>
         </div>
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex items-center gap-3">
           <div className="hidden items-center gap-2 rounded-2xl border border-slate-200 bg-white/90 px-3 py-2 text-sm text-slate-600 shadow-sm xl:flex">
             <CalendarDays className="h-4 w-4 text-slate-400" />
             {today}
@@ -84,14 +85,6 @@ export function AppTopbar({
             />
           </div>
 
-          <button
-            className="relative hidden h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-600 shadow-sm transition hover:bg-slate-50 sm:inline-flex"
-            aria-label="Notifications"
-          >
-            <Bell className="h-4.5 w-4.5" />
-            <span className="absolute right-3 top-3 h-2 w-2 rounded-full bg-blue-500" />
-          </button>
-
           <Show when="signed-out">
             <Link
               href="/sign-in"
@@ -103,17 +96,19 @@ export function AppTopbar({
           </Show>
 
           <Show when="signed-in">
-            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/90 px-2.5 py-2 shadow-sm sm:px-3">
+            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/90 px-3 py-2 shadow-sm">
               <div className="hidden text-right sm:block">
                 <div className="max-w-[140px] truncate text-sm font-medium text-slate-950">
-                  {user?.fullName || user?.username || "Portfolio User"}
+                  {displayName}
                 </div>
-                <div className="text-xs text-muted-foreground">Secure session</div>
+                <div className="max-w-[160px] truncate text-xs text-muted-foreground">
+                  {primaryEmail}
+                </div>
               </div>
               <UserButton
                 appearance={{
                   elements: {
-                    userButtonAvatarBox: cn("h-9 w-9"),
+                    userButtonAvatarBox: "h-9 w-9",
                   },
                 }}
               />
