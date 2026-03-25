@@ -45,7 +45,7 @@ export function AllocationDonutChart({ data }: AllocationDonutChartProps) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="chart-entrance space-y-6">
       <div className="h-[240px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -58,6 +58,10 @@ export function AllocationDonutChart({ data }: AllocationDonutChartProps) {
               nameKey="category"
               stroke="#ffffff"
               strokeWidth={4}
+              isAnimationActive
+              animationDuration={720}
+              animationBegin={80}
+              animationEasing="ease-out"
             >
               {data.map((entry) => (
                 <Cell key={entry.category} fill={colorMap[entry.category]} />

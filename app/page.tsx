@@ -196,7 +196,7 @@ export default async function HomePage() {
                   </div>
 
                   <div className="grid gap-4 lg:grid-cols-[1.2fr_0.8fr]">
-                    <div className="rounded-[1.75rem] border border-slate-200 bg-white/90 p-5">
+                    <div className="landing-trend-card rounded-[1.75rem] border border-slate-200 bg-white/90 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_35px_-22px_rgba(15,23,42,0.28)]">
                       <div className="mb-4 flex items-center justify-between">
                         <div>
                           <h3 className="text-lg font-semibold text-slate-950">
@@ -210,7 +210,7 @@ export default async function HomePage() {
                           30D
                         </div>
                       </div>
-                      <div className="grid-fade relative h-52 overflow-hidden rounded-[1.5rem] border border-slate-200 bg-slate-50">
+                      <div className="grid-fade relative h-52 overflow-hidden rounded-[1.5rem] border border-slate-200 bg-slate-50 transition-transform duration-500 landing-trend-surface">
                         <div className="absolute inset-0 flex items-end px-4 pb-5">
                           <svg
                             viewBox="0 0 320 120"
@@ -249,14 +249,16 @@ export default async function HomePage() {
                       </div>
                     </div>
 
-                    <div className="rounded-[1.75rem] border border-slate-200 bg-white/90 p-5">
+                    <div className="landing-allocation-card rounded-[1.75rem] border border-slate-200 bg-white/90 p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_35px_-22px_rgba(15,23,42,0.28)]">
                       <div className="flex items-center gap-2 text-sm font-medium text-slate-500">
                         <Layers3 className="h-4 w-4" />
                         Allocation
                       </div>
                       <div className="mt-6 flex items-center justify-center">
-                        <div className="landing-donut relative h-52 w-52 rounded-full bg-[conic-gradient(#2563eb_0_34%,#7c3aed_34%_68%,#ef4444_68%_84%,#22c55e_84%_100%)]">
-                          <div className="landing-donut-core absolute inset-[18%] rounded-full bg-white" />
+                        <div className="landing-donut-wrap">
+                          <div className="landing-donut relative h-52 w-52 rounded-full bg-[conic-gradient(#2563eb_0_34%,#7c3aed_34%_68%,#ef4444_68%_84%,#22c55e_84%_100%)]">
+                            <div className="landing-donut-core absolute inset-[18%] rounded-full bg-white" />
+                          </div>
                         </div>
                       </div>
                       <div className="mt-6 grid gap-3">
@@ -290,10 +292,10 @@ export default async function HomePage() {
             return (
               <Card
                 key={feature.title}
-                className="surface rounded-[1.75rem] border-white/80 shadow-[0_18px_40px_-24px_rgba(15,23,42,0.16)]"
+                className="group surface rounded-[1.75rem] border-white/80 shadow-[0_18px_40px_-24px_rgba(15,23,42,0.16)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_50px_-26px_rgba(15,23,42,0.28)]"
               >
                 <CardContent className="p-6">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 shadow-sm">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 shadow-sm transition-transform duration-300 group-hover:scale-105 group-hover:rotate-2">
                     <Icon className="h-5 w-5" />
                   </div>
                   <h3 className="mt-5 text-xl font-semibold text-slate-950">

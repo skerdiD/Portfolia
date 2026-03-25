@@ -51,7 +51,7 @@ export function AdvancedPerformanceChart({
   data,
 }: AdvancedPerformanceChartProps) {
   return (
-    <Card className="surface rounded-[1.75rem]">
+    <Card className="surface chart-entrance rounded-[1.75rem]">
       <CardHeader>
         <CardTitle className="text-2xl font-semibold text-slate-950">
           Advanced performance view
@@ -150,6 +150,9 @@ export function AdvancedPerformanceChart({
                     stroke="#2563eb"
                     strokeWidth={3}
                     fill="url(#analyticsAreaFill)"
+                    isAnimationActive
+                    animationDuration={760}
+                    animationEasing="ease-out"
                   />
 
                   <Line
@@ -158,6 +161,10 @@ export function AdvancedPerformanceChart({
                     stroke="#94a3b8"
                     strokeWidth={2.25}
                     dot={false}
+                    isAnimationActive
+                    animationDuration={680}
+                    animationBegin={70}
+                    animationEasing="ease-out"
                   />
 
                   <Line
@@ -166,6 +173,10 @@ export function AdvancedPerformanceChart({
                     stroke="#16a34a"
                     strokeWidth={2}
                     dot={false}
+                    isAnimationActive
+                    animationDuration={680}
+                    animationBegin={110}
+                    animationEasing="ease-out"
                   />
                 </ComposedChart>
               </ResponsiveContainer>

@@ -60,7 +60,7 @@ export function PerformanceAreaChart({ data }: PerformanceAreaChartProps) {
   }
 
   return (
-    <div className="h-[360px] w-full">
+    <div className="chart-entrance h-[360px] w-full">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{ top: 16, right: 16, left: 8, bottom: 0 }}>
           <defs>
@@ -127,6 +127,9 @@ export function PerformanceAreaChart({ data }: PerformanceAreaChartProps) {
             strokeWidth={2}
             fill="url(#investedLineFill)"
             fillOpacity={1}
+            isAnimationActive
+            animationDuration={620}
+            animationEasing="ease-out"
           />
 
           <Area
@@ -136,6 +139,10 @@ export function PerformanceAreaChart({ data }: PerformanceAreaChartProps) {
             strokeWidth={3}
             fill="url(#portfolioAreaFill)"
             fillOpacity={1}
+            isAnimationActive
+            animationDuration={760}
+            animationBegin={60}
+            animationEasing="ease-out"
           />
         </AreaChart>
       </ResponsiveContainer>

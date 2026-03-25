@@ -1,6 +1,6 @@
-import Link from "next/link";
 import { SignIn } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { AuthPageShell } from "@/components/auth/auth-page-shell";
 import { clerkAppearance } from "@/components/auth/clerk-appearance";
@@ -14,14 +14,14 @@ export default async function SignInPage() {
 
   return (
     <AuthPageShell
-      title="Welcome back"
-      description="Sign in to continue into your private investment workspace."
+      title="Welcome back to Portfolia"
+      description="Sign in to continue tracking holdings, watching assets, and reviewing your portfolio performance in one place."
       footer={
-        <p className="text-sm text-slate-500">
+        <p className="text-sm text-slate-600">
           New to Portfolia?{" "}
           <Link
             href="/sign-up"
-            className="font-medium text-blue-600 transition hover:text-blue-700"
+            className="font-semibold text-blue-600 transition hover:text-blue-700"
           >
             Create an account
           </Link>
