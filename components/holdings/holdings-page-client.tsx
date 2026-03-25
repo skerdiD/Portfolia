@@ -4,6 +4,7 @@ import { useDeferredValue, useMemo, useState } from "react";
 import {
   ArrowUpRight,
   BadgeDollarSign,
+  Download,
   Search,
   Wallet2,
   X,
@@ -13,6 +14,7 @@ import type {
   HoldingRecord,
   PortfolioSummaryData,
 } from "@/lib/portfolio/calculations";
+import { buildHoldingsCsvRows, toCsvContent } from "@/lib/portfolio/csv-export";
 import { filterHoldingsByQueryAndCategory } from "@/lib/portfolio/holdings-helpers";
 import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
 import { PageHeader } from "@/components/shared/page-header";
@@ -79,6 +81,27 @@ export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
   const hasAnyHoldings = holdings.length > 0;
   const hasFilteredResults = filteredHoldings.length > 0;
 
+  function handleExportCsv() {
+    if (filteredHoldings.length === 0) {
+      return;
+    }
+
+    const rows = buildHoldingsCsvRows(filteredHoldings);
+    const csvContent = `\uFEFF${toCsvContent(rows)}`;
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const date = new Date().toISOString().slice(0, 10);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = `portfolia-holdings-${date}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <PageHeader
@@ -87,6 +110,18 @@ export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
         description="Manage your investment positions with a polished financial workspace built for fast review, accurate numbers, and clean portfolio operations."
         actions={
           <div className="flex items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              onClick={handleExportCsv}
+              disabled={!hasFilteredResults}
+              className="gap-2"
+            >
+              <Download className="h-4 w-4" />
+              Export CSV
+            </Button>
+
             <HoldingFormDialog
               mode="create"
               onSuccess={(holding) => {

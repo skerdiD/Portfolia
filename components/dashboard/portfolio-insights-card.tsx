@@ -1,12 +1,16 @@
 "use client";
 
+import Link from "next/link";
+import { Sparkles } from "lucide-react";
 import type {
   AllocationPoint,
   HoldingRecord,
   PortfolioSummaryData,
 } from "@/lib/portfolio/calculations";
+import { buttonVariants } from "@/components/ui/button";
 import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 
 type PortfolioInsightsCardProps = {
   summary: PortfolioSummaryData;
@@ -80,17 +84,37 @@ export function PortfolioInsightsCard(props: PortfolioInsightsCardProps) {
       </CardHeader>
 
       <CardContent className="space-y-3">
-        {insights.map((insight, index) => (
-          <div
-            key={`${index}-${insight}`}
-            className="rounded-[1.35rem] border border-slate-200/80 bg-white/85 px-4 py-4 shadow-sm"
-          >
-            <div className="mb-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-blue-50 text-sm font-semibold text-blue-700">
-              {index + 1}
+        {insights.length > 0 ? (
+          insights.map((insight, index) => (
+            <div
+              key={`${index}-${insight}`}
+              className="rounded-[1.35rem] border border-slate-200/80 bg-white/85 px-4 py-4 shadow-sm"
+            >
+              <div className="mb-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-blue-50 text-sm font-semibold text-blue-700">
+                {index + 1}
+              </div>
+              <p className="text-sm leading-7 text-slate-700">{insight}</p>
             </div>
-            <p className="text-sm leading-7 text-slate-700">{insight}</p>
+          ))
+        ) : (
+          <div className="rounded-[1.35rem] border border-slate-200/80 bg-slate-50/70 px-5 py-6 text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-slate-500 shadow-sm">
+              <Sparkles className="h-5 w-5" />
+            </div>
+            <div className="mt-3 text-base font-semibold text-slate-900">
+              Insights will appear as your portfolio grows
+            </div>
+            <div className="mt-1 text-sm text-slate-500">
+              Add more positions across categories to unlock richer portfolio observations.
+            </div>
+            <Link
+              href="/holdings"
+              className={cn(buttonVariants({ variant: "outline", size: "sm" }), "mt-4")}
+            >
+              Add holdings
+            </Link>
           </div>
-        ))}
+        )}
       </CardContent>
     </Card>
   );

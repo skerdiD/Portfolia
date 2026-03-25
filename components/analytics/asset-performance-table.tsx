@@ -1,7 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo } from "react";
+import { CandlestickChart } from "lucide-react";
 import type { HoldingRecord } from "@/lib/portfolio/calculations";
+import { buttonVariants } from "@/components/ui/button";
 import {
   formatCurrency,
   formatNumber,
@@ -112,8 +115,24 @@ export function AssetPerformanceTable({ holdings }: AssetPerformanceTableProps) 
               </div>
             ))
           ) : (
-            <div className="px-6 py-10 text-sm text-slate-500">
-              No assets match the current filters.
+            <div className="px-6 py-10">
+              <div className="rounded-[1.35rem] border border-slate-200/80 bg-slate-50/70 px-5 py-6 text-center">
+                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-slate-500 shadow-sm">
+                  <CandlestickChart className="h-5 w-5" />
+                </div>
+                <div className="mt-3 text-base font-semibold text-slate-900">
+                  No assets in this filtered view
+                </div>
+                <div className="mt-1 text-sm text-slate-500">
+                  Adjust your search or category filters to inspect position-level performance.
+                </div>
+                <Link
+                  href="/holdings"
+                  className={cn(buttonVariants({ variant: "outline", size: "sm" }), "mt-4")}
+                >
+                  Manage holdings
+                </Link>
+              </div>
             </div>
           )}
         </div>
@@ -183,8 +202,16 @@ export function AssetPerformanceTable({ holdings }: AssetPerformanceTableProps) 
               </div>
             ))
           ) : (
-            <div className="rounded-[1.35rem] border border-slate-200/80 bg-slate-50/70 px-4 py-5 text-sm text-slate-500">
-              No assets match the current filters.
+            <div className="rounded-[1.35rem] border border-slate-200/80 bg-slate-50/70 px-5 py-6 text-center">
+              <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-slate-500 shadow-sm">
+                <CandlestickChart className="h-5 w-5" />
+              </div>
+              <div className="mt-3 text-base font-semibold text-slate-900">
+                No assets in this filtered view
+              </div>
+              <div className="mt-1 text-sm text-slate-500">
+                Reset filters or adjust search terms to view asset performance cards.
+              </div>
             </div>
           )}
         </div>

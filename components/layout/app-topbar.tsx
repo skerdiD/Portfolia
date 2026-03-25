@@ -7,7 +7,7 @@ import {
   useUser,
 } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
-import { CalendarDays, Menu, Search } from "lucide-react";
+import { CalendarDays, Menu, PanelLeft, PanelLeftClose, Search } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -32,8 +32,12 @@ const titleMap: Record<string, { title: string; description: string }> = {
 
 export function AppTopbar({
   onOpenSidebar,
+  sidebarCollapsed,
+  onToggleSidebar,
 }: {
   onOpenSidebar: () => void;
+  sidebarCollapsed: boolean;
+  onToggleSidebar: () => void;
 }) {
   const pathname = usePathname();
   const { user } = useUser();
@@ -59,6 +63,19 @@ export function AppTopbar({
             aria-label="Open navigation"
           >
             <Menu className="h-5 w-5" />
+          </button>
+
+          <button
+            onClick={onToggleSidebar}
+            className="hidden h-11 w-11 items-center justify-center rounded-2xl border border-slate-200 bg-white text-slate-700 shadow-sm transition hover:bg-slate-50 lg:inline-flex"
+            aria-label={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            title={sidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+          >
+            {sidebarCollapsed ? (
+              <PanelLeft className="h-4.5 w-4.5" />
+            ) : (
+              <PanelLeftClose className="h-4.5 w-4.5" />
+            )}
           </button>
 
           <div className="min-w-0 space-y-1">

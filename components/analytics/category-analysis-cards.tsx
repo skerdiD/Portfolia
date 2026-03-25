@@ -1,5 +1,6 @@
 "use client";
 
+import { Layers3 } from "lucide-react";
 import type { AllocationPoint } from "@/lib/portfolio/calculations";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
@@ -96,8 +97,16 @@ export function CategoryAnalysisCards({
             </div>
           ))
         ) : (
-          <div className="rounded-[1.35rem] border border-slate-200/80 bg-slate-50/70 px-4 py-5 text-sm text-slate-500">
-            No category analytics available.
+          <div className="rounded-[1.35rem] border border-slate-200/80 bg-slate-50/70 px-5 py-6 text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-white text-slate-500 shadow-sm">
+              <Layers3 className="h-5 w-5" />
+            </div>
+            <div className="mt-3 text-base font-semibold text-slate-900">
+              Category breakdown unavailable
+            </div>
+            <div className="mt-1 text-sm text-slate-500">
+              Add assets across categories to reveal allocation concentration and impact.
+            </div>
           </div>
         )}
       </CardContent>

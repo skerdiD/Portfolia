@@ -4,8 +4,24 @@ import { useEffect, useState } from "react";
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { AppTopbar } from "@/components/layout/app-topbar";
 
+const SIDEBAR_COLLAPSED_STORAGE_KEY = "portfolia.sidebar.collapsed";
+
 export function AppShell({ children }: { children: React.ReactNode }) {
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+  const [desktopSidebarCollapsed, setDesktopSidebarCollapsed] = useState(() => {
+    if (typeof window === "undefined") {
+      return false;
+    }
+
+    return window.localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY) === "1";
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem(
+      SIDEBAR_COLLAPSED_STORAGE_KEY,
+      desktopSidebarCollapsed ? "1" : "0",
+    );
+  }, [desktopSidebarCollapsed]);
 
   useEffect(() => {
     if (!mobileSidebarOpen) {
@@ -37,7 +53,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       </div>
 
       <div className="hidden lg:block">
-        <AppSidebar />
+        <AppSidebar collapsed={desktopSidebarCollapsed} />
       </div>
 
       {mobileSidebarOpen && (
@@ -53,8 +69,16 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
       )}
 
-      <div className="relative z-10 lg:pl-[18.5rem]">
-        <AppTopbar onOpenSidebar={() => setMobileSidebarOpen(true)} />
+      <div
+        className={`relative z-10 transition-[padding] duration-300 ease-out ${
+          desktopSidebarCollapsed ? "lg:pl-[5.5rem]" : "lg:pl-[18.5rem]"
+        }`}
+      >
+        <AppTopbar
+          onOpenSidebar={() => setMobileSidebarOpen(true)}
+          sidebarCollapsed={desktopSidebarCollapsed}
+          onToggleSidebar={() => setDesktopSidebarCollapsed((current) => !current)}
+        />
         <main className="px-4 pb-8 pt-3 sm:px-6 lg:px-8 lg:pb-10 lg:pt-4">
           <div className="mx-auto flex w-full max-w-[1600px] flex-col gap-6">
             {children}

@@ -7,9 +7,11 @@ import {
   ArrowUpRight,
   ChartColumnBig,
   Filter,
+  LineChart,
   Search,
   SlidersHorizontal,
   TrendingUp,
+  X,
 } from "lucide-react";
 import type {
   AllocationPoint,
@@ -22,6 +24,7 @@ import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
 import { PageHeader } from "@/components/shared/page-header";
 import { StatCard } from "@/components/shared/stat-card";
 import { EmptyDashboardState } from "@/components/dashboard/empty-dashboard-state";
+import { EmptyState } from "@/components/shared/empty-state";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -185,6 +188,7 @@ export function AnalyticsPageClient({
       category,
     });
   }, [category, deferredAssetQuery, holdings]);
+  const hasFilteredResults = filteredHoldings.length > 0;
 
   const filteredSummary = useMemo(() => {
     if (category === "all" && !hasActiveAssetQuery) {
@@ -365,18 +369,43 @@ export function AnalyticsPageClient({
         />
       </div>
 
-      <div className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
-        <AdvancedPerformanceChart data={filteredPerformance} />
-        <CategoryAnalysisCards allocation={filteredAllocation} />
-      </div>
-
-      <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
-        <PerformerSpotlight
-          bestPerformer={bestPerformer}
-          worstPerformer={worstPerformer}
+      {!hasFilteredResults ? (
+        <EmptyState
+          title="No analytics data matches this filter"
+          description="No assets in your portfolio match the selected category or search query. Reset filters to bring back your full analytics view."
+          icon={<LineChart className="h-6 w-6" />}
+          action={
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              onClick={() => {
+                setCategory("all");
+                setAssetQuery("");
+              }}
+              className="gap-2"
+            >
+              <X className="h-4 w-4" />
+              Reset filters
+            </Button>
+          }
         />
-        <AssetPerformanceTable holdings={filteredHoldings} />
-      </div>
+      ) : (
+        <div className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
+          <AdvancedPerformanceChart data={filteredPerformance} />
+          <CategoryAnalysisCards allocation={filteredAllocation} />
+        </div>
+      )}
+
+      {hasFilteredResults ? (
+        <div className="grid gap-6 xl:grid-cols-[0.95fr_1.05fr]">
+          <PerformerSpotlight
+            bestPerformer={bestPerformer}
+            worstPerformer={worstPerformer}
+          />
+          <AssetPerformanceTable holdings={filteredHoldings} />
+        </div>
+      ) : null}
     </div>
   );
 }

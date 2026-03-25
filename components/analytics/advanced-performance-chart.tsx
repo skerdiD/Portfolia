@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   CartesianGrid,
   ComposedChart,
@@ -11,8 +12,10 @@ import {
   YAxis,
 } from "recharts";
 import type { PerformanceHistoryPoint } from "@/lib/portfolio/calculations";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
+import { cn } from "@/lib/utils";
 
 type AdvancedPerformanceChartProps = {
   data: PerformanceHistoryPoint[];
@@ -31,6 +34,8 @@ function formatAxisDate(value: string) {
 export function AdvancedPerformanceChart({
   data,
 }: AdvancedPerformanceChartProps) {
+  const hasInsufficientHistory = data.length > 0 && data.length < 2;
+
   return (
     <Card className="surface rounded-[1.75rem]">
       <CardHeader>
@@ -43,7 +48,7 @@ export function AdvancedPerformanceChart({
       </CardHeader>
 
       <CardContent>
-        {data.length > 0 ? (
+        {data.length > 0 && !hasInsufficientHistory ? (
           <>
             <div className="mb-5 flex flex-wrap gap-3">
               <div className="rounded-2xl border border-slate-200/80 bg-slate-50/70 px-4 py-3">
@@ -152,6 +157,22 @@ export function AdvancedPerformanceChart({
               </ResponsiveContainer>
             </div>
           </>
+        ) : hasInsufficientHistory ? (
+          <div className="flex h-[380px] flex-col items-center justify-center rounded-[1.5rem] border border-slate-200/80 bg-slate-50/70 px-6 text-center">
+            <div className="text-base font-semibold text-slate-900">
+              More history needed for trend analysis
+            </div>
+            <div className="mt-1 max-w-md text-sm text-slate-500">
+              We found one portfolio snapshot in this scope. Add more holdings or let
+              additional snapshots accumulate to unlock meaningful trend lines.
+            </div>
+            <Link
+              href="/holdings"
+              className={cn(buttonVariants({ variant: "outline", size: "sm" }), "mt-4")}
+            >
+              Add more holdings
+            </Link>
+          </div>
         ) : (
           <div className="flex h-[380px] items-center justify-center rounded-[1.5rem] border border-slate-200/80 bg-slate-50/70">
             <div className="text-center">
