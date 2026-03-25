@@ -61,12 +61,12 @@ export function Dialog({
               <button
                 type="button"
                 aria-label="Close dialog"
-                className="absolute inset-0 bg-slate-950/45 backdrop-blur-[3px]"
+                className="dialog-overlay-enter absolute inset-0 bg-slate-950/45 backdrop-blur-[3px]"
                 onClick={() => onOpenChange(false)}
               />
               <div
                 className={cn(
-                  "relative z-[101] w-full max-w-3xl animate-in fade-in zoom-in-95 duration-200",
+                  "dialog-panel-enter relative z-[101] w-full max-w-3xl",
                 )}
                 onClick={(event) => event.stopPropagation()}
               >

@@ -102,7 +102,7 @@ export default async function SettingsPage() {
       />
 
       <div className="grid gap-6 xl:grid-cols-2">
-        <Card className="surface rounded-[1.75rem]">
+        <Card className="surface motion-card rounded-[1.75rem]">
           <CardHeader className="flex flex-row items-center gap-3 space-y-0">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
               <UserCircle2 className="h-5 w-5" />
@@ -159,7 +159,7 @@ export default async function SettingsPage() {
           </CardContent>
         </Card>
 
-        <Card className="surface rounded-[1.75rem]">
+        <Card className="surface motion-card rounded-[1.75rem]">
           <CardHeader className="flex flex-row items-center gap-3 space-y-0">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-700">
               <SlidersHorizontal className="h-5 w-5" />
@@ -200,7 +200,7 @@ export default async function SettingsPage() {
           </CardContent>
         </Card>
 
-        <Card className="surface rounded-[1.75rem]">
+        <Card className="surface motion-card rounded-[1.75rem]">
           <CardHeader className="flex flex-row items-center gap-3 space-y-0">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-50 text-amber-700">
               <Bell className="h-5 w-5" />
@@ -233,7 +233,7 @@ export default async function SettingsPage() {
           </CardContent>
         </Card>
 
-        <Card className="surface rounded-[1.75rem]">
+        <Card className="surface motion-card rounded-[1.75rem]">
           <CardHeader className="flex flex-row items-center gap-3 space-y-0">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
               <ShieldCheck className="h-5 w-5" />
@@ -288,7 +288,7 @@ export default async function SettingsPage() {
         </Card>
       </div>
 
-      <Card className="surface rounded-[1.75rem]">
+      <Card className="surface motion-card rounded-[1.75rem]">
         <CardContent className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-100 text-slate-600">

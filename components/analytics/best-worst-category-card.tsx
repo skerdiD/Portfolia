@@ -71,7 +71,7 @@ export function BestWorstCategoryCard({ allocation }: BestWorstCategoryCardProps
   const { bestCategory, worstCategory } = findBestAndWorstCategory(allocation);
 
   return (
-    <Card className="surface rounded-[1.75rem]">
+    <Card className="surface motion-card rounded-[1.75rem]">
       <CardHeader>
         <CardTitle className="text-xl font-semibold text-slate-950">
           Best vs worst category

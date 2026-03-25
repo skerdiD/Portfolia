@@ -32,7 +32,7 @@ export function buttonVariants({
   };
 
   return cn(
-    "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40",
+    "inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-[transform,box-shadow,background-color,border-color,color] duration-150 ease-out disabled:pointer-events-none disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/40 enabled:active:scale-[0.985] motion-reduce:transform-none",
     variantStyles[variant],
     sizeStyles[size],
     className,

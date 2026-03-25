@@ -201,6 +201,32 @@
   .chart-entrance {
     animation: chart-soft-entrance 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
+
+  .motion-card {
+    transition:
+      transform 170ms cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 170ms ease-out,
+      border-color 170ms ease-out,
+      background-color 170ms ease-out;
+    will-change: transform;
+  }
+
+  .motion-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 40px -26px rgba(15, 23, 42, 0.28);
+  }
+
+  .table-row-soft-hover {
+    transition: background-color 150ms ease-out;
+  }
+
+  .dialog-overlay-enter {
+    animation: dialog-overlay-in 160ms ease-out both;
+  }
+
+  .dialog-panel-enter {
+    animation: dialog-panel-in 180ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
 }
 
 @keyframes landing-line-draw {
@@ -265,6 +291,26 @@
   }
 }
 
+@keyframes dialog-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .landing-line-area,
   .landing-line-stroke,
@@ -273,8 +319,19 @@
   .landing-donut-wrap,
   .landing-donut,
   .landing-donut-core,
-  .chart-entrance {
+  .chart-entrance,
+  .dialog-overlay-enter,
+  .dialog-panel-enter {
     animation: none !important;
     transition: none !important;
+  }
+
+  .motion-card,
+  .table-row-soft-hover {
+    transition: none !important;
+  }
+
+  .motion-card:hover {
+    transform: none !important;
   }
 }

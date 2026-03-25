@@ -132,7 +132,7 @@ export function HoldingsTable({
             {holdings.map((holding) => (
               <TableRow
                 key={holding.id}
-                className="border-b border-slate-200/70 bg-white/80 hover:bg-slate-50/70"
+                className="table-row-soft-hover border-b border-slate-200/70 bg-white/80 hover:bg-blue-50/40"
               >
                 <TableCell className="px-5 py-4 align-top">
                   <div className="font-semibold text-slate-900">{holding.assetName}</div>

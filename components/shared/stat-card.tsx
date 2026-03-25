@@ -38,7 +38,7 @@ export function StatCard({
   const styles = toneStyles[tone];
 
   return (
-    <Card className="surface rounded-[1.75rem]">
+    <Card className="surface motion-card rounded-[1.75rem]">
       <CardContent className="p-5 sm:p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="space-y-2">

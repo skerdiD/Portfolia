@@ -32,7 +32,7 @@ export function WinRateCard({ holdings }: WinRateCardProps) {
   const hasData = stats.total > 0;
 
   return (
-    <Card className="surface rounded-[1.75rem]">
+    <Card className="surface motion-card rounded-[1.75rem]">
       <CardHeader className="flex flex-row items-start justify-between space-y-0">
         <div>
           <CardTitle className="text-xl font-semibold text-slate-950">

@@ -73,7 +73,7 @@ export function PortfolioInsightsCard(props: PortfolioInsightsCardProps) {
   const insights = getInsightItems(props);
 
   return (
-    <Card className="surface rounded-[1.75rem]">
+    <Card className="surface motion-card rounded-[1.75rem]">
       <CardHeader>
         <CardTitle className="text-xl font-semibold text-slate-950">
           Portfolio insights
