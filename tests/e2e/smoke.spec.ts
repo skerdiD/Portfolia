@@ -5,8 +5,7 @@ async function signInForE2E(context: BrowserContext) {
     {
       name: "e2e-auth",
       value: "1",
-      domain: "localhost",
-      path: "/",
+      url: "http://localhost:3000",
       httpOnly: false,
       secure: false,
       sameSite: "Lax",
@@ -49,6 +48,12 @@ test("signed-in user can open analytics", async ({ context, page }) => {
   await signInForE2E(context);
   await page.goto("/analytics");
   await expect(page.getByRole("heading", { name: "Analytics" })).toBeVisible();
+});
+
+test("signed-in user can open watchlist", async ({ context, page }) => {
+  await signInForE2E(context);
+  await page.goto("/watchlist");
+  await expect(page.getByRole("heading", { name: "Watchlist" })).toBeVisible();
 });
 
 test("signed-in user can open create-holding flow", async ({ context, page }) => {

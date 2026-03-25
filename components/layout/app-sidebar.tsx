@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   BarChart3,
   CircleDollarSign,
+  Eye,
   X,
   LayoutDashboard,
   Settings,
@@ -30,6 +31,12 @@ const navigation = [
     href: "/holdings",
     icon: WalletCards,
     description: "Positions and edits",
+  },
+  {
+    label: "Watchlist",
+    href: "/watchlist",
+    icon: Eye,
+    description: "Assets to monitor",
   },
   {
     label: "Analytics",

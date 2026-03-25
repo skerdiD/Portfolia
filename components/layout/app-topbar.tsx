@@ -20,6 +20,10 @@ const titleMap: Record<string, { title: string; description: string }> = {
     title: "Holdings",
     description: "Manage positions, prices, and notes",
   },
+  "/watchlist": {
+    title: "Watchlist",
+    description: "Track assets before they become holdings",
+  },
   "/analytics": {
     title: "Analytics",
     description: "Performance trends and allocation insights",

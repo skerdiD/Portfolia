@@ -42,7 +42,7 @@ export function buildHoldingsCsvRows(holdings: HoldingRecord[]) {
 }
 
 export function toCsvContent(rows: string[][]) {
-  return rows
+  return rows 
     .map((row) => row.map((value) => escapeCsvValue(value)).join(","))
     .join("\n");
 }

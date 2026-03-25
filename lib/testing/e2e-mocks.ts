@@ -4,6 +4,7 @@ import type {
   PerformanceHistoryPoint,
   PortfolioSummaryData,
 } from "@/lib/portfolio/calculations";
+import type { WatchlistItemRecord } from "@/lib/watchlist/types";
 import {
   buildPerformanceHistory,
   calculateAllocationByCategory,
@@ -66,6 +67,31 @@ export const e2eMockHoldings: HoldingRecord[] = [
     currentValue: 2150,
     gainLoss: 50,
     returnPercentage: 2.38,
+  },
+];
+
+export const e2eMockWatchlistItems: WatchlistItemRecord[] = [
+  {
+    id: "44444444-4444-4444-4444-444444444444",
+    userId: "e2e-user",
+    assetName: "NVIDIA",
+    symbol: "NVDA",
+    category: "stock",
+    targetPrice: 1200,
+    notes: "Watch for pullback after earnings.",
+    createdAt: new Date("2026-01-20T12:00:00.000Z"),
+    updatedAt: new Date("2026-01-20T12:00:00.000Z"),
+  },
+  {
+    id: "55555555-5555-5555-5555-555555555555",
+    userId: "e2e-user",
+    assetName: "Ethereum",
+    symbol: "ETH",
+    category: "crypto",
+    targetPrice: null,
+    notes: null,
+    createdAt: new Date("2026-01-21T12:00:00.000Z"),
+    updatedAt: new Date("2026-01-22T12:00:00.000Z"),
   },
 ];
 

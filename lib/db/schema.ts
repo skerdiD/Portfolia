@@ -59,7 +59,30 @@ export const portfolioSnapshots = pgTable(
   }),
 );
 
+export const watchlistItems = pgTable(
+  "watchlist_items",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: text("user_id").notNull(),
+    assetName: text("asset_name").notNull(),
+    symbol: text("symbol").notNull(),
+    category: assetCategoryEnum("category").notNull(),
+    targetPrice: numeric("target_price", { precision: 20, scale: 8 }),
+    notes: text("notes"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => ({
+    userSymbolUnique: uniqueIndex("watchlist_items_user_symbol_unique").on(
+      table.userId,
+      table.symbol,
+    ),
+  }),
+);
+
 export type Holding = typeof holdings.$inferSelect;
 export type NewHolding = typeof holdings.$inferInsert;
 export type PortfolioSnapshot = typeof portfolioSnapshots.$inferSelect;
 export type NewPortfolioSnapshot = typeof portfolioSnapshots.$inferInsert;
+export type WatchlistItem = typeof watchlistItems.$inferSelect;
+export type NewWatchlistItem = typeof watchlistItems.$inferInsert;

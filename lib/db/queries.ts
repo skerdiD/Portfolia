@@ -4,7 +4,13 @@ import { cache } from "react";
 import { auth } from "@clerk/nextjs/server";
 import { and, asc, desc, eq } from "drizzle-orm";
 import { db } from "@/lib/db";
-import { holdings, portfolioSnapshots, type Holding } from "@/lib/db/schema";
+import {
+  holdings,
+  portfolioSnapshots,
+  watchlistItems,
+  type Holding,
+  type WatchlistItem,
+} from "@/lib/db/schema";
 import {
   buildPerformanceHistory,
   calculateAllocationByCategory,
@@ -19,6 +25,11 @@ import {
   type PortfolioSummaryData,
 } from "@/lib/portfolio/calculations";
 import {
+  mapWatchlistRowToRecord,
+  normalizeWatchlistInput,
+  type WatchlistItemRecord,
+} from "@/lib/watchlist/types";
+import {
   createHoldingSchema,
   portfolioSnapshotInputSchema,
   updateHoldingSchema,
@@ -26,6 +37,12 @@ import {
   type PortfolioSnapshotInput,
   type UpdateHoldingInput,
 } from "@/lib/validations/holding";
+import {
+  createWatchlistItemSchema,
+  updateWatchlistItemSchema,
+  type CreateWatchlistItemInput,
+  type UpdateWatchlistItemInput,
+} from "@/lib/validations/watchlist";
 
 async function requireAuthenticatedUserId() {
   const { userId } = await auth();
@@ -39,6 +56,10 @@ async function requireAuthenticatedUserId() {
 
 function mapHoldingRows(rows: Holding[]) {
   return rows.map(mapHoldingRowToRecord);
+}
+
+function mapWatchlistRows(rows: WatchlistItem[]) {
+  return rows.map(mapWatchlistRowToRecord);
 }
 
 const getHoldingsByUserCached = cache(async (userId: string): Promise<HoldingRecord[]> => {
@@ -188,6 +209,180 @@ export async function deleteHoldingForUser(userId: string, holdingId: string) {
 export async function deleteHoldingForCurrentUser(holdingId: string) {
   const userId = await requireAuthenticatedUserId();
   return deleteHoldingForUser(userId, holdingId);
+}
+
+const getWatchlistByUserCached = cache(async (userId: string): Promise<WatchlistItemRecord[]> => {
+  const rows = await db
+    .select()
+    .from(watchlistItems)
+    .where(eq(watchlistItems.userId, userId))
+    .orderBy(desc(watchlistItems.updatedAt), desc(watchlistItems.createdAt));
+
+  return mapWatchlistRows(rows);
+});
+
+export async function listWatchlistByUser(userId: string): Promise<WatchlistItemRecord[]> {
+  return getWatchlistByUserCached(userId);
+}
+
+export async function listCurrentUserWatchlist() {
+  const userId = await requireAuthenticatedUserId();
+  return getWatchlistByUserCached(userId);
+}
+
+const getWatchlistItemByIdForUserCached = cache(
+  async (userId: string, watchlistItemId: string) => {
+    const [row] = await db
+      .select()
+      .from(watchlistItems)
+      .where(and(eq(watchlistItems.userId, userId), eq(watchlistItems.id, watchlistItemId)))
+      .limit(1);
+
+    if (!row) {
+      return null;
+    }
+
+    return mapWatchlistRowToRecord(row);
+  },
+);
+
+export async function getWatchlistItemByIdForUser(userId: string, watchlistItemId: string) {
+  return getWatchlistItemByIdForUserCached(userId, watchlistItemId);
+}
+
+export async function getCurrentUserWatchlistItemById(watchlistItemId: string) {
+  const userId = await requireAuthenticatedUserId();
+  return getWatchlistItemByIdForUserCached(userId, watchlistItemId);
+}
+
+const getWatchlistItemBySymbolForUserCached = cache(
+  async (userId: string, symbol: string) => {
+    const [row] = await db
+      .select()
+      .from(watchlistItems)
+      .where(and(eq(watchlistItems.userId, userId), eq(watchlistItems.symbol, symbol)))
+      .limit(1);
+
+    if (!row) {
+      return null;
+    }
+
+    return mapWatchlistRowToRecord(row);
+  },
+);
+
+export async function getWatchlistItemBySymbolForUser(userId: string, symbol: string) {
+  return getWatchlistItemBySymbolForUserCached(userId, symbol);
+}
+
+export async function createWatchlistItemForUser(
+  userId: string,
+  input: CreateWatchlistItemInput,
+): Promise<WatchlistItemRecord> {
+  const parsed = createWatchlistItemSchema.parse(input);
+  const normalized = normalizeWatchlistInput(parsed);
+
+  const existing = await getWatchlistItemBySymbolForUserCached(userId, normalized.symbol);
+
+  if (existing) {
+    throw new Error("This symbol already exists in your watchlist.");
+  }
+
+  const [row] = await db
+    .insert(watchlistItems)
+    .values({
+      userId,
+      assetName: normalized.assetName,
+      symbol: normalized.symbol,
+      category: normalized.category,
+      targetPrice: normalized.targetPrice,
+      notes: normalized.notes,
+    })
+    .returning();
+
+  return mapWatchlistRowToRecord(row);
+}
+
+export async function createWatchlistItemForCurrentUser(input: CreateWatchlistItemInput) {
+  const userId = await requireAuthenticatedUserId();
+  return createWatchlistItemForUser(userId, input);
+}
+
+export async function updateWatchlistItemForUser(
+  userId: string,
+  watchlistItemId: string,
+  input: UpdateWatchlistItemInput,
+): Promise<WatchlistItemRecord | null> {
+  const parsed = updateWatchlistItemSchema.parse(input);
+  const normalized = normalizeWatchlistInput({
+    assetName: parsed.assetName ?? "",
+    symbol: parsed.symbol ?? "",
+    category: parsed.category ?? "other",
+    targetPrice: parsed.targetPrice,
+    notes: parsed.notes,
+  });
+
+  const updateData: Partial<typeof watchlistItems.$inferInsert> & { updatedAt: Date } = {
+    updatedAt: new Date(),
+  };
+
+  if (parsed.assetName !== undefined) {
+    updateData.assetName = normalized.assetName;
+  }
+
+  if (parsed.symbol !== undefined) {
+    const existing = await getWatchlistItemBySymbolForUserCached(userId, normalized.symbol);
+    if (existing && existing.id !== watchlistItemId) {
+      throw new Error("This symbol already exists in your watchlist.");
+    }
+    updateData.symbol = normalized.symbol;
+  }
+
+  if (parsed.category !== undefined) {
+    updateData.category = normalized.category;
+  }
+
+  if (parsed.targetPrice !== undefined) {
+    updateData.targetPrice = normalized.targetPrice;
+  }
+
+  if (parsed.notes !== undefined) {
+    updateData.notes = normalized.notes;
+  }
+
+  const [row] = await db
+    .update(watchlistItems)
+    .set(updateData)
+    .where(and(eq(watchlistItems.userId, userId), eq(watchlistItems.id, watchlistItemId)))
+    .returning();
+
+  if (!row) {
+    return null;
+  }
+
+  return mapWatchlistRowToRecord(row);
+}
+
+export async function updateWatchlistItemForCurrentUser(
+  watchlistItemId: string,
+  input: UpdateWatchlistItemInput,
+) {
+  const userId = await requireAuthenticatedUserId();
+  return updateWatchlistItemForUser(userId, watchlistItemId, input);
+}
+
+export async function deleteWatchlistItemForUser(userId: string, watchlistItemId: string) {
+  const [row] = await db
+    .delete(watchlistItems)
+    .where(and(eq(watchlistItems.userId, userId), eq(watchlistItems.id, watchlistItemId)))
+    .returning({ id: watchlistItems.id });
+
+  return Boolean(row);
+}
+
+export async function deleteWatchlistItemForCurrentUser(watchlistItemId: string) {
+  const userId = await requireAuthenticatedUserId();
+  return deleteWatchlistItemForUser(userId, watchlistItemId);
 }
 
 export async function upsertPortfolioSnapshotForUser(
