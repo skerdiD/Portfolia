@@ -6,10 +6,26 @@ import {
   UserButton,
   useUser,
 } from "@clerk/nextjs";
-import { usePathname } from "next/navigation";
-import { CalendarDays, Menu, PanelLeft, PanelLeftClose, Search } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  CalendarDays,
+  Download,
+  Menu,
+  PanelLeft,
+  PanelLeftClose,
+  Plus,
+  WalletCards,
+  Eye,
+} from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const titleMap: Record<string, { title: string; description: string }> = {
   "/dashboard": {
@@ -44,6 +60,7 @@ export function AppTopbar({
   onToggleSidebar: () => void;
 }) {
   const pathname = usePathname();
+  const router = useRouter();
   const { user } = useUser();
 
   const current =
@@ -98,13 +115,36 @@ export function AppTopbar({
             <span suppressHydrationWarning>{today}</span>
           </div>
 
-          <div className="relative hidden w-[250px] xl:block">
-            <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
-            <Input
-              className="h-10 rounded-xl pl-11"
-              placeholder="Search holdings, tickers, insights..."
-            />
-          </div>
+          <Show when="signed-in">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button
+                  type="button"
+                  className="hidden h-10 items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 text-sm font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 xl:inline-flex"
+                >
+                  <Plus className="h-4 w-4" />
+                  Add
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 min-w-[14rem]">
+                <DropdownMenuLabel>Quick actions</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onSelect={() => router.push("/holdings?quickAction=add")}>
+                  <WalletCards className="h-4 w-4" />
+                  Add holding
+                </DropdownMenuItem>
+                <DropdownMenuItem onSelect={() => router.push("/watchlist?quickAction=add")}>
+                  <Eye className="h-4 w-4" />
+                  Add watchlist item
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onSelect={() => router.push("/holdings?quickAction=export")}>
+                  <Download className="h-4 w-4" />
+                  Export CSV
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </Show>
 
           <Show when="signed-out">
             <Link

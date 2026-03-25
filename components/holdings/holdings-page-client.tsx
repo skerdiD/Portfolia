@@ -1,6 +1,7 @@
 "use client";
 
-import { useDeferredValue, useMemo, useState } from "react";
+import { useCallback, useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   ArrowUpRight,
   BadgeDollarSign,
@@ -59,10 +60,13 @@ function getSummaryFromHoldings(holdings: HoldingRecord[]): PortfolioSummaryData
 }
 
 export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [holdings, setHoldings] = useState(initialData.holdings);
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
   const [category, setCategory] = useState<"all" | AssetCategory>("all");
+  const addHoldingTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   const filteredHoldings = useMemo(() => {
     return filterHoldingsByQueryAndCategory({
@@ -81,7 +85,7 @@ export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
   const hasAnyHoldings = holdings.length > 0;
   const hasFilteredResults = filteredHoldings.length > 0;
 
-  function handleExportCsv() {
+  const handleExportCsv = useCallback(() => {
     if (filteredHoldings.length === 0) {
       return;
     }
@@ -100,7 +104,23 @@ export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
     document.body.removeChild(link);
 
     URL.revokeObjectURL(url);
-  }
+  }, [filteredHoldings]);
+
+  useEffect(() => {
+    const quickAction = searchParams.get("quickAction");
+
+    if (!quickAction) {
+      return;
+    }
+
+    if (quickAction === "add") {
+      addHoldingTriggerRef.current?.click();
+    } else if (quickAction === "export") {
+      handleExportCsv();
+    }
+
+    router.replace("/holdings", { scroll: false });
+  }, [handleExportCsv, router, searchParams]);
 
   return (
     <div className="flex flex-col gap-6">
@@ -138,7 +158,7 @@ export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
                 });
               }}
               trigger={
-                <button className={buttonVariants({ size: "lg" })}>
+                <button ref={addHoldingTriggerRef} className={buttonVariants({ size: "lg" })}>
                   Add holding
                 </button>
               }

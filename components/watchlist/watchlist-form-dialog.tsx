@@ -25,6 +25,8 @@ type WatchlistFormDialogProps = {
   watchlistItem?: WatchlistItemRecord;
   trigger: React.ReactNode;
   onSuccess?: (watchlistItem: WatchlistItemRecord) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
 const categoryOptions: Array<{ label: string; value: AssetCategory }> = [
@@ -60,10 +62,21 @@ export function WatchlistFormDialog({
   watchlistItem,
   trigger,
   onSuccess,
+  open: controlledOpen,
+  onOpenChange,
 }: WatchlistFormDialogProps) {
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
   const [serverMessage, setServerMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const open = controlledOpen ?? internalOpen;
+
+  const setOpen = (nextOpen: boolean) => {
+    if (controlledOpen === undefined) {
+      setInternalOpen(nextOpen);
+    }
+
+    onOpenChange?.(nextOpen);
+  };
 
   const defaults = useMemo(
     () => defaultValuesFromWatchlistItem(watchlistItem),

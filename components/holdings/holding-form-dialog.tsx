@@ -19,6 +19,8 @@ type HoldingFormDialogProps = {
   holding?: HoldingRecord;
   trigger: React.ReactNode;
   onSuccess?: (holding: HoldingRecord) => void;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 };
 
 const categoryOptions: Array<{ label: string; value: AssetCategory }> = [
@@ -60,10 +62,21 @@ export function HoldingFormDialog({
   holding,
   trigger,
   onSuccess,
+  open: controlledOpen,
+  onOpenChange,
 }: HoldingFormDialogProps) {
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
   const [serverMessage, setServerMessage] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const open = controlledOpen ?? internalOpen;
+
+  const setOpen = (nextOpen: boolean) => {
+    if (controlledOpen === undefined) {
+      setInternalOpen(nextOpen);
+    }
+
+    onOpenChange?.(nextOpen);
+  };
 
   const defaults = useMemo(() => defaultValuesFromHolding(holding), [holding]);
 

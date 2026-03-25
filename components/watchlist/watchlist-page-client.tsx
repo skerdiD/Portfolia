@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import {
   Eye,
   Search,
@@ -49,9 +50,12 @@ function averageTargetPrice(items: WatchlistItemRecord[]) {
 }
 
 export function WatchlistPageClient({ initialItems }: WatchlistPageClientProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [items, setItems] = useState(initialItems);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<"all" | AssetCategory>("all");
+  const addWatchlistTriggerRef = useRef<HTMLButtonElement | null>(null);
 
   const filteredItems = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
@@ -72,6 +76,17 @@ export function WatchlistPageClient({ initialItems }: WatchlistPageClientProps) 
   const hasAnyItems = items.length > 0;
   const hasFilteredResults = filteredItems.length > 0;
 
+  useEffect(() => {
+    const quickAction = searchParams.get("quickAction");
+
+    if (quickAction !== "add") {
+      return;
+    }
+
+    addWatchlistTriggerRef.current?.click();
+    router.replace("/watchlist", { scroll: false });
+  }, [router, searchParams]);
+
   const targetPriceCount = countWithTargetPrice(filteredItems);
   const targetPriceAverage = averageTargetPrice(filteredItems);
 
@@ -91,7 +106,11 @@ export function WatchlistPageClient({ initialItems }: WatchlistPageClientProps) 
                 return next;
               });
             }}
-            trigger={<button className={buttonVariants({ size: "lg" })}>Add watchlist item</button>}
+            trigger={
+              <button ref={addWatchlistTriggerRef} className={buttonVariants({ size: "lg" })}>
+                Add watchlist item
+              </button>
+            }
           />
         }
       />
