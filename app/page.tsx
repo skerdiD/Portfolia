@@ -218,11 +218,19 @@ export default async function HomePage() {
                             fill="none"
                           >
                             <path
+                              d="M0 88C24 82 36 90 60 80C80 72 95 76 118 64C138 54 156 58 180 50C199 44 218 49 240 38C266 26 280 35 320 16V120H0Z"
+                              className="landing-line-area"
+                            />
+                            <path
                               d="M0 88C24 82 36 90 60 80C80 72 95 76 118 64C138 54 156 58 180 50C199 44 218 49 240 38C266 26 280 35 320 16"
                               stroke="url(#lineGradient)"
                               strokeWidth="3.5"
                               strokeLinecap="round"
+                              className="landing-line-stroke"
                             />
+                            <circle cx="60" cy="80" r="3.5" className="landing-line-point landing-line-point-1" />
+                            <circle cx="180" cy="50" r="3.5" className="landing-line-point landing-line-point-2" />
+                            <circle cx="320" cy="16" r="3.5" className="landing-line-point landing-line-point-3" />
                             <defs>
                               <linearGradient
                                 id="lineGradient"
@@ -247,8 +255,8 @@ export default async function HomePage() {
                         Allocation
                       </div>
                       <div className="mt-6 flex items-center justify-center">
-                        <div className="relative h-52 w-52 rounded-full bg-[conic-gradient(#2563eb_0_34%,#7c3aed_34%_68%,#ef4444_68%_84%,#22c55e_84%_100%)]">
-                          <div className="absolute inset-[18%] rounded-full bg-white" />
+                        <div className="landing-donut relative h-52 w-52 rounded-full bg-[conic-gradient(#2563eb_0_34%,#7c3aed_34%_68%,#ef4444_68%_84%,#22c55e_84%_100%)]">
+                          <div className="landing-donut-core absolute inset-[18%] rounded-full bg-white" />
                         </div>
                       </div>
                       <div className="mt-6 grid gap-3">

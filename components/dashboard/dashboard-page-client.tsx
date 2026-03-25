@@ -22,6 +22,7 @@ import { EmptyDashboardState } from "@/components/dashboard/empty-dashboard-stat
 import { TopHoldingsCard } from "@/components/dashboard/top-holdings-card";
 import { PortfolioInsightsCard } from "@/components/dashboard/portfolio-insights-card";
 import { RecentActivityCard } from "@/components/dashboard/recent-activity-card";
+import { WinRateCard } from "@/components/dashboard/win-rate-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -282,24 +283,28 @@ export function DashboardPageClient({
           </div>
 
           <div className="grid gap-6 xl:grid-cols-[1.45fr_0.95fr]">
-            <Card className="surface rounded-[1.75rem]">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
-                <div>
-                  <CardTitle className="text-2xl font-semibold text-slate-950">
-                    Portfolio value over time
-                  </CardTitle>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Performance trend built from portfolio snapshots or derived holding history.
-                  </p>
-                </div>
-                <Badge variant="outline" className="rounded-full bg-white/80 px-3 py-1">
-                  {timeRange === "all" ? "All time" : timeRange.toUpperCase()}
-                </Badge>
-              </CardHeader>
-              <CardContent className="pt-6">
-                <PerformanceAreaChart data={filteredPerformanceHistory} />
-              </CardContent>
-            </Card>
+            <div className="grid content-start gap-6">
+              <Card className="surface rounded-[1.75rem]">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
+                  <div>
+                    <CardTitle className="text-2xl font-semibold text-slate-950">
+                      Portfolio value over time
+                    </CardTitle>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      Performance trend built from portfolio snapshots or derived holding history.
+                    </p>
+                  </div>
+                  <Badge variant="outline" className="rounded-full bg-white/80 px-3 py-1">
+                    {timeRange === "all" ? "All time" : timeRange.toUpperCase()}
+                  </Badge>
+                </CardHeader>
+                <CardContent className="pt-6">
+                  <PerformanceAreaChart data={filteredPerformanceHistory} />
+                </CardContent>
+              </Card>
+
+              <WinRateCard holdings={filteredHoldings} />
+            </div>
 
             <Card className="surface rounded-[1.75rem]">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">

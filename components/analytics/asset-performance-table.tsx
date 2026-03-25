@@ -10,7 +10,6 @@ import {
   formatNumber,
   formatPercentage,
 } from "@/lib/portfolio/formatters";
-import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
@@ -18,21 +17,8 @@ type AssetPerformanceTableProps = {
   holdings: HoldingRecord[];
 };
 
-const categoryLabel: Record<HoldingRecord["category"], string> = {
-  stock: "Stock",
-  crypto: "Crypto",
-  etf: "ETF",
-  cash: "Cash",
-  other: "Other",
-};
-
-const categoryBadgeStyle: Record<HoldingRecord["category"], string> = {
-  stock: "border-blue-200 bg-blue-50 text-blue-700",
-  crypto: "border-violet-200 bg-violet-50 text-violet-700",
-  etf: "border-emerald-200 bg-emerald-50 text-emerald-700",
-  cash: "border-amber-200 bg-amber-50 text-amber-700",
-  other: "border-slate-200 bg-slate-100 text-slate-700",
-};
+const desktopGridColumns =
+  "grid-cols-[minmax(0,1.25fr)_72px_minmax(0,1.2fr)_minmax(0,1.05fr)]";
 
 export function AssetPerformanceTable({ holdings }: AssetPerformanceTableProps) {
   const sorted = useMemo(
@@ -53,14 +39,16 @@ export function AssetPerformanceTable({ holdings }: AssetPerformanceTableProps) 
 
       <CardContent className="p-0">
         <div className="hidden xl:block">
-          <div className="grid grid-cols-[1.7fr_0.85fr_0.9fr_1fr_1fr_1fr_1fr] gap-4 bg-slate-50/85 px-6 py-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
+          <div
+            className={cn(
+              "grid gap-2 bg-slate-50/85 px-6 py-4 text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500",
+              desktopGridColumns,
+            )}
+          >
             <div>Asset</div>
-            <div>Category</div>
-            <div className="text-right">Quantity</div>
-            <div className="text-right">Invested</div>
-            <div className="text-right">Value</div>
-            <div className="text-right">P&amp;L</div>
-            <div className="text-right">Return</div>
+            <div className="text-left">Qty</div>
+            <div className="text-right">Capital</div>
+            <div className="text-right">Performance</div>
           </div>
 
           {sorted.length > 0 ? (
@@ -68,49 +56,47 @@ export function AssetPerformanceTable({ holdings }: AssetPerformanceTableProps) 
               <div
                 key={holding.id}
                 className={cn(
-                  "grid grid-cols-[1.7fr_0.85fr_0.9fr_1fr_1fr_1fr_1fr] gap-4 px-6 py-5 transition hover:bg-slate-50/75",
+                  "grid gap-2 px-6 py-5",
+                  desktopGridColumns,
                   index !== sorted.length - 1 && "border-b border-slate-200/70",
                 )}
               >
                 <div className="min-w-0">
-                  <div className="font-semibold text-slate-950">{holding.assetName}</div>
+                  <div className="truncate font-semibold text-slate-950">{holding.assetName}</div>
                   <div className="mt-1 text-sm text-slate-500">{holding.symbol}</div>
                 </div>
 
-                <div>
-                  <Badge
-                    variant="outline"
-                    className={cn("border", categoryBadgeStyle[holding.category])}
-                  >
-                    {categoryLabel[holding.category]}
-                  </Badge>
-                </div>
-
-                <div className="text-right font-medium text-slate-800">
+                <div className="text-left font-medium text-slate-800">
                   {formatNumber(holding.quantity, 4)}
                 </div>
-                <div className="text-right font-medium text-slate-800">
-                  {formatCurrency(holding.investedAmount)}
+
+                <div className="text-right">
+                  <div className="font-semibold text-slate-950">
+                    {formatCurrency(holding.currentValue)}
+                  </div>
+                  <div className="mt-1 text-xs text-slate-500">
+                    Invested {formatCurrency(holding.investedAmount)}
+                  </div>
                 </div>
-                <div className="text-right font-semibold text-slate-950">
-                  {formatCurrency(holding.currentValue)}
-                </div>
-                <div
-                  className={cn(
-                    "text-right font-semibold",
-                    holding.gainLoss >= 0 ? "text-emerald-600" : "text-rose-600",
-                  )}
-                >
-                  {holding.gainLoss >= 0 ? "+" : "-"}
-                  {formatCurrency(Math.abs(holding.gainLoss))}
-                </div>
-                <div
-                  className={cn(
-                    "text-right font-semibold",
-                    holding.returnPercentage >= 0 ? "text-emerald-600" : "text-rose-600",
-                  )}
-                >
-                  {formatPercentage(holding.returnPercentage)}
+
+                <div className="text-right">
+                  <div
+                    className={cn(
+                      "font-semibold",
+                      holding.gainLoss >= 0 ? "text-emerald-600" : "text-rose-600",
+                    )}
+                  >
+                    {holding.gainLoss >= 0 ? "+" : "-"}
+                    {formatCurrency(Math.abs(holding.gainLoss))}
+                  </div>
+                  <div
+                    className={cn(
+                      "mt-1 text-sm font-semibold",
+                      holding.returnPercentage >= 0 ? "text-emerald-600" : "text-rose-600",
+                    )}
+                  >
+                    {formatPercentage(holding.returnPercentage)}
+                  </div>
                 </div>
               </div>
             ))
@@ -147,9 +133,7 @@ export function AssetPerformanceTable({ holdings }: AssetPerformanceTableProps) 
                 <div className="flex items-start justify-between gap-4">
                   <div>
                     <div className="font-semibold text-slate-950">{holding.assetName}</div>
-                    <div className="mt-1 text-sm text-slate-500">
-                      {holding.symbol} | {categoryLabel[holding.category]}
-                    </div>
+                    <div className="mt-1 text-sm text-slate-500">{holding.symbol}</div>
                   </div>
 
                   <div

@@ -26,6 +26,25 @@ function formatAxisDate(value: string) {
   return axisDateFormatter.format(date);
 }
 
+function formatYAxisValue(value: number | string) {
+  const numericValue = typeof value === "number" ? value : Number(value ?? 0);
+  const absolute = Math.abs(numericValue);
+
+  if (absolute >= 1_000_000) {
+    return `$${(numericValue / 1_000_000).toFixed(1)}m`;
+  }
+
+  if (absolute >= 10_000) {
+    return `$${Math.round(numericValue / 1_000)}k`;
+  }
+
+  if (absolute >= 1_000) {
+    return `$${(numericValue / 1_000).toFixed(1)}k`;
+  }
+
+  return `$${Math.round(numericValue)}`;
+}
+
 export function PerformanceAreaChart({ data }: PerformanceAreaChartProps) {
   if (data.length === 0) {
     return (
@@ -76,7 +95,7 @@ export function PerformanceAreaChart({ data }: PerformanceAreaChartProps) {
             tickLine={false}
             axisLine={false}
             width={84}
-            tickFormatter={(value) => `$${Math.round(Number(value ?? 0) / 1000)}k`}
+            tickFormatter={formatYAxisValue}
             tick={{ fill: "#64748b", fontSize: 12 }}
           />
 

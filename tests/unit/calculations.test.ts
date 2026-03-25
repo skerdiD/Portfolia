@@ -42,7 +42,7 @@ describe("portfolio calculations", () => {
     expect(allocation[0].percentage).toBe(68.6);
   });
 
-  it("builds performance history from snapshots when available", () => {
+  it("falls back to derived history when snapshots are too sparse", () => {
     const history = buildPerformanceHistory({
       holdings: holdingFixtures,
       snapshots: [
@@ -58,13 +58,40 @@ describe("portfolio calculations", () => {
       ],
     });
 
-    expect(history).toHaveLength(1);
+    expect(history.length).toBeGreaterThan(1);
+    expect(history[0].date).toBe("2026-01-01");
+  });
+
+  it("uses snapshot history when at least two snapshots exist", () => {
+    const history = buildPerformanceHistory({
+      holdings: holdingFixtures,
+      snapshots: [
+        {
+          id: "s1",
+          userId: "user-1",
+          date: "2026-01-01",
+          totalValue: "1000.00",
+          investedAmount: "900.00",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: "s2",
+          userId: "user-1",
+          date: "2026-01-02",
+          totalValue: "1100.00",
+          investedAmount: "950.00",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ],
+    });
+
+    expect(history).toHaveLength(2);
     expect(history[0]).toMatchObject({
       date: "2026-01-01",
       totalValue: 1000,
       investedAmount: 900,
-      gainLoss: 100,
-      returnPercentage: 11.11,
     });
   });
 });

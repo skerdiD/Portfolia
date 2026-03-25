@@ -63,16 +63,13 @@ function mapWatchlistRows(rows: WatchlistItem[]) {
   return rows.map(mapWatchlistRowToRecord);
 }
 
-type SnapshotDbExecutor = Pick<typeof db, "select" | "insert">;
-
-async function upsertPortfolioSnapshotForUserWithExecutor(
-  executor: SnapshotDbExecutor,
+async function upsertPortfolioSnapshotForUserInternal(
   userId: string,
   input: PortfolioSnapshotInput,
 ) {
   const parsed = portfolioSnapshotInputSchema.parse(input);
 
-  const [row] = await executor
+  const [row] = await db
     .insert(portfolioSnapshots)
     .values({
       userId,
@@ -92,29 +89,25 @@ async function upsertPortfolioSnapshotForUserWithExecutor(
   return row;
 }
 
-async function syncPortfolioSnapshotForUserWithExecutor(
-  executor: SnapshotDbExecutor,
-  userId: string,
-) {
-  const rows = await executor
+async function syncPortfolioSnapshotForUserInternal(userId: string) {
+  const rows = await db
     .select()
     .from(holdings)
     .where(eq(holdings.userId, userId));
 
-  await upsertPortfolioSnapshotForUserWithExecutor(
-    executor,
+  await upsertPortfolioSnapshotForUserInternal(
     userId,
     buildSnapshotInputFromHoldings(mapHoldingRows(rows)),
   );
 }
 
 export async function syncPortfolioSnapshotForUser(userId: string) {
-  await syncPortfolioSnapshotForUserWithExecutor(db, userId);
+  await syncPortfolioSnapshotForUserInternal(userId);
 }
 
 export async function syncPortfolioSnapshotForCurrentUser() {
   const userId = await requireAuthenticatedUserId();
-  await syncPortfolioSnapshotForUserWithExecutor(db, userId);
+  await syncPortfolioSnapshotForUserInternal(userId);
 }
 
 const getHoldingsByUserCached = cache(async (userId: string): Promise<HoldingRecord[]> => {
@@ -165,26 +158,24 @@ export async function createHoldingForUser(
 ): Promise<HoldingRecord> {
   const parsed = createHoldingSchema.parse(input);
 
-  return db.transaction(async (tx) => {
-    const [row] = await tx
-      .insert(holdings)
-      .values({
-        userId,
-        assetName: parsed.assetName,
-        symbol: normalizeSymbol(parsed.symbol),
-        category: parsed.category,
-        quantity: toStoredDecimalString(parsed.quantity),
-        averageBuyPrice: toStoredDecimalString(parsed.averageBuyPrice),
-        currentPrice: toStoredDecimalString(parsed.currentPrice),
-        purchaseDate: parsed.purchaseDate,
-        notes: normalizeOptionalText(parsed.notes),
-      })
-      .returning();
+  const [row] = await db
+    .insert(holdings)
+    .values({
+      userId,
+      assetName: parsed.assetName,
+      symbol: normalizeSymbol(parsed.symbol),
+      category: parsed.category,
+      quantity: toStoredDecimalString(parsed.quantity),
+      averageBuyPrice: toStoredDecimalString(parsed.averageBuyPrice),
+      currentPrice: toStoredDecimalString(parsed.currentPrice),
+      purchaseDate: parsed.purchaseDate,
+      notes: normalizeOptionalText(parsed.notes),
+    })
+    .returning();
 
-    await syncPortfolioSnapshotForUserWithExecutor(tx, userId);
+  await syncPortfolioSnapshotForUser(userId);
 
-    return mapHoldingRowToRecord(row);
-  });
+  return mapHoldingRowToRecord(row);
 }
 
 export async function createHoldingForCurrentUser(input: CreateHoldingInput) {
@@ -235,21 +226,19 @@ export async function updateHoldingForUser(
     updateData.notes = normalizeOptionalText(parsed.notes);
   }
 
-  return db.transaction(async (tx) => {
-    const [row] = await tx
-      .update(holdings)
-      .set(updateData)
-      .where(and(eq(holdings.userId, userId), eq(holdings.id, holdingId)))
-      .returning();
+  const [row] = await db
+    .update(holdings)
+    .set(updateData)
+    .where(and(eq(holdings.userId, userId), eq(holdings.id, holdingId)))
+    .returning();
 
-    if (!row) {
-      return null;
-    }
+  if (!row) {
+    return null;
+  }
 
-    await syncPortfolioSnapshotForUserWithExecutor(tx, userId);
+  await syncPortfolioSnapshotForUser(userId);
 
-    return mapHoldingRowToRecord(row);
-  });
+  return mapHoldingRowToRecord(row);
 }
 
 export async function updateHoldingForCurrentUser(
@@ -261,20 +250,18 @@ export async function updateHoldingForCurrentUser(
 }
 
 export async function deleteHoldingForUser(userId: string, holdingId: string) {
-  return db.transaction(async (tx) => {
-    const [row] = await tx
-      .delete(holdings)
-      .where(and(eq(holdings.userId, userId), eq(holdings.id, holdingId)))
-      .returning({ id: holdings.id });
+  const [row] = await db
+    .delete(holdings)
+    .where(and(eq(holdings.userId, userId), eq(holdings.id, holdingId)))
+    .returning({ id: holdings.id });
 
-    if (!row) {
-      return false;
-    }
+  if (!row) {
+    return false;
+  }
 
-    await syncPortfolioSnapshotForUserWithExecutor(tx, userId);
+  await syncPortfolioSnapshotForUser(userId);
 
-    return true;
-  });
+  return true;
 }
 
 export async function deleteHoldingForCurrentUser(holdingId: string) {
@@ -460,7 +447,7 @@ export async function upsertPortfolioSnapshotForUser(
   userId: string,
   input: PortfolioSnapshotInput,
 ) {
-  return upsertPortfolioSnapshotForUserWithExecutor(db, userId, input);
+  return upsertPortfolioSnapshotForUserInternal(userId, input);
 }
 
 const getPortfolioSnapshotsByUserCached = cache(

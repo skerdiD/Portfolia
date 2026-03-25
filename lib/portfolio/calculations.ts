@@ -297,9 +297,17 @@ export function buildPerformanceHistory({
   snapshots: PortfolioSnapshot[];
   holdings: HoldingRecord[];
 }) {
-  if (snapshots.length > 0) {
-    return buildPerformanceHistoryFromSnapshots(snapshots);
+  const snapshotHistory = buildPerformanceHistoryFromSnapshots(snapshots);
+
+  if (snapshotHistory.length >= 2) {
+    return snapshotHistory;
   }
 
-  return buildDerivedPerformanceHistory(holdings);
+  const derivedHistory = buildDerivedPerformanceHistory(holdings);
+
+  if (derivedHistory.length > 0) {
+    return derivedHistory;
+  }
+
+  return snapshotHistory;
 }

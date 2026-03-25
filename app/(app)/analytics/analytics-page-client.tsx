@@ -25,7 +25,7 @@ import { PageHeader } from "@/components/shared/page-header";
 import { StatCard } from "@/components/shared/stat-card";
 import { EmptyDashboardState } from "@/components/dashboard/empty-dashboard-state";
 import { EmptyState } from "@/components/shared/empty-state";
-import { ContributionToPortfolioCard } from "@/components/analytics/contribution-to-portfolio-card";
+import { BestWorstCategoryCard } from "@/components/analytics/best-worst-category-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -396,7 +396,7 @@ export function AnalyticsPageClient({
         <div className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
           <div className="grid content-start gap-6">
             <AdvancedPerformanceChart data={filteredPerformance} />
-            <ContributionToPortfolioCard holdings={filteredHoldings} />
+            <BestWorstCategoryCard allocation={filteredAllocation} />
           </div>
           <CategoryAnalysisCards allocation={filteredAllocation} />
         </div>
