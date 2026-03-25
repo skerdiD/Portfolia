@@ -1,5 +1,5 @@
 import { protectPageRequest } from "@/lib/security/arcjet";
-import { getCurrentUserAnalyticsChartData, listCurrentUserHoldings } from "@/lib/db/queries";
+import { getCurrentUserAnalyticsChartDataWithHoldings } from "@/lib/db/queries";
 import { AnalyticsPageClient } from "./analytics-page-client";
 import { e2eMockHoldings, getE2EAnalyticsData } from "@/lib/testing/e2e-mocks";
 
@@ -23,14 +23,11 @@ export default async function AnalyticsPage() {
     throw new Error(protection.message);
   }
 
-  const [analytics, holdings] = await Promise.all([
-    getCurrentUserAnalyticsChartData(),
-    listCurrentUserHoldings(),
-  ]);
+  const analytics = await getCurrentUserAnalyticsChartDataWithHoldings();
 
   return (
     <AnalyticsPageClient
-      holdings={holdings}
+      holdings={analytics.holdings}
       summary={analytics.summary}
       allocation={analytics.allocation}
       performanceHistory={analytics.performanceHistory}

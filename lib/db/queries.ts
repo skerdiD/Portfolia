@@ -532,26 +532,46 @@ export async function getCurrentUserHoldingsTableData() {
   return getHoldingsTableDataByUserCached(userId);
 }
 
-const getAnalyticsChartDataByUserCached = cache(
-  async (
-    userId: string,
-  ): Promise<{
-    summary: PortfolioSummaryData;
-    allocation: AllocationPoint[];
-    performanceHistory: PerformanceHistoryPoint[];
-  }> => {
+type AnalyticsChartData = {
+  summary: PortfolioSummaryData;
+  allocation: AllocationPoint[];
+  performanceHistory: PerformanceHistoryPoint[];
+};
+
+type AnalyticsChartDataWithHoldings = AnalyticsChartData & {
+  holdings: HoldingRecord[];
+};
+
+const getAnalyticsChartDataWithHoldingsByUserCached = cache(
+  async (userId: string): Promise<AnalyticsChartDataWithHoldings> => {
     const [userHoldings, snapshots] = await Promise.all([
       getHoldingsByUserCached(userId),
       getPortfolioSnapshotsByUserCached(userId, 180),
     ]);
 
+    const summary = calculatePortfolioSummary(userHoldings);
+    const allocation = calculateAllocationByCategory(userHoldings);
+
     return {
-      summary: calculatePortfolioSummary(userHoldings),
-      allocation: calculateAllocationByCategory(userHoldings),
+      holdings: userHoldings,
+      summary,
+      allocation,
       performanceHistory: buildPerformanceHistory({
         snapshots,
         holdings: userHoldings,
       }),
+    };
+  },
+);
+
+const getAnalyticsChartDataByUserCached = cache(
+  async (userId: string): Promise<AnalyticsChartData> => {
+    const analytics = await getAnalyticsChartDataWithHoldingsByUserCached(userId);
+
+    return {
+      summary: analytics.summary,
+      allocation: analytics.allocation,
+      performanceHistory: analytics.performanceHistory,
     };
   },
 );
@@ -563,4 +583,13 @@ export async function getAnalyticsChartDataByUser(userId: string) {
 export async function getCurrentUserAnalyticsChartData() {
   const userId = await requireAuthenticatedUserId();
   return getAnalyticsChartDataByUserCached(userId);
+}
+
+export async function getAnalyticsChartDataWithHoldingsByUser(userId: string) {
+  return getAnalyticsChartDataWithHoldingsByUserCached(userId);
+}
+
+export async function getCurrentUserAnalyticsChartDataWithHoldings() {
+  const userId = await requireAuthenticatedUserId();
+  return getAnalyticsChartDataWithHoldingsByUserCached(userId);
 }

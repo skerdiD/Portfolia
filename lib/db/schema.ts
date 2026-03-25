@@ -1,5 +1,6 @@
 import {
   date,
+  index,
   numeric,
   pgEnum,
   pgTable,
@@ -19,23 +20,34 @@ export const assetCategoryEnum = pgEnum("asset_category", [
 
 export type AssetCategory = (typeof assetCategoryEnum.enumValues)[number];
 
-export const holdings = pgTable("holdings", {
-  id: uuid("id").defaultRandom().primaryKey(),
-  userId: text("user_id").notNull(),
-  assetName: text("asset_name").notNull(),
-  symbol: text("symbol").notNull(),
-  category: assetCategoryEnum("category").notNull(),
-  quantity: numeric("quantity", { precision: 20, scale: 8 }).notNull(),
-  averageBuyPrice: numeric("average_buy_price", {
-    precision: 20,
-    scale: 8,
-  }).notNull(),
-  currentPrice: numeric("current_price", { precision: 20, scale: 8 }).notNull(),
-  purchaseDate: date("purchase_date").notNull(),
-  notes: text("notes"),
-  createdAt: timestamp("created_at").defaultNow().notNull(),
-  updatedAt: timestamp("updated_at").defaultNow().notNull(),
-});
+export const holdings = pgTable(
+  "holdings",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: text("user_id").notNull(),
+    assetName: text("asset_name").notNull(),
+    symbol: text("symbol").notNull(),
+    category: assetCategoryEnum("category").notNull(),
+    quantity: numeric("quantity", { precision: 20, scale: 8 }).notNull(),
+    averageBuyPrice: numeric("average_buy_price", {
+      precision: 20,
+      scale: 8,
+    }).notNull(),
+    currentPrice: numeric("current_price", { precision: 20, scale: 8 }).notNull(),
+    purchaseDate: date("purchase_date").notNull(),
+    notes: text("notes"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => ({
+    userIdIdx: index("holdings_user_id_idx").on(table.userId),
+    userPurchaseCreatedIdx: index("holdings_user_purchase_created_idx").on(
+      table.userId,
+      table.purchaseDate,
+      table.createdAt,
+    ),
+  }),
+);
 
 export const portfolioSnapshots = pgTable(
   "portfolio_snapshots",
@@ -76,6 +88,11 @@ export const watchlistItems = pgTable(
     userSymbolUnique: uniqueIndex("watchlist_items_user_symbol_unique").on(
       table.userId,
       table.symbol,
+    ),
+    userUpdatedCreatedIdx: index("watchlist_items_user_updated_created_idx").on(
+      table.userId,
+      table.updatedAt,
+      table.createdAt,
     ),
   }),
 );

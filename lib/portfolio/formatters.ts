@@ -11,6 +11,8 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
 });
 
+const numberFormatterCache = new Map<number, Intl.NumberFormat>();
+
 export function formatCurrency(value: number) {
   return currencyFormatter.format(value);
 }
@@ -21,10 +23,20 @@ export function formatPercentage(value: number) {
 }
 
 export function formatNumber(value: number, maximumFractionDigits = 4) {
-  return new Intl.NumberFormat("en-US", {
+  const cached = numberFormatterCache.get(maximumFractionDigits);
+
+  if (cached) {
+    return cached.format(value);
+  }
+
+  const formatter = new Intl.NumberFormat("en-US", {
     minimumFractionDigits: 0,
     maximumFractionDigits,
-  }).format(value);
+  });
+
+  numberFormatterCache.set(maximumFractionDigits, formatter);
+
+  return formatter.format(value);
 }
 
 export function formatDate(value: string | Date) {

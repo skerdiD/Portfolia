@@ -15,6 +15,13 @@
       "when": 1774435000000,
       "tag": "0001_watchlist_items",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1774459000000,
+      "tag": "0002_query_performance_indexes",
+      "breakpoints": true
     }
   ]
 }
