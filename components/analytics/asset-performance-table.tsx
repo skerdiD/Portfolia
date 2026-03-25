@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import type { HoldingRecord } from "@/lib/portfolio/calculations";
 import {
   formatCurrency,
@@ -31,7 +32,10 @@ const categoryBadgeStyle: Record<HoldingRecord["category"], string> = {
 };
 
 export function AssetPerformanceTable({ holdings }: AssetPerformanceTableProps) {
-  const sorted = [...holdings].sort((a, b) => b.currentValue - a.currentValue);
+  const sorted = useMemo(
+    () => [...holdings].sort((a, b) => b.currentValue - a.currentValue),
+    [holdings],
+  );
 
   return (
     <Card className="surface rounded-[1.75rem]">

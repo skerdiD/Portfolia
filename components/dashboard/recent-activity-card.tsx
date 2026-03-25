@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import type { HoldingRecord } from "@/lib/portfolio/calculations";
 import { formatDate } from "@/lib/portfolio/formatters";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -42,7 +43,7 @@ function buildActivities(holdings: HoldingRecord[]): ActivityItem[] {
 }
 
 export function RecentActivityCard({ holdings }: RecentActivityCardProps) {
-  const items = buildActivities(holdings);
+  const items = useMemo(() => buildActivities(holdings), [holdings]);
 
   return (
     <Card className="surface rounded-[1.75rem]">

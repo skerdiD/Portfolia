@@ -16,12 +16,14 @@ type PerformanceAreaChartProps = {
   data: PerformanceHistoryPoint[];
 };
 
+const axisDateFormatter = new Intl.DateTimeFormat("en-US", {
+  month: "short",
+  day: "numeric",
+});
+
 function formatAxisDate(value: string) {
   const date = new Date(`${value}T00:00:00.000Z`);
-  return new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-  }).format(date);
+  return axisDateFormatter.format(date);
 }
 
 export function PerformanceAreaChart({ data }: PerformanceAreaChartProps) {

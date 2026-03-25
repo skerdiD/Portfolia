@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import type { AllocationPoint } from "@/lib/portfolio/calculations";
 import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
@@ -25,7 +26,10 @@ const labelMap: Record<AllocationPoint["category"], string> = {
 };
 
 export function AllocationDonutChart({ data }: AllocationDonutChartProps) {
-  const totalValue = data.reduce((sum, item) => sum + item.currentValue, 0);
+  const totalValue = useMemo(
+    () => data.reduce((sum, item) => sum + item.currentValue, 0),
+    [data],
+  );
 
   if (data.length === 0 || totalValue === 0) {
     return (

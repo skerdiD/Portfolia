@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import {
   ArrowUpRight,
   BadgeDollarSign,
@@ -18,8 +19,6 @@ import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
 import { PageHeader } from "@/components/shared/page-header";
 import { StatCard } from "@/components/shared/stat-card";
 import { EmptyDashboardState } from "@/components/dashboard/empty-dashboard-state";
-import { PerformanceAreaChart } from "@/components/dashboard/performance-area-chart";
-import { AllocationDonutChart } from "@/components/dashboard/allocation-donut-chart";
 import { TopHoldingsCard } from "@/components/dashboard/top-holdings-card";
 import { PortfolioInsightsCard } from "@/components/dashboard/portfolio-insights-card";
 import { RecentActivityCard } from "@/components/dashboard/recent-activity-card";
@@ -37,6 +36,32 @@ type DashboardPageClientProps = {
 
 type TimeRange = "all" | "90d" | "30d" | "7d";
 type CategoryFilter = "all" | HoldingRecord["category"];
+
+const ChartLoading = () => (
+  <div className="h-[360px] w-full animate-pulse rounded-[1.5rem] border border-slate-200/80 bg-slate-50/70" />
+);
+
+const PerformanceAreaChart = dynamic(
+  () =>
+    import("@/components/dashboard/performance-area-chart").then(
+      (module) => module.PerformanceAreaChart,
+    ),
+  {
+    loading: ChartLoading,
+    ssr: false,
+  },
+);
+
+const AllocationDonutChart = dynamic(
+  () =>
+    import("@/components/dashboard/allocation-donut-chart").then(
+      (module) => module.AllocationDonutChart,
+    ),
+  {
+    loading: ChartLoading,
+    ssr: false,
+  },
+);
 
 function calculateSummary(holdings: HoldingRecord[]): PortfolioSummaryData {
   const investedAmount = holdings.reduce((sum, item) => sum + item.investedAmount, 0);

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
 import {
   ArrowUpRight,
   BadgeDollarSign,
@@ -13,6 +13,7 @@ import type {
   HoldingRecord,
   PortfolioSummaryData,
 } from "@/lib/portfolio/calculations";
+import { filterHoldingsByQueryAndCategory } from "@/lib/portfolio/holdings-helpers";
 import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
 import { PageHeader } from "@/components/shared/page-header";
 import { StatCard } from "@/components/shared/stat-card";
@@ -58,24 +59,16 @@ function getSummaryFromHoldings(holdings: HoldingRecord[]): PortfolioSummaryData
 export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
   const [holdings, setHoldings] = useState(initialData.holdings);
   const [query, setQuery] = useState("");
+  const deferredQuery = useDeferredValue(query);
   const [category, setCategory] = useState<"all" | AssetCategory>("all");
 
   const filteredHoldings = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
-
-    return holdings.filter((holding) => {
-      const matchesCategory =
-        category === "all" ? true : holding.category === category;
-
-      const matchesQuery =
-        normalizedQuery.length === 0
-          ? true
-          : holding.assetName.toLowerCase().includes(normalizedQuery) ||
-            holding.symbol.toLowerCase().includes(normalizedQuery);
-
-      return matchesCategory && matchesQuery;
+    return filterHoldingsByQueryAndCategory({
+      holdings,
+      query: deferredQuery,
+      category,
     });
-  }, [holdings, query, category]);
+  }, [category, deferredQuery, holdings]);
 
   const filteredSummary = useMemo(
     () => getSummaryFromHoldings(filteredHoldings),

@@ -28,6 +28,22 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  if (process.env.E2E_TEST_MODE === "1") {
+    return (
+      <html lang="en" suppressHydrationWarning>
+        <body
+          className={cn(
+            inter.variable,
+            manrope.variable,
+            "min-h-screen bg-background font-body text-foreground antialiased",
+          )}
+        >
+          {children}
+        </body>
+      </html>
+    );
+  }
+
   return (
     <ClerkProvider
       afterSignOutUrl="/"

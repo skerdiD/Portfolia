@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useDeferredValue, useMemo, useState } from "react";
+import dynamic from "next/dynamic";
 import {
   ArrowDownRight,
   ArrowUpRight,
@@ -16,14 +17,11 @@ import type {
   PerformanceHistoryPoint,
   PortfolioSummaryData,
 } from "@/lib/portfolio/calculations";
+import { filterHoldingsByQueryAndCategory } from "@/lib/portfolio/holdings-helpers";
 import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
 import { PageHeader } from "@/components/shared/page-header";
 import { StatCard } from "@/components/shared/stat-card";
 import { EmptyDashboardState } from "@/components/dashboard/empty-dashboard-state";
-import { AdvancedPerformanceChart } from "@/components/analytics/advanced-performance-chart";
-import { CategoryAnalysisCards } from "@/components/analytics/category-analysis-cards";
-import { PerformerSpotlight } from "@/components/analytics/performer-spotlight";
-import { AssetPerformanceTable } from "@/components/analytics/asset-performance-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -38,6 +36,54 @@ type AnalyticsPageClientProps = {
 
 type TimeRange = "all" | "90d" | "30d" | "7d";
 type CategoryFilter = "all" | HoldingRecord["category"];
+
+const ChartLoading = () => (
+  <div className="h-[380px] w-full animate-pulse rounded-[1.5rem] border border-slate-200/80 bg-slate-50/70" />
+);
+
+const AdvancedPerformanceChart = dynamic(
+  () =>
+    import("@/components/analytics/advanced-performance-chart").then(
+      (module) => module.AdvancedPerformanceChart,
+    ),
+  {
+    loading: ChartLoading,
+    ssr: false,
+  },
+);
+
+const CategoryAnalysisCards = dynamic(
+  () =>
+    import("@/components/analytics/category-analysis-cards").then(
+      (module) => module.CategoryAnalysisCards,
+    ),
+  {
+    loading: ChartLoading,
+    ssr: false,
+  },
+);
+
+const PerformerSpotlight = dynamic(
+  () =>
+    import("@/components/analytics/performer-spotlight").then(
+      (module) => module.PerformerSpotlight,
+    ),
+  {
+    loading: ChartLoading,
+    ssr: false,
+  },
+);
+
+const AssetPerformanceTable = dynamic(
+  () =>
+    import("@/components/analytics/asset-performance-table").then(
+      (module) => module.AssetPerformanceTable,
+    ),
+  {
+    loading: ChartLoading,
+    ssr: false,
+  },
+);
 
 function filterHistoryByRange(
   history: PerformanceHistoryPoint[],
@@ -128,43 +174,38 @@ export function AnalyticsPageClient({
   const [timeRange, setTimeRange] = useState<TimeRange>("all");
   const [category, setCategory] = useState<CategoryFilter>("all");
   const [assetQuery, setAssetQuery] = useState("");
+  const deferredAssetQuery = useDeferredValue(assetQuery);
+  const hasActiveAssetQuery = deferredAssetQuery.trim().length > 0;
   const hasFilters = category !== "all" || assetQuery.trim().length > 0;
 
   const filteredHoldings = useMemo(() => {
-    const query = assetQuery.trim().toLowerCase();
-
-    return holdings.filter((holding) => {
-      const matchesCategory = category === "all" || holding.category === category;
-      const matchesAsset =
-        query.length === 0
-          ? true
-          : holding.assetName.toLowerCase().includes(query) ||
-            holding.symbol.toLowerCase().includes(query);
-
-      return matchesCategory && matchesAsset;
+    return filterHoldingsByQueryAndCategory({
+      holdings,
+      query: deferredAssetQuery,
+      category,
     });
-  }, [assetQuery, category, holdings]);
+  }, [category, deferredAssetQuery, holdings]);
 
   const filteredSummary = useMemo(() => {
-    if (category === "all" && assetQuery.trim().length === 0) {
+    if (category === "all" && !hasActiveAssetQuery) {
       return summary;
     }
 
     return buildSummary(filteredHoldings);
-  }, [assetQuery, category, filteredHoldings, summary]);
+  }, [category, filteredHoldings, hasActiveAssetQuery, summary]);
 
   const filteredAllocation = useMemo(() => {
-    if (category === "all" && assetQuery.trim().length === 0) {
+    if (category === "all" && !hasActiveAssetQuery) {
       return allocation;
     }
 
     return buildAllocation(filteredHoldings);
-  }, [allocation, assetQuery, category, filteredHoldings]);
+  }, [allocation, category, filteredHoldings, hasActiveAssetQuery]);
 
   const filteredPerformance = useMemo(() => {
     const ranged = filterHistoryByRange(performanceHistory, timeRange);
 
-    if (category === "all" && assetQuery.trim().length === 0) {
+    if (category === "all" && !hasActiveAssetQuery) {
       return ranged;
     }
 
@@ -175,21 +216,28 @@ export function AnalyticsPageClient({
       gainLoss: filteredSummary.gainLoss,
       returnPercentage: filteredSummary.returnPercentage,
     }));
-  }, [assetQuery, category, filteredSummary, performanceHistory, timeRange]);
+  }, [category, filteredSummary, hasActiveAssetQuery, performanceHistory, timeRange]);
 
-  const bestPerformer = useMemo(
-    () =>
-      [...filteredHoldings].sort((a, b) => b.returnPercentage - a.returnPercentage)[0] ??
-      null,
-    [filteredHoldings],
-  );
+  const { bestPerformer, worstPerformer } = useMemo(() => {
+    if (filteredHoldings.length === 0) {
+      return { bestPerformer: null, worstPerformer: null };
+    }
 
-  const worstPerformer = useMemo(
-    () =>
-      [...filteredHoldings].sort((a, b) => a.returnPercentage - b.returnPercentage)[0] ??
-      null,
-    [filteredHoldings],
-  );
+    let best = filteredHoldings[0];
+    let worst = filteredHoldings[0];
+
+    for (const holding of filteredHoldings) {
+      if (holding.returnPercentage > best.returnPercentage) {
+        best = holding;
+      }
+
+      if (holding.returnPercentage < worst.returnPercentage) {
+        worst = holding;
+      }
+    }
+
+    return { bestPerformer: best, worstPerformer: worst };
+  }, [filteredHoldings]);
 
   if (holdings.length === 0) {
     return <EmptyDashboardState />;

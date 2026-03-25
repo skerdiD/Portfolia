@@ -6,6 +6,10 @@ import arcjet, {
   shield,
   slidingWindow,
 } from "@arcjet/next";
+import {
+  mapDecisionToResult,
+  type ProtectionResult,
+} from "@/lib/security/protection-result";
 
 const arcjetKey = process.env.ARCJET_KEY;
 
@@ -55,33 +59,7 @@ const pageProtection = arcjetKey
     })
   : null;
 
-export type ProtectionResult =
-  | { allowed: true }
-  | {
-      allowed: false;
-      status: 403 | 429;
-      message: string;
-    };
-
-function mapDecisionToResult(decision: Awaited<ReturnType<NonNullable<typeof mutationProtection>["protect"]>>): ProtectionResult {
-  if (decision.isDenied()) {
-    if (decision.reason.isRateLimit()) {
-      return {
-        allowed: false,
-        status: 429,
-        message: "Too many requests. Please wait a moment and try again.",
-      };
-    }
-
-    return {
-      allowed: false,
-      status: 403,
-      message: "This request was blocked for security reasons.",
-    };
-  }
-
-  return { allowed: true };
-}
+export type { ProtectionResult };
 
 export async function protectMutationRequest(): Promise<ProtectionResult> {
   if (!mutationProtection) {

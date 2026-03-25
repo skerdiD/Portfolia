@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
 const isProtectedRoute = createRouteMatcher([
   "/dashboard(.*)",
@@ -9,6 +10,16 @@ const isProtectedRoute = createRouteMatcher([
 
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) {
+    if (process.env.E2E_TEST_MODE === "1") {
+      const isE2EAuthenticated = req.cookies.get("e2e-auth")?.value === "1";
+
+      if (!isE2EAuthenticated) {
+        return NextResponse.redirect(new URL("/unauthorized", req.url));
+      }
+
+      return;
+    }
+
     await auth.protect();
   }
 });
