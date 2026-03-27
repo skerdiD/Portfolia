@@ -283,7 +283,7 @@ export function DashboardPageClient({
           </div>
 
           <div className="grid gap-6 xl:grid-cols-[1.45fr_0.95fr]">
-            <div className="grid content-start gap-6">
+            <div className="grid min-w-0 content-start gap-6">
               <Card className="surface rounded-[1.75rem]">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
                   <div>
@@ -306,7 +306,7 @@ export function DashboardPageClient({
               <WinRateCard holdings={filteredHoldings} />
             </div>
 
-            <Card className="surface rounded-[1.75rem]">
+            <Card className="surface min-w-0 rounded-[1.75rem]">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-0">
                 <div>
                   <CardTitle className="text-2xl font-semibold text-slate-950">

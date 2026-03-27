@@ -45,9 +45,9 @@ export function AllocationDonutChart({ data }: AllocationDonutChartProps) {
   }
 
   return (
-    <div className="chart-entrance space-y-6">
-      <div className="h-[240px] w-full">
-        <ResponsiveContainer width="100%" height="100%">
+    <div className="chart-entrance min-w-0 space-y-6">
+      <div className="h-[240px] w-full min-w-0">
+        <ResponsiveContainer width="100%" height="100%" minWidth={1} minHeight={220}>
           <PieChart>
             <Pie
               data={data}
