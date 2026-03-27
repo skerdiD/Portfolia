@@ -6,15 +6,17 @@ It showcases modern full-stack development with secure authentication, protected
 
 ## Live Demo
 
-**Live App:** https://portfolia-wheat-gamma.vercel.app/
+- **Live App:** https://portfolia-wheat-gamma.vercel.app/
+- **Analytics Page:** https://portfolia-wheat-gamma.vercel.app/analytics
 
 ## What You Can Do
 
-- Secure authentication with protected app routes
+- Secure authentication and protected app routes
 - Create, edit, and manage portfolio holdings
 - Track watchlist assets and target prices
-- Explore allocation, performance, and category analytics
-- Review insights such as top holdings and portfolio win rate
+- Explore allocation, performance, and portfolio analytics
+- Export holdings data to CSV
+- Review insights like top holdings and portfolio win rate
 - Manage account and workspace settings
 
 ## Tech Stack
@@ -35,32 +37,33 @@ components/           Reusable UI and feature components
 lib/db/               Database client, schema, and query layer
 lib/security/         Request protection logic
 drizzle/              SQL migrations
-public/screenshots/   Product screenshots used in this README
+public/screenshoots/  Product screenshots used in this README
+```
 
 ## Screenshots
 
 ### Dashboard
 
-![Dashboard Overview](public/screenshoots/01-dashboard-overview.png)
-![Dashboard Allocation](public/screenshoots/02-dashboard-allocation.png)
+<img src="./public/screenshoots/01-dashboard-overview.png" alt="Dashboard Overview" width="100%" />
+<img src="./public/screenshoots/02-dashboard-allocation.png" alt="Dashboard Allocation" width="100%" />
 
 ### Holdings
 
-![Holdings Table](public/screenshoots/03-holdings-table.png)
-![Holdings Add Dialog](public/screenshoots/04-holdings-add-dialog.png)
+<img src="./public/screenshoots/03-holdings-table.png" alt="Holdings Table" width="100%" />
+<img src="./public/screenshoots/04-holdings-add-dialog.png" alt="Holdings Add Dialog" width="100%" />
 
 ### Watchlist
 
-![Watchlist Table](public/screenshoots/05-watchlist-table.png)
-![Watchlist Add Dialog](public/screenshoots/06-watchlist-add-dialog.png)
+<img src="./public/screenshoots/05-watchlist-table.png" alt="Watchlist Table" width="100%" />
+<img src="./public/screenshoots/06-watchlist-add-dialog.png" alt="Watchlist Add Dialog" width="100%" />
 
 ### Analytics
 
-![Analytics Performance](public/screenshoots/07-analytics-performance.png)
-![Analytics Allocation](public/screenshoots/08-analytics-allocation.png)
-![Analytics Categories](public/screenshoots/09-analytics-categories.png)
-![Settings Account](public/screenshoots/10-settings-account.png)
-![Settings Security](public/screenshoots/11-settings-security.png)
+<img src="./public/screenshoots/07-analytics-performance.png" alt="Analytics Performance" width="100%" />
+<img src="./public/screenshoots/08-analytics-allocation.png" alt="Analytics Allocation" width="100%" />
+<img src="./public/screenshoots/09-analytics-categories.png" alt="Analytics Categories" width="100%" />
+<img src="./public/screenshoots/10-settings-account.png" alt="Settings Account" width="100%" />
+<img src="./public/screenshoots/11-settings-security.png" alt="Settings Security" width="100%" />
 
 ## Notes
 
