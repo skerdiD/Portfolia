@@ -4,7 +4,6 @@ import Link from "next/link";
 import {
   Show,
   UserButton,
-  useUser,
 } from "@clerk/nextjs";
 import { usePathname, useRouter } from "next/navigation";
 import {
@@ -61,13 +60,10 @@ export function AppTopbar({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { user } = useUser();
 
   const current =
     Object.entries(titleMap).find(([route]) => pathname.startsWith(route))?.[1] ??
     titleMap["/dashboard"];
-  const displayName = user?.fullName || user?.username || "Portfolio User";
-  const primaryEmail = user?.primaryEmailAddress?.emailAddress || "Secure session";
   const today = new Intl.DateTimeFormat("en-US", {
     month: "short",
     day: "numeric",
@@ -157,19 +153,11 @@ export function AppTopbar({
           </Show>
 
           <Show when="signed-in">
-            <div className="flex items-center gap-3 rounded-2xl border border-slate-200/80 bg-white/90 px-3 py-2 shadow-sm">
-              <div className="hidden text-right sm:block">
-                <div className="max-w-[140px] truncate text-sm font-medium text-slate-950">
-                  {displayName}
-                </div>
-                <div className="max-w-[160px] truncate text-xs text-muted-foreground">
-                  {primaryEmail}
-                </div>
-              </div>
+            <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-200/80 bg-white/90 shadow-sm">
               <UserButton
                 appearance={{
                   elements: {
-                    userButtonAvatarBox: "h-9 w-9",
+                    userButtonAvatarBox: "h-8.5 w-8.5",
                   },
                 }}
               />
