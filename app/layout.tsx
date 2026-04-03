@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     template: "%s | Portfolia",
   },
   description:
-    "Portfolia is a premium personal investment dashboard for tracking holdings, portfolio performance, and financial analytics.",
+    "Portfolia is an AI proposal operating system for freelancers and agencies to generate polished client proposals, faster.",
 };
 
 export default async function RootLayout({

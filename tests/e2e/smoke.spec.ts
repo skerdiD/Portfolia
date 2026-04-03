@@ -16,7 +16,9 @@ async function signInForE2E(context: BrowserContext) {
 test("home page loads", async ({ page }) => {
   await page.goto("/");
   await expect(
-    page.getByRole("heading", { name: /modern portfolio workspace/i }),
+    page.getByRole("heading", {
+      name: /win more clients with polished proposals in minutes/i,
+    }),
   ).toBeVisible();
 });
 
