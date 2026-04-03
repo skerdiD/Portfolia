@@ -17,11 +17,11 @@ export default async function SignUpPage() {
       title="Create your Portfolia account"
       description="Start with a secure, polished personal investment dashboard designed for real-world portfolio tracking."
       footer={
-        <p className="text-sm text-slate-600">
+        <p className="text-sm text-slate-600 dark:text-slate-300">
           Already have an account?{" "}
           <Link
             href="/sign-in"
-            className="font-semibold text-blue-600 transition hover:text-blue-700"
+            className="font-semibold text-blue-600 transition hover:text-blue-700 dark:text-cyan-300 dark:hover:text-cyan-200"
           >
             Sign in
           </Link>

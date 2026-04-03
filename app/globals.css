@@ -265,15 +265,15 @@
   }
 
   .reveal-up {
-    animation: reveal-up 650ms cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation: reveal-up 980ms cubic-bezier(0.22, 1, 0.36, 1) both;
   }
 
   .reveal-delay-1 {
-    animation-delay: 100ms;
+    animation-delay: 180ms;
   }
 
   .reveal-delay-2 {
-    animation-delay: 180ms;
+    animation-delay: 320ms;
   }
 }
 
