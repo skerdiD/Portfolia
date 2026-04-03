@@ -275,6 +275,18 @@
   .reveal-delay-2 {
     animation-delay: 320ms;
   }
+
+  .landing-slow-reveal .reveal-up {
+    animation-duration: 1280ms;
+  }
+
+  .landing-slow-reveal .reveal-delay-1 {
+    animation-delay: 260ms;
+  }
+
+  .landing-slow-reveal .reveal-delay-2 {
+    animation-delay: 440ms;
+  }
 }
 
 @keyframes landing-line-draw {

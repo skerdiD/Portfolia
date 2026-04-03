@@ -225,7 +225,7 @@ export function LandingPage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden pb-16">
+    <div className="landing-slow-reveal relative min-h-screen overflow-hidden pb-16">
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -left-24 top-4 h-72 w-72 rounded-full bg-cyan-400/12 blur-3xl dark:bg-cyan-300/16" />
         <div className="absolute right-[-4rem] top-24 h-80 w-80 rounded-full bg-blue-500/10 blur-3xl dark:bg-indigo-400/15" />
