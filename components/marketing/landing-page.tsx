@@ -33,73 +33,73 @@ const navLinks = [
 ];
 
 const heroStats = [
-  { label: "Time to first draft", value: "< 5 min" },
-  { label: "Proposal win lift", value: "+31%" },
-  { label: "Avg. time saved weekly", value: "9.2 hrs" },
+  { label: "Holdings tracked", value: "24 assets" },
+  { label: "Allocation categories", value: "5 segments" },
+  { label: "Performance horizon", value: "All-time to 7D" },
 ];
 
 const painPoints = [
   {
-    title: "Proposals take too long",
+    title: "Holdings are scattered",
     description:
-      "Teams burn hours rewriting scope and pricing for every single lead.",
+      "Positions end up split across broker tabs, notes, and spreadsheets, making true exposure hard to read.",
     icon: Clock3,
   },
   {
-    title: "Scope gets misunderstood",
+    title: "Allocation drifts quietly",
     description:
-      "Requirements become vague, then projects drift and revisions pile up.",
+      "Without a clear category view, weights move off target before you catch the shift.",
     icon: ScanSearch,
   },
   {
-    title: "Pricing feels inconsistent",
+    title: "Performance lacks context",
     description:
-      "Without structure, margins shrink and clients question every line item.",
+      "Raw price moves do not show how each position impacts overall portfolio return.",
     icon: CircleDollarSign,
   },
   {
-    title: "Quality depends on who writes",
+    title: "Watchlist ideas get lost",
     description:
-      "Great proposals should be repeatable, not dependent on one teammate.",
+      "Potential entries fade without one place for target prices and conviction notes.",
     icon: MenuSquare,
   },
 ];
 
 const featureCards = [
   {
-    title: "AI scope builder",
+    title: "Holdings management",
     description:
-      "Turn rough notes into clear milestones, deliverables, and timelines.",
+      "Track asset value, invested capital, and return for every position in one table.",
     icon: WandSparkles,
   },
   {
-    title: "Smart pricing engine",
+    title: "Allocation breakdown",
     description:
-      "Generate structured pricing options with margin-safe recommendations.",
+      "View category concentration so rebalancing decisions are based on clear exposure.",
     icon: CircleDollarSign,
   },
   {
-    title: "Reusable playbooks",
+    title: "Watchlist tracking",
     description:
-      "Save your best proposals as repeatable templates for every vertical.",
+      "Monitor symbols before entry with target prices and private notes.",
     icon: Layers3,
   },
   {
-    title: "Brand-safe voice",
+    title: "Performance analytics",
     description:
-      "Keep tone, vocabulary, and formatting consistent across your team.",
+      "Analyze gain/loss trends and return behavior across your full portfolio.",
     icon: ShieldCheck,
   },
   {
-    title: "Client-ready exports",
+    title: "CSV exports",
     description:
-      "Export polished PDFs and share a branded link in a single click.",
+      "Export holdings data when you need reporting outside the dashboard.",
     icon: FileCheck2,
   },
   {
-    title: "Collaboration notes",
+    title: "Actionable insights",
     description:
-      "Review AI suggestions, edit fast, and align before proposals go out.",
+      "Spot top positions, category extremes, and portfolio momentum faster.",
     icon: CheckCircle2,
   },
 ];
@@ -107,52 +107,52 @@ const featureCards = [
 const howItWorks = [
   {
     step: "01",
-    title: "Input project details",
+    title: "Add your holdings",
     description:
-      "Drop in meeting notes, goals, timeline, and budget expectations.",
+      "Log positions with symbol, category, invested amount, and current value.",
   },
   {
     step: "02",
-    title: "AI generates proposal",
+    title: "Track your watchlist",
     description:
-      "Portfolia creates scope, milestones, pricing options, and rationale.",
+      "Save assets you are researching and attach target prices plus notes.",
   },
   {
     step: "03",
-    title: "Edit and export",
+    title: "Review portfolio analytics",
     description:
-      "Adjust wording, lock sections, and send a client-ready proposal quickly.",
+      "Use dashboard insights to monitor allocation, performance, and concentration.",
   },
 ];
 
 const testimonials = [
   {
     quote:
-      "Our proposal cycle dropped from two days to under an hour, and close rates improved in the same quarter.",
-    name: "Maya Chen",
-    role: "Founder, Northline Studio",
+      "Portfolia replaced my spreadsheet stack in one weekend. I can finally see allocation and performance without hunting across tabs.",
+    name: "Lena Ortiz",
+    role: "Retail investor",
   },
   {
     quote:
-      "The scope clarity is unreal. Clients ask fewer questions because everything is structured from the first draft.",
-    name: "David Romero",
-    role: "Creative Director, Anchor Eight",
+      "The watchlist workflow is exactly what I needed. Target prices and notes keep my entry plan disciplined.",
+    name: "Marcus Lee",
+    role: "Long-term investor",
   },
   {
     quote:
-      "We finally have a consistent quality bar across the team, even when new account managers jump in.",
-    name: "Priya Desai",
-    role: "Operations Lead, Signalhaus",
+      "The analytics view makes category drift obvious, so rebalancing decisions feel less reactive.",
+    name: "Nora Patel",
+    role: "Self-directed investor",
   },
 ];
 
 const brandLogos = [
-  "NORTHLINE",
-  "ANCHOR EIGHT",
-  "SIGNALHAUS",
-  "LUMIN",
-  "TIDEWORKS",
-  "BRIGHTFOLK",
+  "NOVA CAPITAL",
+  "ALPHA HARBOR",
+  "SUMMIT LEDGER",
+  "HORIZON FUND",
+  "BLUEPEAK",
+  "ORBITAL",
 ];
 
 function applyTheme(nextTheme: Theme) {
@@ -243,7 +243,7 @@ export function LandingPage() {
                 Portfolia
               </p>
               <p className="text-xs text-slate-600 dark:text-slate-400">
-                AI Proposal Operating System
+                Portfolio Tracking Dashboard
               </p>
             </div>
           </Link>
@@ -283,7 +283,7 @@ export function LandingPage() {
               href="/sign-up"
               className={cn(buttonVariants({ size: "sm" }), "gap-2")}
             >
-              Generate Proposal
+              Start tracking
               <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -298,17 +298,17 @@ export function LandingPage() {
           <div className="reveal-up max-w-2xl">
             <div className="inline-flex items-center gap-2 rounded-full border border-cyan-200/80 bg-cyan-50/85 px-3 py-1.5 text-sm font-medium text-cyan-800 shadow-sm dark:border-cyan-800/80 dark:bg-cyan-950/50 dark:text-cyan-200">
               <Sparkles className="h-4 w-4" />
-              Built for freelancers and agencies
+              Built for personal portfolio tracking
             </div>
 
             <h1 className="mt-6 text-balance font-heading text-5xl font-semibold leading-[0.94] text-slate-950 sm:text-6xl lg:text-7xl dark:text-slate-100">
-              Win more clients with polished proposals in minutes.
+              Track holdings and performance with total portfolio clarity.
             </h1>
 
             <p className="mt-6 max-w-xl text-lg leading-8 text-slate-600 sm:text-xl dark:text-slate-300">
-              Portfolia turns messy project notes into clear, conversion-ready
-              proposals with strong scope, pricing, and delivery structure so
-              you can move from lead to signed deal faster.
+              Portfolia helps you monitor holdings, allocation, and portfolio
+              performance in one clean dashboard, so every investment decision
+              is grounded in a clear view of your data.
             </p>
 
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -316,7 +316,7 @@ export function LandingPage() {
                 href="/sign-up"
                 className={cn(buttonVariants({ size: "lg" }), "gap-2")}
               >
-                Generate Proposal
+                Start tracking
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
@@ -361,14 +361,14 @@ export function LandingPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">
-                        Live Proposal Preview
+                        Live Portfolio Snapshot
                       </p>
                       <h2 className="mt-1 text-2xl font-semibold text-slate-950 dark:text-slate-100">
-                        Acme Co. Website Redesign
+                        Balanced Growth Portfolio
                       </h2>
                     </div>
                     <span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.12em] text-emerald-700 dark:border-emerald-900/80 dark:bg-emerald-950/40 dark:text-emerald-300">
-                      Ready to send
+                      Market synced
                     </span>
                   </div>
                 </div>
@@ -376,9 +376,9 @@ export function LandingPage() {
                 <div className="grid gap-4 p-6">
                   <div className="grid gap-3 sm:grid-cols-3">
                     {[
-                      ["Scope Confidence", "92%"],
-                      ["Estimated Margin", "41%"],
-                      ["Close Probability", "High"],
+                      ["Portfolio Value", "$248,420"],
+                      ["Unrealized Gain/Loss", "+$18,760"],
+                      ["YTD Return", "+8.2%"],
                     ].map(([label, value]) => (
                       <div
                         key={label}
@@ -398,18 +398,18 @@ export function LandingPage() {
                     <div className="rounded-[1.6rem] border border-slate-200/80 bg-white/85 p-5 dark:border-slate-800/80 dark:bg-slate-900/80">
                       <div className="mb-4 flex items-center justify-between">
                         <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">
-                          Milestones
+                          Top Holdings
                         </h3>
                         <span className="text-sm text-slate-500 dark:text-slate-400">
-                          6 weeks
+                          By current value
                         </span>
                       </div>
                       <div className="space-y-3">
                         {[
-                          ["Discovery and audit", "Week 1"],
-                          ["Wireframes and direction", "Week 2-3"],
-                          ["UI implementation", "Week 4-5"],
-                          ["Handover and launch", "Week 6"],
+                          ["Apple (AAPL)", "18.4%"],
+                          ["NVIDIA (NVDA)", "14.1%"],
+                          ["Vanguard S&P 500 ETF", "12.7%"],
+                          ["Bitcoin (BTC)", "9.9%"],
                         ].map(([label, week]) => (
                           <div
                             key={label}
@@ -428,13 +428,13 @@ export function LandingPage() {
 
                     <div className="rounded-[1.6rem] border border-slate-200/80 bg-white/85 p-5 dark:border-slate-800/80 dark:bg-slate-900/80">
                       <h3 className="text-base font-semibold text-slate-900 dark:text-slate-100">
-                        Pricing Options
+                        Allocation Mix
                       </h3>
                       <div className="mt-4 space-y-3">
                         {[
-                          ["Essential", "$6,500"],
-                          ["Growth", "$9,800"],
-                          ["Premium", "$13,400"],
+                          ["Stocks", "58%"],
+                          ["ETFs", "24%"],
+                          ["Crypto", "12%"],
                         ].map(([plan, price], index) => (
                           <div
                             key={plan}
@@ -457,8 +457,8 @@ export function LandingPage() {
                         ))}
                       </div>
                       <div className="mt-4 rounded-xl border border-dashed border-cyan-300 bg-cyan-50/80 px-3 py-2 text-xs text-cyan-800 dark:border-cyan-800/80 dark:bg-cyan-950/45 dark:text-cyan-200">
-                        AI note: Growth package aligns best with timeline and
-                        margin target.
+                        Insight: Equity exposure is nearing your 60% target
+                        allocation.
                       </div>
                     </div>
                   </div>
@@ -474,12 +474,12 @@ export function LandingPage() {
               The Problem
             </p>
             <h2 className="mt-4 text-balance font-heading text-4xl font-semibold text-slate-950 sm:text-5xl dark:text-slate-100">
-              Great work gets lost in weak, slow proposal workflows.
+              Portfolio decisions get harder when your data is scattered.
             </h2>
             <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-300">
-              Freelancers and agencies often lose momentum between discovery
-              calls and client approval because proposals are manual, unclear,
-              and hard to scale.
+              Most investors spread tracking across notes, broker dashboards,
+              and spreadsheets, which makes allocation and performance harder to
+              monitor with confidence.
             </p>
           </div>
           <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
@@ -517,19 +517,18 @@ export function LandingPage() {
                 The Solution
               </p>
               <h2 className="mt-4 text-4xl font-semibold text-slate-950 dark:text-slate-100">
-                Portfolia gives your team a repeatable proposal engine.
+                Portfolia gives you one clear view of your investment portfolio.
               </h2>
               <p className="mt-4 text-lg leading-8 text-slate-600 dark:text-slate-300">
-                Instead of starting from scratch, you move through a guided flow
-                that captures project context, auto-builds strategic proposal
-                drafts, and keeps quality consistent from first version to final
-                export.
+                Track holdings, watchlist candidates, allocation, and
+                performance from one modern dashboard designed for everyday
+                investors.
               </p>
               <ul className="mt-6 space-y-3">
                 {[
-                  "Outcome-driven proposal structure by default",
-                  "Clear pricing and scope options clients can understand",
-                  "Faster review cycles with fewer back-and-forth edits",
+                  "Position-level tracking for invested amount, current value, and return",
+                  "Watchlist workflow with category tags, target prices, and notes",
+                  "Analytics views for trends, allocation, and category-level impact",
                 ].map((item) => (
                   <li key={item} className="flex items-start gap-3">
                     <CheckCircle2 className="mt-0.5 h-5 w-5 text-cyan-600 dark:text-cyan-300" />
@@ -546,32 +545,32 @@ export function LandingPage() {
             <CardContent className="grid gap-4 p-8">
               <div className="rounded-2xl border border-slate-200/75 bg-white/85 p-5 dark:border-slate-800/80 dark:bg-slate-900/75">
                 <p className="text-sm text-slate-500 dark:text-slate-400">
-                  Pipeline status
+                  Portfolio status
                 </p>
                 <p className="mt-2 text-3xl font-semibold text-slate-950 dark:text-slate-100">
-                  18 active proposals
+                  $248,420 currently tracked
                 </p>
                 <p className="mt-2 text-sm text-emerald-700 dark:text-emerald-300">
-                  +7 sent this week
+                  +$18,760 unrealized gain
                 </p>
               </div>
               <div className="rounded-2xl border border-slate-200/75 bg-white/85 p-5 dark:border-slate-800/80 dark:bg-slate-900/75">
                 <p className="text-sm text-slate-500 dark:text-slate-400">
-                  Team consistency score
+                  Allocation alignment score
                 </p>
                 <div className="mt-3 h-2 rounded-full bg-slate-200 dark:bg-slate-800">
                   <div className="h-full w-[84%] rounded-full bg-gradient-to-r from-cyan-500 to-blue-600" />
                 </div>
                 <p className="mt-3 text-sm text-slate-600 dark:text-slate-300">
-                  84% of drafts match your top-performing proposal format.
+                  84% of holdings sit within your planned category targets.
                 </p>
               </div>
               <div className="rounded-2xl border border-cyan-200 bg-cyan-50/80 p-5 dark:border-cyan-800/80 dark:bg-cyan-950/45">
                 <p className="text-sm font-semibold text-cyan-800 dark:text-cyan-200">
-                  Revenue impact
+                  Visibility impact
                 </p>
                 <p className="mt-2 text-2xl font-semibold text-cyan-950 dark:text-cyan-100">
-                  $54,300 projected uplift this quarter
+                  1 unified workspace for holdings and analytics
                 </p>
               </div>
             </CardContent>
@@ -584,7 +583,7 @@ export function LandingPage() {
               Features
             </p>
             <h2 className="mt-4 text-balance font-heading text-4xl font-semibold text-slate-950 sm:text-5xl dark:text-slate-100">
-              Everything needed to craft premium proposals at scale.
+              Everything you need for modern portfolio tracking.
             </h2>
           </div>
           <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -618,17 +617,17 @@ export function LandingPage() {
               <div className="grid gap-0 lg:grid-cols-[0.34fr_0.66fr]">
                 <div className="border-b border-slate-200/80 bg-slate-50/75 p-6 lg:border-b-0 lg:border-r dark:border-slate-800/80 dark:bg-slate-900/75">
                   <p className="text-xs font-semibold uppercase tracking-[0.14em] text-slate-500 dark:text-slate-400">
-                    Proposal Pipeline
+                    Portfolio Overview
                   </p>
                   <h3 className="mt-2 text-2xl font-semibold text-slate-950 dark:text-slate-100">
-                    Team workspace
+                    Personal workspace
                   </h3>
                   <div className="mt-6 space-y-3">
                     {[
-                      ["Discovery received", "7"],
-                      ["Draft generated", "11"],
-                      ["Client review", "4"],
-                      ["Signed", "6"],
+                      ["Tracked holdings", "24"],
+                      ["Watchlist assets", "11"],
+                      ["Allocation groups", "5"],
+                      ["Near target price", "4"],
                     ].map(([label, count], index) => (
                       <div
                         key={label}
@@ -649,8 +648,8 @@ export function LandingPage() {
                     ))}
                   </div>
                   <div className="mt-6 rounded-xl border border-dashed border-slate-300 bg-white/80 p-4 text-sm text-slate-600 dark:border-slate-700/80 dark:bg-slate-900 dark:text-slate-300">
-                    Built for freelancers and agency teams who need speed
-                    without sacrificing quality.
+                    Built for investors who want a cleaner view of holdings,
+                    allocation, and watchlist decisions.
                   </div>
                 </div>
 
@@ -661,11 +660,11 @@ export function LandingPage() {
                         Product Preview
                       </p>
                       <h3 className="mt-1 text-2xl font-semibold text-slate-950 dark:text-slate-100">
-                        Proposal Editor
+                        Portfolio Dashboard
                       </h3>
                     </div>
                     <span className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 text-xs text-slate-700 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-300">
-                      Auto-saved 2m ago
+                      Updated moments ago
                     </span>
                   </div>
 
@@ -679,13 +678,13 @@ export function LandingPage() {
                       </div>
                       <div className="mt-5 rounded-xl border border-slate-200 bg-slate-50 p-4 dark:border-slate-700 dark:bg-slate-800/70">
                         <p className="text-xs uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
-                          Deliverables
+                          Dashboard highlights
                         </p>
                         <div className="mt-3 space-y-2">
                           {[
-                            "UX audit and sitemap",
-                            "High-fidelity interface system",
-                            "Responsive implementation package",
+                            "Total value, invested capital, and gain/loss",
+                            "Allocation and concentration by category",
+                            "Top holdings with recent portfolio activity",
                           ].map((item) => (
                             <div
                               key={item}
@@ -701,13 +700,13 @@ export function LandingPage() {
 
                     <div className="rounded-2xl border border-slate-200/75 bg-white/80 p-5 dark:border-slate-800/80 dark:bg-slate-900/80">
                       <p className="text-xs uppercase tracking-[0.12em] text-slate-500 dark:text-slate-400">
-                        AI Suggestions
+                        Insights
                       </p>
                       <div className="mt-4 space-y-3">
                         {[
-                          "Add optional maintenance retainer section",
-                          "Clarify CMS handover training scope",
-                          "Use outcome-focused copy in opening summary",
+                          "Tech exposure is 6% above your target mix",
+                          "2 watchlist assets are within 5% of target price",
+                          "Crypto allocation moved -1.4% this week",
                         ].map((tip) => (
                           <div
                             key={tip}
@@ -724,7 +723,7 @@ export function LandingPage() {
                           "mt-4 w-full dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800",
                         )}
                       >
-                        Apply all suggestions
+                        Open analytics view
                       </button>
                     </div>
                   </div>
@@ -740,7 +739,7 @@ export function LandingPage() {
               How It Works
             </p>
             <h2 className="mt-4 text-balance font-heading text-4xl font-semibold text-slate-950 sm:text-5xl dark:text-slate-100">
-              A 3-step flow from lead notes to client-ready proposal.
+              A 3-step flow to track, monitor, and understand your portfolio.
             </h2>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
@@ -771,8 +770,7 @@ export function LandingPage() {
               Social Proof
             </p>
             <h2 className="mt-4 text-balance font-heading text-4xl font-semibold text-slate-950 sm:text-5xl dark:text-slate-100">
-              Built for freelancers and agencies who need to close with
-              confidence.
+              Trusted by investors who want cleaner portfolio visibility.
             </h2>
           </div>
 
@@ -822,15 +820,14 @@ export function LandingPage() {
               <div className="absolute -right-10 bottom-0 h-44 w-44 rounded-full bg-blue-300/20 blur-3xl" />
               <div className="relative">
                 <p className="text-sm font-semibold uppercase tracking-[0.14em] text-cyan-200">
-                  Start Closing Faster
+                  Track With Clarity
                 </p>
                 <h2 className="mt-4 max-w-3xl text-balance font-heading text-4xl font-semibold leading-tight sm:text-5xl">
-                  Move from discovery call to premium proposal before your
-                  competitor sends version one.
+                  See holdings, allocation, and performance in one place.
                 </h2>
                 <p className="mt-5 max-w-2xl text-lg text-slate-200">
-                  Join freelancers and agencies using Portfolia to ship clearer
-                  proposals, protect margins, and win better-fit projects.
+                  Join investors using Portfolia to replace scattered tracking
+                  with a clean, modern portfolio dashboard.
                 </p>
                 <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                   <Link
@@ -840,7 +837,7 @@ export function LandingPage() {
                       "gap-2 border border-cyan-200/50 bg-white text-slate-900 shadow-none hover:bg-slate-100",
                     )}
                   >
-                    Generate Proposal
+                    Start tracking
                     <ArrowRight className="h-4 w-4" />
                   </Link>
                   <Link
@@ -850,7 +847,7 @@ export function LandingPage() {
                       "border-white/30 bg-white/8 text-white hover:bg-white/16",
                     )}
                   >
-                    See workspace
+                    See dashboard
                   </Link>
                 </div>
               </div>
@@ -871,8 +868,8 @@ export function LandingPage() {
               </p>
             </div>
             <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
-              Proposal intelligence for freelancers and agencies that want
-              better margins, faster delivery, and cleaner client decisions.
+              Modern portfolio tracking for investors who want clearer
+              allocation, performance insight, and watchlist visibility.
             </p>
           </div>
           <div className="grid grid-cols-2 gap-8 text-sm sm:grid-cols-3">
