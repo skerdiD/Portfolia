@@ -1,72 +1,125 @@
 # Portfolia
 
-Portfolia is a full-stack portfolio management app built to track holdings, manage a watchlist, and explore performance analytics through a clean fintech-style dashboard.
+Modern portfolio tracking dashboard for managing holdings, monitoring allocation, and understanding portfolio performance.
 
-It showcases modern full-stack development with secure authentication, protected routes, portfolio data management, and rich analytics UI.
+Portfolia is a full-stack fintech-style web app built to help users track investments through a clean dashboard, detailed holdings management, watchlist tracking, and performance analytics.
+
+---
 
 ## Live Demo
 
-- **Live App:** https://portfolia-wheat-gamma.vercel.app/
+- **Live App:** https://portfolia-wheat-gamma.vercel.app
 - **Analytics Page:** https://portfolia-wheat-gamma.vercel.app/analytics
+- **Repository:** https://github.com/skerdiD/Portfolia
 
-## What You Can Do
-
-- Secure authentication and protected app routes
-- Create, edit, and manage portfolio holdings
-- Track watchlist assets and target prices
-- Explore allocation, performance, and portfolio analytics
-- Export holdings data to CSV
-- Review insights like top holdings and portfolio win rate
-- Manage account and workspace settings
-
-## Tech Stack
-
-- **Framework:** Next.js 16, React 19, TypeScript
-- **Styling/UI:** Tailwind CSS v4, shadcn/ui, Lucide icons
-- **Authentication:** Clerk
-- **Security:** Arcjet
-- **Database:** PostgreSQL, Drizzle ORM
-- **Charts:** Recharts
-- **Testing:** Vitest, Playwright
-
-## Project Structure
-
-```text
-app/                  Route groups and pages
-components/           Reusable UI and feature components
-lib/db/               Database client, schema, and query layer
-lib/security/         Request protection logic
-drizzle/              SQL migrations
-public/screenshoots/  Product screenshots used in this README
-```
+---
 
 ## Screenshots
 
 ### Dashboard
-
-<img src="./public/screenshoots/01-dashboard-overview.png" alt="Dashboard Overview" width="100%" />
-<img src="./public/screenshoots/02-dashboard-allocation.png" alt="Dashboard Allocation" width="100%" />
+![Dashboard Overview](./public/screenshoots/dashboard-overview.png)
+![Dashboard Allocation](./public/screenshoots/dashboard-allocation.png)
 
 ### Holdings
-
-<img src="./public/screenshoots/03-holdings-table.png" alt="Holdings Table" width="100%" />
-<img src="./public/screenshoots/04-holdings-add-dialog.png" alt="Holdings Add Dialog" width="100%" />
+![Holdings Table](./public/screenshoots/holdings-table.png)
+![Holdings Add Dialog](./public/screenshoots/holdings-add-dialog.png)
 
 ### Watchlist
-
-<img src="./public/screenshoots/05-watchlist-table.png" alt="Watchlist Table" width="100%" />
-<img src="./public/screenshoots/06-watchlist-add-dialog.png" alt="Watchlist Add Dialog" width="100%" />
+![Watchlist Table](./public/screenshoots/watchlist-table.png)
+![Watchlist Add Dialog](./public/screenshoots/watchlist-add-dialog.png)
 
 ### Analytics
+![Analytics Performance](./public/screenshoots/analytics-performance.png)
+![Analytics Allocation](./public/screenshoots/analytics-allocation.png)
+![Analytics Categories](./public/screenshoots/analytics-categories.png)
 
-<img src="./public/screenshoots/07-analytics-performance.png" alt="Analytics Performance" width="100%" />
-<img src="./public/screenshoots/08-analytics-allocation.png" alt="Analytics Allocation" width="100%" />
-<img src="./public/screenshoots/09-analytics-categories.png" alt="Analytics Categories" width="100%" />
-<img src="./public/screenshoots/10-settings-account.png" alt="Settings Account" width="100%" />
-<img src="./public/screenshoots/11-settings-security.png" alt="Settings Security" width="100%" />
+### Settings
+![Settings Account](./public/screenshoots/settings-account.png)
 
-## Notes
+---
 
-- Protected routes are enforced in `proxy.ts` with Clerk middleware.
-- Arcjet protections are applied through `lib/security/arcjet.ts`.
-- Data access is scoped per authenticated user in `lib/db/queries.ts`.
+## What You Can Do
+
+- Sign in securely and access protected portfolio routes
+- Add, edit, and manage portfolio holdings
+- Track watchlist assets and target prices
+- View portfolio allocation and performance analytics
+- Review top holdings and portfolio insights
+- Export holdings data to CSV
+- Manage account and workspace settings
+- Explore a clean fintech-style dashboard built with reusable UI components
+
+---
+
+## Core Sections
+
+### Dashboard
+Get a high-level view of portfolio value, allocation, trends, and recent portfolio activity.
+
+### Holdings
+Manage investment positions with forms, tables, and structured portfolio data.
+
+### Watchlist
+Track assets you are monitoring without adding them to your active portfolio.
+
+### Analytics
+Understand allocation, category split, and overall portfolio performance through charts and summary views.
+
+### Settings
+Manage account and app-related preferences inside a protected workspace.
+
+---
+
+## Tech Stack
+
+### Frontend
+- Next.js 16
+- React 19
+- TypeScript
+- Tailwind CSS v4
+- shadcn/ui
+- Lucide React
+- Recharts
+
+### Backend / Data Layer
+- Next.js App Router
+- PostgreSQL
+- Drizzle ORM
+- Neon serverless driver
+
+### Auth / Security
+- Clerk authentication
+- Protected routes via middleware
+- Arcjet request protection
+
+### Testing
+- Vitest
+- Playwright
+
+---
+
+## Project Highlights
+
+- **Protected app routes** for dashboard, holdings, watchlist, analytics, and settings
+- **Per-user portfolio data management**
+- **Chart-driven analytics UI** for performance and allocation
+- **Reusable component architecture** across dashboard sections
+- **CSV export support** for holdings workflows
+- **Portfolio-grade UI polish** with a fintech-style visual direction
+
+---
+
+## Project Structure
+
+```text
+Portfolia/
+├── .github/workflows/      CI / workflow files
+├── app/                    App Router pages and route groups
+├── components/             Reusable UI and feature components
+├── drizzle/                Database migrations
+├── lib/                    DB, queries, utilities, and security helpers
+├── public/                 Static assets and screenshots
+├── tests/                  Automated tests
+├── proxy.ts                Clerk route protection
+├── package.json
+└── README.md
