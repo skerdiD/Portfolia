@@ -75,7 +75,7 @@ export function AuthPageShell({
         </header>
 
         <div className="flex flex-1 items-center py-8 lg:py-12">
-          <div className="grid w-full items-stretch gap-7 lg:grid-cols-[1fr_1.08fr] lg:gap-10">
+          <div className="grid w-full items-stretch gap-7 lg:grid-cols-[1.03fr_0.97fr] lg:gap-10">
             <div className="surface flex flex-col justify-between rounded-[2rem] border-white/80 p-6 shadow-[0_30px_80px_-36px_rgba(15,23,42,0.28)] sm:p-8">
               <div>
                 <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200/70 bg-blue-50/85 px-3 py-1.5 text-sm font-medium text-blue-700 shadow-sm dark:border-cyan-800/80 dark:bg-cyan-950/45 dark:text-cyan-200">
@@ -98,13 +98,13 @@ export function AuthPageShell({
                     return (
                       <div
                         key={item.title}
-                        className="rounded-[1.4rem] border border-slate-200/80 bg-white/82 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200/80 hover:shadow-sm dark:border-slate-700/80 dark:bg-slate-900/70 dark:hover:border-cyan-700/80"
+                        className="min-h-[7.75rem] rounded-[1.4rem] border border-slate-200/80 bg-white/82 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-blue-200/80 hover:shadow-sm dark:border-slate-700/80 dark:bg-slate-900/70 dark:hover:border-cyan-700/80"
                       >
                         <div className="flex items-start gap-4">
                           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600 shadow-sm dark:bg-cyan-950/55 dark:text-cyan-300">
                             <Icon className="h-5 w-5" />
                           </div>
-                          <div>
+                          <div className="min-w-0">
                             <div className="font-semibold text-slate-950 dark:text-slate-100">
                               {item.title}
                             </div>
@@ -119,26 +119,26 @@ export function AuthPageShell({
                 </div>
               </div>
 
-              <div className="mt-8 grid gap-3 rounded-[1.5rem] border border-blue-100 bg-gradient-to-br from-blue-50/85 to-cyan-50/85 p-5 sm:grid-cols-3 dark:border-slate-700/80 dark:from-slate-900/80 dark:to-cyan-950/45">
-                <div>
+              <div className="mt-8 grid gap-3 rounded-[1.5rem] border border-blue-100 bg-gradient-to-br from-blue-50/85 to-cyan-50/85 p-4 sm:grid-cols-3 dark:border-slate-700/80 dark:from-slate-900/80 dark:to-cyan-950/45">
+                <div className="rounded-xl bg-white/55 px-4 py-3 dark:bg-slate-900/45">
                   <div className="text-xs font-medium uppercase tracking-[0.16em] text-blue-700 dark:text-cyan-300">UX</div>
                   <div className="mt-1 text-xl font-semibold tracking-tight text-slate-950 dark:text-slate-100">Premium</div>
                 </div>
-                <div>
+                <div className="rounded-xl bg-white/55 px-4 py-3 dark:bg-slate-900/45">
                   <div className="text-xs font-medium uppercase tracking-[0.16em] text-blue-700 dark:text-cyan-300">Security</div>
                   <div className="mt-1 text-xl font-semibold tracking-tight text-slate-950 dark:text-slate-100">Protected</div>
                 </div>
-                <div>
+                <div className="rounded-xl bg-white/55 px-4 py-3 dark:bg-slate-900/45">
                   <div className="text-xs font-medium uppercase tracking-[0.16em] text-blue-700 dark:text-cyan-300">Data</div>
                   <div className="mt-1 text-xl font-semibold tracking-tight text-slate-950 dark:text-slate-100">Accurate</div>
                 </div>
               </div>
             </div>
 
-            <div className="relative flex items-center justify-center">
+            <div className="relative flex items-start justify-center lg:pt-1">
               <div className="absolute inset-x-12 top-10 -z-10 h-40 rounded-full bg-blue-500/14 blur-3xl dark:bg-cyan-500/18" />
               <div className="w-full max-w-[36rem]">
-                <div className="mb-5 space-y-1 text-center lg:pl-2 lg:text-left">
+                <div className="mb-5 space-y-1 text-center lg:text-left">
                   <div className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
                     Portfolia access
                   </div>

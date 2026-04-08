@@ -17,7 +17,7 @@ test("home page loads", async ({ page }) => {
   await page.goto("/");
   await expect(
     page.getByRole("heading", {
-      name: /win more clients with polished proposals in minutes/i,
+      name: /track holdings and performance/i,
     }),
   ).toBeVisible();
 });

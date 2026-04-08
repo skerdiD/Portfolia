@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { type MouseEvent, useEffect } from "react";
+import { type MouseEvent, useEffect, useRef } from "react";
 import {
   ArrowRight,
   CheckCircle2,
@@ -155,6 +155,16 @@ const brandLogos = [
   "ORBITAL",
 ];
 
+function getStaggerDelayClass(index: number) {
+  const offset = index % 4;
+
+  if (offset === 1) return "reveal-delay-1";
+  if (offset === 2) return "reveal-delay-2";
+  if (offset === 3) return "reveal-delay-3";
+
+  return "";
+}
+
 function applyTheme(nextTheme: Theme) {
   const root = document.documentElement;
   root.classList.toggle("dark", nextTheme === "dark");
@@ -174,8 +184,64 @@ function getResolvedTheme(): Theme {
 }
 
 export function LandingPage() {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
   useEffect(() => {
     applyTheme(getResolvedTheme());
+  }, []);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+
+    const revealTargets = Array.from(
+      root.querySelectorAll<HTMLElement>(".reveal-up"),
+    );
+
+    if (revealTargets.length === 0) return;
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    if (prefersReducedMotion) {
+      revealTargets.forEach((target) => target.classList.add("is-revealed"));
+      return;
+    }
+
+    const initialRevealBoundary = window.innerHeight * 0.92;
+    revealTargets.forEach((target) => {
+      const rect = target.getBoundingClientRect();
+      if (rect.top <= initialRevealBoundary) {
+        target.classList.add("is-revealed");
+      }
+    });
+
+    root.classList.add("reveal-ready");
+
+    const observer = new IntersectionObserver(
+      (entries, currentObserver) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+
+          entry.target.classList.add("is-revealed");
+          currentObserver.unobserve(entry.target);
+        }
+      },
+      {
+        threshold: 0.14,
+        rootMargin: "0px 0px -10% 0px",
+      },
+    );
+
+    revealTargets
+      .filter((target) => !target.classList.contains("is-revealed"))
+      .forEach((target) => observer.observe(target));
+
+    return () => {
+      observer.disconnect();
+      root.classList.remove("reveal-ready");
+    };
   }, []);
 
   const handleThemeToggle = (
@@ -225,7 +291,10 @@ export function LandingPage() {
   };
 
   return (
-    <div className="landing-slow-reveal relative min-h-screen overflow-hidden pb-16">
+    <div
+      ref={rootRef}
+      className="landing-slow-reveal relative min-h-screen overflow-hidden"
+    >
       <div className="pointer-events-none absolute inset-0 -z-10">
         <div className="absolute -left-24 top-4 h-72 w-72 rounded-full bg-cyan-400/12 blur-3xl dark:bg-cyan-300/16" />
         <div className="absolute right-[-4rem] top-24 h-80 w-80 rounded-full bg-blue-500/10 blur-3xl dark:bg-indigo-400/15" />
@@ -335,6 +404,8 @@ export function LandingPage() {
                 <Card
                   key={stat.label}
                   className={cn(
+                    "reveal-up",
+                    getStaggerDelayClass(index),
                     "surface motion-card rounded-3xl border-slate-200/70 dark:border-slate-800/75",
                     index === 1 &&
                       "border-cyan-200/80 bg-cyan-50/65 dark:border-cyan-800/80 dark:bg-cyan-950/40",
@@ -483,12 +554,16 @@ export function LandingPage() {
             </p>
           </div>
           <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-            {painPoints.map((item) => {
+            {painPoints.map((item, index) => {
               const Icon = item.icon;
               return (
                 <Card
                   key={item.title}
-                  className="surface motion-card rounded-[1.65rem] border-slate-200/75 dark:border-slate-800/80"
+                  className={cn(
+                    "reveal-up",
+                    getStaggerDelayClass(index),
+                    "surface motion-card rounded-[1.65rem] border-slate-200/75 dark:border-slate-800/80",
+                  )}
                 >
                   <CardContent className="p-6">
                     <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-700 dark:bg-cyan-950/55 dark:text-cyan-200">
@@ -587,12 +662,16 @@ export function LandingPage() {
             </h2>
           </div>
           <div className="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {featureCards.map((feature) => {
+            {featureCards.map((feature, index) => {
               const Icon = feature.icon;
               return (
                 <Card
                   key={feature.title}
-                  className="surface motion-card rounded-[1.65rem] border-slate-200/75 dark:border-slate-800/80"
+                  className={cn(
+                    "reveal-up",
+                    getStaggerDelayClass(index),
+                    "surface motion-card rounded-[1.65rem] border-slate-200/75 dark:border-slate-800/80",
+                  )}
                 >
                   <CardContent className="p-6">
                     <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-slate-900 text-white shadow-[0_12px_35px_-18px_rgba(15,23,42,0.65)] dark:bg-slate-100 dark:text-slate-900">
@@ -743,10 +822,14 @@ export function LandingPage() {
             </h2>
           </div>
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
-            {howItWorks.map((item) => (
+            {howItWorks.map((item, index) => (
               <Card
                 key={item.step}
-                className="surface motion-card relative rounded-[1.65rem] border-slate-200/75 dark:border-slate-800/80"
+                className={cn(
+                  "reveal-up",
+                  getStaggerDelayClass(index),
+                  "surface motion-card relative rounded-[1.65rem] border-slate-200/75 dark:border-slate-800/80",
+                )}
               >
                 <CardContent className="p-6">
                   <div className="inline-flex h-10 min-w-10 items-center justify-center rounded-full bg-slate-900 px-3 text-sm font-semibold text-white dark:bg-slate-100 dark:text-slate-900">
@@ -775,10 +858,14 @@ export function LandingPage() {
           </div>
 
           <div className="mt-10 grid gap-5 lg:grid-cols-3">
-            {testimonials.map((item) => (
+            {testimonials.map((item, index) => (
               <Card
                 key={item.name}
-                className="surface motion-card rounded-[1.65rem] border-slate-200/75 dark:border-slate-800/80"
+                className={cn(
+                  "reveal-up",
+                  getStaggerDelayClass(index),
+                  "surface motion-card rounded-[1.65rem] border-slate-200/75 dark:border-slate-800/80",
+                )}
               >
                 <CardContent className="p-6">
                   <p className="text-lg leading-8 text-slate-700 dark:text-slate-200">
@@ -801,10 +888,13 @@ export function LandingPage() {
 
           <div className="mt-10 rounded-3xl border border-slate-200/80 bg-white/70 p-4 dark:border-slate-800/80 dark:bg-slate-900/70">
             <div className="grid grid-cols-2 gap-2 text-center sm:grid-cols-3 lg:grid-cols-6">
-              {brandLogos.map((logo) => (
+              {brandLogos.map((logo, index) => (
                 <div
                   key={logo}
-                  className="rounded-xl border border-slate-200/75 bg-slate-50/80 px-3 py-2 text-xs font-semibold tracking-[0.12em] text-slate-500 dark:border-slate-700/75 dark:bg-slate-800/65 dark:text-slate-300"
+                  className={cn(
+                    "reveal-up rounded-xl border border-slate-200/75 bg-slate-50/80 px-3 py-2 text-xs font-semibold tracking-[0.12em] text-slate-500 dark:border-slate-700/75 dark:bg-slate-800/65 dark:text-slate-300",
+                    getStaggerDelayClass(index),
+                  )}
                 >
                   {logo}
                 </div>
@@ -856,7 +946,7 @@ export function LandingPage() {
         </section>
       </main>
 
-      <footer className="mx-auto mt-20 max-w-7xl border-t border-slate-200/75 px-5 pb-10 pt-8 sm:px-8 lg:px-10 dark:border-slate-800/80">
+      <footer className="mx-auto mt-20 max-w-7xl border-t border-slate-200/75 px-5 pb-4 pt-8 sm:px-8 lg:px-10 dark:border-slate-800/80">
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-sm">
             <div className="flex items-center gap-2">
