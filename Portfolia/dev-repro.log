@@ -1,0 +1,1750 @@
+
+> portfolia@0.1.0 dev
+> next dev --port 3333
+
+▲ Next.js 16.2.1 (Turbopack)
+- Local:         http://localhost:3333
+- Network:       http://192.168.56.1:3333
+- Environments: .env.local
+✓ Ready in 1093ms
+Creating turbopack project {
+  dir: 'C:\\Users\\USER\\OneDrive\\PortfolioProjects\\portfolia',
+  testMode: true
+}
+
+⨯ TypeError: adapterFn is not a function
+    at ignore-listed frames
+○ Compiling /_error ...
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+ 1: 00007FF682FE20AD node::SetCppgcReference+17245
+ 2: 00007FF682EC62CF node::TriggerNodeReport+75631
+ 3: 00007FF6840916E6 v8::base::FatalOOM+54
+ 4: 00007FF683ACA203 v8::Isolate::ReportExternalAllocationLimitReached+147
+ 5: 00007FF683AB7096 v8::Function::Experimental_IsNopFunction+2790
+ 6: 00007FF683906920 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+31392
+ 7: 00007FF6838CEADA v8::CpuProfileNode::GetScriptResourceNameStr+3210
+ 8: 00007FF6838CF0F0 v8::CpuProfileNode::GetScriptResourceNameStr+4768
+ 9: 00007FF6838CEDF5 v8::CpuProfileNode::GetScriptResourceNameStr+4005
+10: 00007FF6838BE86B v8::PrimitiveArray::Length+126779
+11: 00007FF6838BDE2A v8::PrimitiveArray::Length+124154
+12: 00007FF6839146E2 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+88162
+13: 00007FF6839782C7 v8::base::CPU::has_sse41+74151
+14: 00007FF6835A7F5E v8::internal::Version::GetString+126270
+15: 00007FF683ABFEA1 v8::Isolate::Initialize+433
+16: 00007FF6830217ED node::NewContext+413
+17: 00007FF682E0B566 RSA_meth_get_flags+184694
+18: 00007FF682E10155 RSA_meth_get_flags+204133
+19: 00007FF682E05A25 RSA_meth_get_flags+161333
+20: 00007FF683042323 uv_poll_stop+291
+21: 00007FF6847A066E inflateValidate+153502
+22: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+23: 00007FFD4D9AC48C RtlUserThreadStart+44
+ 1: 00007FF682FE20AD node::SetCppgcReference+17245
+ 2: 00007FF682EC62CF node::TriggerNodeReport+75631
+ 3: 00007FF6840916E6 v8::base::FatalOOM+54
+ 4: 00007FF683ACA203 v8::Isolate::ReportExternalAllocationLimitReached+147
+ 5: 00007FF683AB7096 v8::Function::Experimental_IsNopFunction+2790
+ 6: 00007FF683906920 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+31392
+ 7: 00007FF6838CEADA v8::CpuProfileNode::GetScriptResourceNameStr+3210
+ 8: 00007FF6838CF0F0 v8::CpuProfileNode::GetScriptResourceNameStr+4768
+ 9: 00007FF6838CEDF5 v8::CpuProfileNode::GetScriptResourceNameStr+4005
+10: 00007FF6838BE86B v8::PrimitiveArray::Length+126779
+11: 00007FF6838BDE2A v8::PrimitiveArray::Length+124154
+12: 00007FF6839146E2 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+88162
+13: 00007FF6839782C7 v8::base::CPU::has_sse41+74151
+14: 00007FF6835A7F5E v8::internal::Version::GetString+126270
+15: 00007FF683ABFEA1 v8::Isolate::Initialize+433
+16: 00007FF6830217ED node::NewContext+413
+17: 00007FF682E0B566 RSA_meth_get_flags+184694
+18: 00007FF682E10155 RSA_meth_get_flags+204133
+19: 00007FF682E05A25 RSA_meth_get_flags+161333
+20: 00007FF683042323 uv_poll_stop+291
+21: 00007FF6847A066E inflateValidate+153502
+22: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+23: 00007FFD4D9AC48C RtlUserThreadStart+44
+
+thread '<unnamed>' panicked at C:\Users\runneradmin\.cargo\registry\src\index.crates.io-1949cf8c6b5b557f\rayon-core-1.12.1\src\registry.rs:168:10:
+The global thread pool has not been initialized.: ThreadPoolBuildError { kind: IOError(Os { code: 1450, kind: Uncategorized, message: "Insufficient system resources exist to complete the requested service." }) }
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+
+<--- Last few GCs --->
+
+
+<--- JS stacktrace --->
+
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+
+
+
+#
+<--- Last few GCs --->
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+
+#
+----- Native stack trace -----
+
+
+<--- JS stacktrace --->
+
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+
+<--- Last few GCs --->
+
+
+<--- JS stacktrace --->
+
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+ 1: 00007FF682FE20AD 
+ 2: 00007FF682EC62CF 
+ 3: 00007FF6840916E6 
+ 4: 00007FF683ACA203 
+ 5: 00007FF683AB7096 
+ 6: 00007FF683906920 
+ 7: 00007FF6838CEADA 
+ 8: 00007FF6838CF0F0 
+ 9: 00007FF6838CEDF5 
+10: 00007FF6838B4933 
+11: 00007FF6838F4C66 
+12: 00007FF6838F48ED 
+13: 00007FF6838F4038 
+14: 00007FF6838F3791 
+15: 00007FF68391918D 
+16: 00007FF683919ACA 
+17: 00007FF6835C2DDB 
+18: 00007FF6835C46E3 
+19: 00007FF6835BFFE7 
+20: 00007FF6835C4DDF 
+21: 00007FF68390C7DD 
+22: 00007FF68359FFBE 
+23: 00007FF68397871F 
+24: 00007FF6835A7F5E 
+25: 00007FF683ABFEA1 
+26: 00007FF6830217ED 
+27: 00007FF682E0B566 
+28: 00007FF682E10155 
+29: 00007FF682E05A25 
+30: 00007FF683042323 
+31: 00007FF6847A066E 
+32: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+33: 00007FFD4D9AC48C RtlUserThreadStart+44
+ 1: 00007FF682FE20AD 
+ 2: 00007FF682EC62CF 
+ 3: 00007FF6840916E6 
+ 4: 00007FF683ACA203 
+ 5: 00007FF683AB7096 
+ 6: 00007FF683906920 
+ 7: 00007FF6838CEADA 
+ 8: 00007FF6838CF0F0 
+ 9: 00007FF6838CEDF5 
+10: 00007FF6838BE86B 
+11: 00007FF6838BDE2A 
+12: 00007FF6839146E2 
+13: 00007FF6839782C7 
+14: 00007FF6835A7F5E 
+15: 00007FF683ABFEA1 
+16: 00007FF6830217ED 
+17: 00007FF682E0B566 
+18: 00007FF682E10155 
+19: 00007FF682E05A25 
+20: 00007FF683042323 
+21: 00007FF6847A066E 
+22: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+23: 00007FFD4D9AC48C RtlUserThreadStart+44
+ 1: 00007FF682FE20AD 
+ 2: 00007FF682EC62CF 
+ 3: 00007FF6840916E6 
+ 4: 00007FF683ACA203 
+ 5: 00007FF683AB7096 
+ 6: 00007FF683906920 
+ 7: 00007FF6838CEADA 
+ 8: 00007FF6838CF0F0 
+ 9: 00007FF6838CEDF5 
+10: 00007FF6838B4933 
+11: 00007FF6838F4C66 
+12: 00007FF6838F48ED 
+13: 00007FF6838F4038 
+14: 00007FF6838F3791 
+15: 00007FF68391918D 
+16: 00007FF683919ACA 
+17: 00007FF6835C2DDB 
+18: 00007FF6835C46E3 
+19: 00007FF6835BF0E5 
+20: 00007FF6835C3F8C 
+21: 00007FF6835C47FC 
+22: 00007FF6835BF0E5 
+23: 00007FF6835C3F8C 
+24: 00007FF6835C47FC 
+25: 00007FF6835BF0E5 
+26: 00007FF6835C3F8C 
+27: 00007FF6835C47FC 
+28: 00007FF6835BF0E5 
+29: 00007FF6835C3F8C 
+30: 00007FF6835C47FC 
+31: 00007FF6835BF0E5 
+32: 00007FF6835C3F8C 
+33: 00007FF6835C47FC 
+34: 00007FF6835BFFE7 
+35: 00007FF6835C4DDF 
+36: 00007FF68390C7DD 
+37: 00007FF68359FFBE 
+38: 00007FF68397871F 
+39: 00007FF6835A7F5E 
+40: 00007FF683ABFEA1 
+41: 00007FF6830217ED 
+42: 00007FF682E0B566 
+43: 00007FF682E10155 
+44: 00007FF682E05A25 
+45: 00007FF683042323 
+46: 00007FF6847A066E 
+47: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+48: 00007FFD4D9AC48C RtlUserThreadStart+44
+ 1: 00007FF682FE20AD 
+ 2: 00007FF682EC62CF 
+ 3: 00007FF6840916E6 
+ 4: 00007FF683ACA203 
+ 5: 00007FF683AB7096 
+ 6: 00007FF683906920 
+ 7: 00007FF6838CEADA 
+ 8: 00007FF6838CF0F0 
+ 9: 00007FF6838CEB72 
+10: 00007FF6838F6C3B 
+11: 00007FF6838F6EA5 
+12: 00007FF6838F7006 
+13: 00007FF683918964 
+14: 00007FF6835C2D27 
+15: 00007FF6835C46E3 
+16: 00007FF6835BFFE7 
+17: 00007FF6835C4DDF 
+18: 00007FF68390C7DD 
+19: 00007FF68359FFBE 
+20: 00007FF68397871F 
+21: 00007FF6835A7F5E 
+22: 00007FF683ABFEA1 
+23: 00007FF6830217ED 
+24: 00007FF682E0B566 
+25: 00007FF682E10155 
+26: 00007FF682E05A25 
+27: 00007FF683042323 
+28: 00007FF6847A066E 
+29: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+30: 00007FFD4D9AC48C RtlUserThreadStart+44
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+
+<--- Last few GCs --->
+
+
+<--- JS stacktrace --->
+
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+ 1: 00007FF682FE20AD node::SetCppgcReference+17245
+ 2: 00007FF682EC62CF node::TriggerNodeReport+75631
+ 3: 00007FF6840916E6 v8::base::FatalOOM+54
+ 4: 00007FF683ACA203 v8::Isolate::ReportExternalAllocationLimitReached+147
+ 5: 00007FF683AB7096 v8::Function::Experimental_IsNopFunction+2790
+ 6: 00007FF683906920 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+31392
+ 7: 00007FF6838CEADA v8::CpuProfileNode::GetScriptResourceNameStr+3210
+ 8: 00007FF6838CF0F0 v8::CpuProfileNode::GetScriptResourceNameStr+4768
+ 9: 00007FF6838CEDF5 v8::CpuProfileNode::GetScriptResourceNameStr+4005
+10: 00007FF6838B4933 v8::PrimitiveArray::Length+86019
+11: 00007FF6838F4C66 v8::CpuProfileNode::GetScriptResourceNameStr+159254
+12: 00007FF6838F48ED v8::CpuProfileNode::GetScriptResourceNameStr+158365
+13: 00007FF6838F4038 v8::CpuProfileNode::GetScriptResourceNameStr+156136
+14: 00007FF6838F3791 v8::CpuProfileNode::GetScriptResourceNameStr+153921
+15: 00007FF68391918D v8::Isolate::GetHeapProfiler+7629
+16: 00007FF683919ACA v8::Isolate::GetHeapProfiler+9994
+17: 00007FF6835C2DDB v8::internal::Version::GetString+236475
+18: 00007FF6835C46E3 v8::internal::Version::GetString+242883
+19: 00007FF6835BF0E5 v8::internal::Version::GetString+220869
+20: 00007FF6835C3F8C v8::internal::Version::GetString+241004
+21: 00007FF6835C47FC v8::internal::Version::GetString+243164
+22: 00007FF6835BF0E5 v8::internal::Version::GetString+220869
+23: 00007FF6835C3F8C v8::internal::Version::GetString+241004
+24: 00007FF6835C47FC v8::internal::Version::GetString+243164
+25: 00007FF6835BF0E5 v8::internal::Version::GetString+220869
+26: 00007FF6835C3F8C v8::internal::Version::GetString+241004
+27: 00007FF6835C47FC v8::internal::Version::GetString+243164
+28: 00007FF6835BF0E5 v8::internal::Version::GetString+220869
+29: 00007FF6835C3F8C v8::internal::Version::GetString+241004
+30: 00007FF6835C47FC v8::internal::Version::GetString+243164
+31: 00007FF6835BFFE7 v8::internal::Version::GetString+224711
+32: 00007FF6835C4DDF v8::internal::Version::GetString+244671
+33: 00007FF68390C7DD v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+55645
+34: 00007FF68359FFBE v8::internal::Version::GetString+93598
+35: 00007FF68397871F v8::base::CPU::has_sse41+75263
+36: 00007FF6835A7F5E v8::internal::Version::GetString+126270
+37: 00007FF683ABFEA1 v8::Isolate::Initialize+433
+38: 00007FF6830217ED node::NewContext+413
+39: 00007FF682E0B566 RSA_meth_get_flags+184694
+40: 00007FF682E10155 RSA_meth_get_flags+204133
+41: 00007FF682E05A25 RSA_meth_get_flags+161333
+42: 00007FF683042323 uv_poll_stop+291
+43: 00007FF6847A066E inflateValidate+153502
+44: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+45: 00007FFD4D9AC48C RtlUserThreadStart+44
+
+<--- Last few GCs --->
+
+
+<--- JS stacktrace --->
+
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+ 1: 00007FF682FE20AD node::SetCppgcReference+17245
+ 2: 00007FF682EC62CF node::TriggerNodeReport+75631
+ 3: 00007FF6840916E6 v8::base::FatalOOM+54
+ 4: 00007FF683ACA203 v8::Isolate::ReportExternalAllocationLimitReached+147
+ 5: 00007FF683AB7096 v8::Function::Experimental_IsNopFunction+2790
+ 6: 00007FF683906920 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+31392
+ 7: 00007FF6838CEADA v8::CpuProfileNode::GetScriptResourceNameStr+3210
+ 8: 00007FF6838CF0F0 v8::CpuProfileNode::GetScriptResourceNameStr+4768
+ 9: 00007FF6838CEDF5 v8::CpuProfileNode::GetScriptResourceNameStr+4005
+10: 00007FF6838B4933 v8::PrimitiveArray::Length+86019
+11: 00007FF6838F4C66 v8::CpuProfileNode::GetScriptResourceNameStr+159254
+12: 00007FF6838F48ED v8::CpuProfileNode::GetScriptResourceNameStr+158365
+13: 00007FF6838F4038 v8::CpuProfileNode::GetScriptResourceNameStr+156136
+14: 00007FF6838F3791 v8::CpuProfileNode::GetScriptResourceNameStr+153921
+15: 00007FF68391918D v8::Isolate::GetHeapProfiler+7629
+16: 00007FF683919ACA v8::Isolate::GetHeapProfiler+9994
+17: 00007FF6835C2DDB v8::internal::Version::GetString+236475
+18: 00007FF6835C46E3 v8::internal::Version::GetString+242883
+19: 00007FF6835BF0E5 v8::internal::Version::GetString+220869
+20: 00007FF6835C3F8C v8::internal::Version::GetString+241004
+21: 00007FF6835C47FC v8::internal::Version::GetString+243164
+22: 00007FF6835BF0E5 v8::internal::Version::GetString+220869
+23: 00007FF6835C3F8C v8::internal::Version::GetString+241004
+24: 00007FF6835C47FC v8::internal::Version::GetString+243164
+25: 00007FF6835BF0E5 v8::internal::Version::GetString+220869
+26: 00007FF6835C3F8C v8::internal::Version::GetString+241004
+27: 00007FF6835C47FC v8::internal::Version::GetString+243164
+28: 00007FF6835BF0E5 v8::internal::Version::GetString+220869
+29: 00007FF6835C3F8C v8::internal::Version::GetString+241004
+30: 00007FF6835C47FC v8::internal::Version::GetString+243164
+31: 00007FF6835BFFE7 v8::internal::Version::GetString+224711
+32: 00007FF6835C4DDF v8::internal::Version::GetString+244671
+33: 00007FF68390C7DD v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+55645
+34: 00007FF68359FFBE v8::internal::Version::GetString+93598
+35: 00007FF68397871F v8::base::CPU::has_sse41+75263
+36: 00007FF6835A7F5E v8::internal::Version::GetString+126270
+37: 00007FF683ABFEA1 v8::Isolate::Initialize+433
+38: 00007FF6830217ED node::NewContext+413
+39: 00007FF682E0B566 RSA_meth_get_flags+184694
+40: 00007FF682E10155 RSA_meth_get_flags+204133
+41: 00007FF682E05A25 RSA_meth_get_flags+161333
+42: 00007FF683042323 uv_poll_stop+291
+43: 00007FF6847A066E inflateValidate+153502
+44: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+45: 00007FFD4D9AC48C RtlUserThreadStart+44
+
+<--- Last few GCs --->
+
+
+<--- JS stacktrace --->
+
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+
+<--- Last few GCs --->
+
+
+<--- JS stacktrace --->
+
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+
+<--- Last few GCs --->
+
+
+<--- JS stacktrace --->
+
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+
+<--- Last few GCs --->
+
+[55128:00000260381A1000]     7310 ms: Scavenge 5.1 (7.2) -> 5.1 (10.2) MB, pooled: 0 MB, 1083.51 / 0.00 ms  (average mu = 1.000, current mu = 1.000) allocation failure; 
+
+
+<--- JS stacktrace --->
+
+FATAL ERROR: Zone Allocation failed - process out of memory
+----- Native stack trace -----
+
+ 1: 00007FF682FE20AD 
+ 2: 00007FF682EC62CF 
+ 3: 00007FF6840916E6 
+ 4: 00007FF683ACA203 
+ 5: 00007FF683AB7096 
+ 6: 00007FF683906920 
+ 7: 00007FF6838CEADA 
+ 8: 00007FF6838CF0F0 
+ 9: 00007FF6838CEDF5 
+10: 00007FF6838B4933 
+11: 00007FF6838F4C66 
+12: 00007FF6838F48ED 
+13: 00007FF6838F4038 
+14: 00007FF6838F3791 
+15: 00007FF6835C2D63 
+16: 00007FF6835C46E3 
+17: 00007FF6835BF0E5 
+18: 00007FF6835C3F8C 
+19: 00007FF6835C47FC 
+20: 00007FF6835BF0E5 
+21: 00007FF6835C3F8C 
+22: 00007FF6835C47FC 
+23: 00007FF6835BF0E5 
+24: 00007FF6835C3F8C 
+25: 00007FF6835C47FC 
+26: 00007FF6835BF0E5 
+27: 00007FF6835C3F8C 
+28: 00007FF6835C47FC 
+29: 00007FF6835BF0E5 
+30: 00007FF6835C3F8C 
+31: 00007FF6835C47FC 
+32: 00007FF6835BF0E5 
+33: 00007FF6835C3F8C 
+34: 00007FF6835C47FC 
+35: 00007FF6835BF0E5 
+36: 00007FF6835C3F8C 
+37: 00007FF6835C47FC 
+38: 00007FF6835BFFE7 
+39: 00007FF6835C4DDF 
+40: 00007FF68390C7DD 
+41: 00007FF68359FFBE 
+42: 00007FF68397871F 
+43: 00007FF6835A7F5E 
+44: 00007FF683ABFEA1 
+45: 00007FF6830217ED 
+46: 00007FF682E0B566 
+47: 00007FF682E10155 
+48: 00007FF682E05A25 
+49: 00007FF683042323 
+50: 00007FF6847A066E 
+51: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+52: 00007FFD4D9AC48C RtlUserThreadStart+44
+ 1: 00007FF682FE20AD 
+ 2: 00007FF682EC62CF 
+ 3: 00007FF6840916E6 
+ 4: 00007FF683ACA203 
+ 5: 00007FF683AB7096 
+ 6: 00007FF683906920 
+ 7: 00007FF6838CEADA 
+ 8: 00007FF6838CF0F0 
+ 9: 00007FF6838CEB72 
+10: 00007FF6838F6C3B 
+11: 00007FF6838F6EA5 
+12: 00007FF6838F7006 
+13: 00007FF683918964 
+14: 00007FF6835C2D27 
+15: 00007FF6835C46E3 
+16: 00007FF6835BFFE7 
+17: 00007FF6835C4DDF 
+18: 00007FF68390C7DD 
+19: 00007FF68359FFBE 
+20: 00007FF68397871F 
+21: 00007FF6835A7F5E 
+22: 00007FF683ABFEA1 
+23: 00007FF6830217ED 
+24: 00007FF682E0B566 
+25: 00007FF682E10155 
+26: 00007FF682E05A25 
+27: 00007FF683042323 
+28: 00007FF6847A066E 
+29: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+30: 00007FFD4D9AC48C RtlUserThreadStart+44
+ 1: 00007FF682FE20AD node::SetCppgcReference+17245
+ 2: 00007FF682EC62CF node::TriggerNodeReport+75631
+ 3: 00007FF6840916E6 v8::base::FatalOOM+54
+ 4: 00007FF683ACA203 v8::Isolate::ReportExternalAllocationLimitReached+147
+ 5: 00007FF683AB7096 v8::Function::Experimental_IsNopFunction+2790
+ 6: 00007FF683906920 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+31392
+ 1: 00007FF682FE20AD node::SetCppgcReference+17245
+ 7: 00007FF6838CEADA v8::CpuProfileNode::GetScriptResourceNameStr+3210
+ 8: 00007FF6838CF0F0 v8::CpuProfileNode::GetScriptResourceNameStr+4768
+ 2: 00007FF682F4A4D8 v8::base::CPU::num_virtual_address_bits+92376
+ 9: 00007FF6838CEB72 v8::CpuProfileNode::GetScriptResourceNameStr+3362
+ 3: 00007FF683ACA1B1 v8::Isolate::ReportExternalAllocationLimitReached+65
+10: 00007FF6838F6C3B v8::CpuProfileNode::GetScriptResourceNameStr+167403
+ 4: 00007FF683AB7096 v8::Function::Experimental_IsNopFunction+2790
+11: 00007FF6838F6EA5 v8::CpuProfileNode::GetScriptResourceNameStr+168021
+ 5: 00007FF683588ECB v8::SnapshotCreator::GetIsolate+52139
+12: 00007FF6838F7006 v8::CpuProfileNode::GetScriptResourceNameStr+168374
+ 6: 00007FF683688306 v8::base::Thread::StartSynchronously+173750
+13: 00007FF683918964 v8::Isolate::GetHeapProfiler+5540
+ 7: 00007FF683694FA6 v8::base::Thread::StartSynchronously+226134
+14: 00007FF6835C2D27 v8::internal::Version::GetString+236295
+ 8: 00007FF683694D3C v8::base::Thread::StartSynchronously+225516
+15: 00007FF6835C46E3 v8::internal::Version::GetString+242883
+ 9: 00007FF683699C05 v8::base::Thread::StartSynchronously+245685
+16: 00007FF6835BFFE7 v8::internal::Version::GetString+224711
+10: 00007FF683697229 v8::base::Thread::StartSynchronously+234969
+17: 00007FF6835C4DDF v8::internal::Version::GetString+244671
+11: 00007FF68368B5B7 v8::base::Thread::StartSynchronously+186727
+18: 00007FF68390C7DD v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+55645
+12: 00007FF68368BB26 v8::base::Thread::StartSynchronously+188118
+19: 00007FF68359FFBE v8::internal::Version::GetString+93598
+13: 00007FF68368B604 v8::base::Thread::StartSynchronously+186804
+20: 00007FF68397871F v8::base::CPU::has_sse41+75263
+14: 00007FF683690DEE v8::base::Thread::StartSynchronously+209310
+21: 00007FF6835A7F5E v8::internal::Version::GetString+126270
+15: 00007FF6836912BE v8::base::Thread::StartSynchronously+210542
+22: 00007FF683ABFEA1 v8::Isolate::Initialize+433
+16: 00007FF68369D2E7 v8::base::Thread::StartSynchronously+259735
+23: 00007FF6830217ED node::NewContext+413
+17: 00007FF683694630 v8::base::Thread::StartSynchronously+223712
+24: 00007FF682E0B566 RSA_meth_get_flags+184694
+18: 00007FF68368B20B v8::base::Thread::StartSynchronously+185787
+25: 00007FF682E10155 RSA_meth_get_flags+204133
+19: 00007FF68368B7C7 v8::base::Thread::StartSynchronously+187255
+26: 00007FF682E05A25 RSA_meth_get_flags+161333
+20: 00007FF68368B604 v8::base::Thread::StartSynchronously+186804
+27: 00007FF683042323 uv_poll_stop+291
+21: 00007FF683690DEE v8::base::Thread::StartSynchronously+209310
+28: 00007FF6847A066E inflateValidate+153502
+22: 00007FF683699D56 v8::base::Thread::StartSynchronously+246022
+29: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+23: 00007FF683697229 v8::base::Thread::StartSynchronously+234969
+30: 00007FFD4D9AC48C RtlUserThreadStart+44
+24: 00007FF68368B5B7 v8::base::Thread::StartSynchronously+186727
+25: 00007FF683690DEE v8::base::Thread::StartSynchronously+209310
+26: 00007FF6836912BE v8::base::Thread::StartSynchronously+210542
+27: 00007FF68369D2E7 v8::base::Thread::StartSynchronously+259735
+28: 00007FF683694630 v8::base::Thread::StartSynchronously+223712
+29: 00007FF68368B20B v8::base::Thread::StartSynchronously+185787
+30: 00007FF68368B7C7 v8::base::Thread::StartSynchronously+187255
+31: 00007FF68368B604 v8::base::Thread::StartSynchronously+186804
+32: 00007FF683690DEE v8::base::Thread::StartSynchronously+209310
+33: 00007FF683699D56 v8::base::Thread::StartSynchronously+246022
+34: 00007FF683697229 v8::base::Thread::StartSynchronously+234969
+35: 00007FF68368B5B7 v8::base::Thread::StartSynchronously+186727
+36: 00007FF683690DEE v8::base::Thread::StartSynchronously+209310
+37: 00007FF6836912BE v8::base::Thread::StartSynchronously+210542
+38: 00007FF68369D2E7 v8::base::Thread::StartSynchronously+259735
+39: 00007FF683694630 v8::base::Thread::StartSynchronously+223712
+40: 00007FF6836938E5 v8::base::Thread::StartSynchronously+220309
+41: 00007FF6836950A8 v8::base::Thread::StartSynchronously+226392
+42: 00007FF683686026 v8::base::Thread::StartSynchronously+164822
+43: 00007FF68369A28B v8::base::Thread::StartSynchronously+247355
+44: 00007FF68367F29C v8::base::Thread::StartSynchronously+136780
+45: 00007FF683A31B69 v8::SharedValueConveyor::SharedValueConveyor+23481
+46: 00007FF683A3721A v8::SharedValueConveyor::SharedValueConveyor+45674
+47: 00007FF683AB1DE9 v8::ScriptCompiler::CompileFunctionInternal+697
+48: 00007FF683AB1B24 v8::ScriptCompiler::CompileFunction+84
+49: 00007FF682F57FB8 node::OnFatalError+55976
+50: 00007FF682F58514 node::OnFatalError+57348
+51: 00007FF683AE7B18 v8::PropertyDescriptor::writable+80280
+52: 00007FF603D319B0 
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+ 1: 00007FF682FE20AD node::SetCppgcReference+17245
+ 2: 00007FF682EC62CF node::TriggerNodeReport+75631
+ 3: 00007FF6840916E6 v8::base::FatalOOM+54
+ 4: 00007FF683ACA203 v8::Isolate::ReportExternalAllocationLimitReached+147
+ 5: 00007FF683AB7096 v8::Function::Experimental_IsNopFunction+2790
+ 6: 00007FF683906920 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+31392
+ 7: 00007FF6838CEADA v8::CpuProfileNode::GetScriptResourceNameStr+3210
+ 8: 00007FF6838CF0F0 v8::CpuProfileNode::GetScriptResourceNameStr+4768
+ 9: 00007FF6838CEDF5 v8::CpuProfileNode::GetScriptResourceNameStr+4005
+10: 00007FF6838BE86B v8::PrimitiveArray::Length+126779
+11: 00007FF6838BDE2A v8::PrimitiveArray::Length+124154
+12: 00007FF6839146E2 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+88162
+13: 00007FF6839782C7 v8::base::CPU::has_sse41+74151
+14: 00007FF6835A7F5E v8::internal::Version::GetString+126270
+15: 00007FF683ABFEA1 v8::Isolate::Initialize+433
+16: 00007FF6830217ED node::NewContext+413
+17: 00007FF682E0B566 RSA_meth_get_flags+184694
+18: 00007FF682E10155 RSA_meth_get_flags+204133
+19: 00007FF682E05A25 RSA_meth_get_flags+161333
+20: 00007FF683042323 uv_poll_stop+291
+21: 00007FF6847A066E inflateValidate+153502
+22: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+23: 00007FFD4D9AC48C RtlUserThreadStart+44
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+
+
+
+#
+<--- Last few GCs --->
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+
+#
+----- Native stack trace -----
+
+
+<--- JS stacktrace --->
+
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+
+<--- Last few GCs --->
+
+
+<--- JS stacktrace --->
+
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+ 1: 00007FF682FE20AD node::SetCppgcReference+17245
+ 2: 00007FF682EC62CF node::TriggerNodeReport+75631
+ 3: 00007FF6840916E6 v8::base::FatalOOM+54
+ 4: 00007FF683ACA203 v8::Isolate::ReportExternalAllocationLimitReached+147
+ 5: 00007FF683AB7096 v8::Function::Experimental_IsNopFunction+2790
+ 6: 00007FF683906920 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+31392
+ 7: 00007FF6838CEADA v8::CpuProfileNode::GetScriptResourceNameStr+3210
+ 8: 00007FF6838CF0F0 v8::CpuProfileNode::GetScriptResourceNameStr+4768
+ 9: 00007FF6838CEDF5 v8::CpuProfileNode::GetScriptResourceNameStr+4005
+10: 00007FF6838BE86B v8::PrimitiveArray::Length+126779
+11: 00007FF6838BDE2A v8::PrimitiveArray::Length+124154
+12: 00007FF6839146E2 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+88162
+13: 00007FF6839782C7 v8::base::CPU::has_sse41+74151
+14: 00007FF6835A7F5E v8::internal::Version::GetString+126270
+15: 00007FF683ABFEA1 v8::Isolate::Initialize+433
+16: 00007FF6830217ED node::NewContext+413
+17: 00007FF682E0B566 RSA_meth_get_flags+184694
+18: 00007FF682E10155 RSA_meth_get_flags+204133
+19: 00007FF682E05A25 RSA_meth_get_flags+161333
+20: 00007FF683042323 uv_poll_stop+291
+21: 00007FF6847A066E inflateValidate+153502
+22: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+23: 00007FFD4D9AC48C RtlUserThreadStart+44
+
+
+
+
+#
+<--- Last few GCs --->
+<--- Last few GCs --->
+# Fatal error in , line 0
+
+
+# Out of memory: HashMap::Initialize
+
+#
+
+<--- JS stacktrace --->
+#
+<--- JS stacktrace --->
+
+#
+
+
+#FailureMessage Object: 0000007BE67FE600
+
+
+----- Native stack trace -----
+
+#
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+#
+----- Native stack trace -----
+----- Native stack trace -----
+
+
+
+<--- Last few GCs --->
+
+
+<--- JS stacktrace --->
+
+
+
+#
+# Fatal JavaScript out of memory: MemoryChunk allocation failed during deserialization.
+#
+----- Native stack trace -----
+
+
+
+
+#
+<--- Last few GCs --->
+# Fatal error in , line 0
+
+# Out of memory: HashMap::Initialize
+
+#
+<--- JS stacktrace --->
+#
+
+#
+FATAL ERROR: Committing semi space failed. Allocation failed - JavaScript heap out of memory
+#FailureMessage Object: 000000146EDFC6B0
+----- Native stack trace -----
+----- Native stack trace -----
+
+
+ 1: 00007FF682FE20AD node::SetCppgcReference+17245
+ 2: 00007FF682EC62CF node::TriggerNodeReport+75631
+ 3: 00007FF6840916E6 v8::base::FatalOOM+54
+ 4: 00007FF683ACA203 v8::Isolate::ReportExternalAllocationLimitReached+147
+ 5: 00007FF683AB7096 v8::Function::Experimental_IsNopFunction+2790
+ 6: 00007FF683906920 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+31392
+ 7: 00007FF6838CEADA v8::CpuProfileNode::GetScriptResourceNameStr+3210
+ 8: 00007FF6838CF0F0 v8::CpuProfileNode::GetScriptResourceNameStr+4768
+ 9: 00007FF6838CEDF5 v8::CpuProfileNode::GetScriptResourceNameStr+4005
+10: 00007FF6838B4933 v8::PrimitiveArray::Length+86019
+11: 00007FF6838F4C66 v8::CpuProfileNode::GetScriptResourceNameStr+159254
+12: 00007FF6838F48ED v8::CpuProfileNode::GetScriptResourceNameStr+158365
+13: 00007FF6838F4038 v8::CpuProfileNode::GetScriptResourceNameStr+156136
+14: 00007FF6838F3791 v8::CpuProfileNode::GetScriptResourceNameStr+153921
+15: 00007FF68391918D v8::Isolate::GetHeapProfiler+7629
+16: 00007FF683919ACA v8::Isolate::GetHeapProfiler+9994
+17: 00007FF6835C2DDB v8::internal::Version::GetString+236475
+18: 00007FF6835C46E3 v8::internal::Version::GetString+242883
+19: 00007FF6835BFFE7 v8::internal::Version::GetString+224711
+20: 00007FF6835C4DDF v8::internal::Version::GetString+244671
+21: 00007FF68390C7DD v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+55645
+22: 00007FF68359FFBE v8::internal::Version::GetString+93598
+23: 00007FF68397871F v8::base::CPU::has_sse41+75263
+24: 00007FF6835A7F5E v8::internal::Version::GetString+126270
+25: 00007FF683ABFEA1 v8::Isolate::Initialize+433
+26: 00007FF6830217ED node::NewContext+413
+27: 00007FF682E0B566 RSA_meth_get_flags+184694
+28: 00007FF682E10155 RSA_meth_get_flags+204133
+29: 00007FF682E05A25 RSA_meth_get_flags+161333
+30: 00007FF683042323 uv_poll_stop+291
+31: 00007FF6847A066E inflateValidate+153502
+32: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+33: 00007FFD4D9AC48C RtlUserThreadStart+44
+ 1: 00007FF682FE20AD 
+ 2: 00007FF682EC62CF 
+ 3: 00007FF6840916E6 
+ 4: 00007FF683ACA203 
+ 5: 00007FF683AB7096 
+ 6: 00007FF683906920 
+ 7: 00007FF6838CEADA 
+ 1: 00007FF682FE20AD 
+ 8: 00007FF6838CF0F0 
+ 2: 00007FF682EC62CF 
+ 9: 00007FF6838CEDF5 
+ 3: 00007FF6840916E6 
+10: 00007FF6838BE86B 
+ 4: 00007FF683ACA203 
+11: 00007FF6838BDE2A 
+ 5: 00007FF683AB7096 
+12: 00007FF6839146E2 
+ 6: 00007FF683906920 
+13: 00007FF6839782C7 
+ 7: 00007FF6838CEADA 
+14: 00007FF6835A7F5E 
+ 8: 00007FF6838CF0F0 
+15: 00007FF683ABFEA1 
+ 9: 00007FF6838CEDF5 
+16: 00007FF6830217ED 
+10: 00007FF6838B4933 
+17: 00007FF682E0B566 
+11: 00007FF6838F4C66 
+18: 00007FF682E10155 
+12: 00007FF6838F48ED 
+19: 00007FF682E05A25 
+13: 00007FF6838F4038 
+20: 00007FF683042323 
+14: 00007FF6838F3791 
+21: 00007FF6847A066E 
+15: 00007FF6835C2D63 
+22: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+16: 00007FF6835C46E3 
+23: 00007FFD4D9AC48C RtlUserThreadStart+44
+17: 00007FF6835BF0E5 
+18: 00007FF6835C3F8C 
+19: 00007FF6835C47FC 
+20: 00007FF6835BF0E5 
+21: 00007FF6835C3F8C 
+22: 00007FF6835C47FC 
+23: 00007FF6835BF0E5 
+24: 00007FF6835C3F8C 
+25: 00007FF6835C47FC 
+26: 00007FF6835BF0E5 
+27: 00007FF6835C3F8C 
+28: 00007FF6835C47FC 
+29: 00007FF6835BF0E5 
+30: 00007FF6835C3F8C 
+31: 00007FF6835C47FC 
+32: 00007FF6835BF0E5 
+33: 00007FF6835C3F8C 
+34: 00007FF6835C47FC 
+35: 00007FF6835BF0E5 
+36: 00007FF6835C3F8C 
+37: 00007FF6835C47FC 
+38: 00007FF6835BFFE7 
+39: 00007FF6835C4DDF 
+40: 00007FF68390C7DD 
+41: 00007FF68359FFBE 
+42: 00007FF68397871F 
+43: 00007FF6835A7F5E 
+44: 00007FF683ABFEA1 
+45: 00007FF6830217ED 
+46: 00007FF682E0B566 
+47: 00007FF682E10155 
+48: 00007FF682E05A25 
+49: 00007FF683042323 
+50: 00007FF6847A066E 
+51: 00007FFD4CB3E8D7 
+52: 00007FFD4D9AC48C 
+ 1: 00007FF682FE20AD 
+ 2: 00007FF682EC62CF 
+ 3: 00007FF684091B05 
+ 4: 00007FF683AA8743 
+ 5: 00007FF683AA81B6 
+ 6: 00007FF683AA847D 
+ 7: 00007FF683AA82F8 
+ 8: 00007FF683660521 
+ 9: 00007FF683699A5F 
+10: 00007FF683697229 
+11: 00007FF68368B5B7 
+12: 00007FF68368A52F 
+13: 00007FF683696CF5 
+14: 00007FF683697267 
+15: 00007FF68368B5B7 
+16: 00007FF683690DEE 
+17: 00007FF6836912BE 
+18: 00007FF68369D2E7 
+19: 00007FF683694630 
+20: 00007FF6836938E5 
+21: 00007FF6836950A8 
+22: 00007FF683686026 
+23: 00007FF68369A28B 
+24: 00007FF68367F29C 
+25: 00007FF683A31B69 
+26: 00007FF683A3721A 
+27: 00007FF683AB1DE9 
+28: 00007FF683AB1B24 
+29: 00007FF682F6F167 
+30: 00007FF682F6E99F 
+31: 00007FF682F6CC41 
+32: 00007FF683AE7B18 
+33: 00007FF683AE5DD2 
+34: 00007FF683AE5DD2 
+35: 00007FF683AE5DD2 
+36: 00007FF683AE5DD2 
+37: 00007FF683AE39D0 
+38: 00007FF683AE35CB 
+39: 00007FF68398EF06 
+40: 00007FF68398E843 
+41: 00007FF683AAF934 
+42: 00007FF682F6C8A5 
+43: 00007FF682F6CA14 
+44: 00007FF682EBB7E6 
+45: 00007FF683020245 
+46: 00007FF682E10C80 
+47: 00007FF682E05A25 
+48: 00007FF683042323 
+49: 00007FF6847A066E 
+50: 00007FFD4CB3E8D7 
+51: 00007FFD4D9AC48C 
+ 1: 00007FF682FE20AD node::SetCppgcReference+17245
+ 2: 00007FF682EC62CF node::TriggerNodeReport+75631
+ 3: 00007FF6840916E6 v8::base::FatalOOM+54
+ 4: 00007FF683ACA203 v8::Isolate::ReportExternalAllocationLimitReached+147
+ 5: 00007FF683AB7096 v8::Function::Experimental_IsNopFunction+2790
+ 6: 00007FF683906920 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+31392
+ 7: 00007FF6838CEADA v8::CpuProfileNode::GetScriptResourceNameStr+3210
+ 8: 00007FF6838CF0F0 v8::CpuProfileNode::GetScriptResourceNameStr+4768
+ 9: 00007FF6838CEDF5 v8::CpuProfileNode::GetScriptResourceNameStr+4005
+10: 00007FF6838B4933 v8::PrimitiveArray::Length+86019
+11: 00007FF6838F4C66 v8::CpuProfileNode::GetScriptResourceNameStr+159254
+12: 00007FF6838F48ED v8::CpuProfileNode::GetScriptResourceNameStr+158365
+13: 00007FF6838F4038 v8::CpuProfileNode::GetScriptResourceNameStr+156136
+14: 00007FF6838F3791 v8::CpuProfileNode::GetScriptResourceNameStr+153921
+15: 00007FF68391918D v8::Isolate::GetHeapProfiler+7629
+16: 00007FF683919ACA v8::Isolate::GetHeapProfiler+9994
+17: 00007FF6835C2DDB v8::internal::Version::GetString+236475
+18: 00007FF6835C46E3 v8::internal::Version::GetString+242883
+19: 00007FF6835BFFE7 v8::internal::Version::GetString+224711
+20: 00007FF6835C4DDF v8::internal::Version::GetString+244671
+21: 00007FF68390C7DD v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+55645
+22: 00007FF68359FFBE v8::internal::Version::GetString+93598
+23: 00007FF68397871F v8::base::CPU::has_sse41+75263
+24: 00007FF6835A7F5E v8::internal::Version::GetString+126270
+25: 00007FF683ABFEA1 v8::Isolate::Initialize+433
+26: 00007FF6830217ED node::NewContext+413
+27: 00007FF682E0B566 RSA_meth_get_flags+184694
+28: 00007FF682E10155 RSA_meth_get_flags+204133
+29: 00007FF682E05A25 RSA_meth_get_flags+161333
+30: 00007FF683042323 uv_poll_stop+291
+31: 00007FF6847A066E inflateValidate+153502
+32: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+33: 00007FFD4D9AC48C RtlUserThreadStart+44
+ 1: 00007FF682FE20AD 
+ 2: 00007FF682EC62CF 
+ 3: 00007FF6840916E6 
+ 4: 00007FF683ACA203 
+ 5: 00007FF683AB7096 
+ 6: 00007FF683906920 
+ 7: 00007FF6838CEADA 
+ 8: 00007FF6838CF0F0 
+ 9: 00007FF6838CEDF5 
+10: 00007FF6838B4933 
+11: 00007FF6838F4C66 
+12: 00007FF6838F48ED 
+13: 00007FF6838F4038 
+14: 00007FF6838F3791 
+15: 00007FF6835C2D63 
+16: 00007FF6835C46E3 
+17: 00007FF6835BFFE7 
+18: 00007FF6835C4DDF 
+19: 00007FF68359FB64 
+20: 00007FF6835B7F8A 
+21: 00007FF68359FFCA 
+22: 00007FF68397871F 
+23: 00007FF6835A7F5E 
+24: 00007FF683ABFEA1 
+25: 00007FF6830217ED 
+26: 00007FF682E0B566 
+27: 00007FF682E10155 
+28: 00007FF682E05A25 
+29: 00007FF683042323 
+30: 00007FF6847A066E 
+31: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+32: 00007FFD4D9AC48C RtlUserThreadStart+44
+ 1: 00007FF682FE20AD 
+ 2: 00007FF682EC62CF 
+ 3: 00007FF684091B05 
+ 4: 00007FF68358CC56 
+ 5: 00007FF68358CAEC 
+ 6: 00007FF683A2BCA4 
+ 7: 00007FF6835AA10F 
+ 8: 00007FF6835C9284 
+ 9: 00007FF682F6F84A 
+10: 00007FF682F6F42D 
+11: 00007FF682F6E99F 
+12: 00007FF682F6C857 
+13: 00007FF682F6CA14 
+14: 00007FF682EBB7E6 
+15: 00007FF683020245 
+16: 00007FF682E10C80 
+17: 00007FF682E05A25 
+18: 00007FF683042323 
+19: 00007FF6847A066E 
+20: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+21: 00007FFD4D9AC48C RtlUserThreadStart+44
+ 1: 00007FF682FE20AD node::SetCppgcReference+17245
+ 2: 00007FF682EC62CF node::TriggerNodeReport+75631
+ 3: 00007FF6840916E6 v8::base::FatalOOM+54
+ 4: 00007FF683ACA203 v8::Isolate::ReportExternalAllocationLimitReached+147
+ 5: 00007FF683AB7096 v8::Function::Experimental_IsNopFunction+2790
+ 6: 00007FF683906920 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+31392
+ 7: 00007FF6838CEADA v8::CpuProfileNode::GetScriptResourceNameStr+3210
+ 8: 00007FF6838CF0F0 v8::CpuProfileNode::GetScriptResourceNameStr+4768
+ 9: 00007FF6838CEDF5 v8::CpuProfileNode::GetScriptResourceNameStr+4005
+10: 00007FF6838B4933 v8::PrimitiveArray::Length+86019
+11: 00007FF6838F4C66 v8::CpuProfileNode::GetScriptResourceNameStr+159254
+12: 00007FF6838F48ED v8::CpuProfileNode::GetScriptResourceNameStr+158365
+13: 00007FF6838F4038 v8::CpuProfileNode::GetScriptResourceNameStr+156136
+14: 00007FF6838F3791 v8::CpuProfileNode::GetScriptResourceNameStr+153921
+15: 00007FF6835C2D63 v8::internal::Version::GetString+236355
+16: 00007FF6835C46E3 v8::internal::Version::GetString+242883
+17: 00007FF6835BF0E5 v8::internal::Version::GetString+220869
+18: 00007FF6835C3F8C v8::internal::Version::GetString+241004
+19: 00007FF6835C47FC v8::internal::Version::GetString+243164
+20: 00007FF6835BF0E5 v8::internal::Version::GetString+220869
+21: 00007FF6835C3F8C v8::internal::Version::GetString+241004
+22: 00007FF6835C47FC v8::internal::Version::GetString+243164
+23: 00007FF6835BF0E5 v8::internal::Version::GetString+220869
+24: 00007FF6835C3F8C v8::internal::Version::GetString+241004
+25: 00007FF6835C47FC v8::internal::Version::GetString+243164
+26: 00007FF6835BF0E5 v8::internal::Version::GetString+220869
+27: 00007FF6835C3F8C v8::internal::Version::GetString+241004
+28: 00007FF6835C47FC v8::internal::Version::GetString+243164
+29: 00007FF6835BF0E5 v8::internal::Version::GetString+220869
+30: 00007FF6835C3F8C v8::internal::Version::GetString+241004
+31: 00007FF6835C47FC v8::internal::Version::GetString+243164
+32: 00007FF6835BFFE7 v8::internal::Version::GetString+224711
+33: 00007FF6835C4DDF v8::internal::Version::GetString+244671
+34: 00007FF68390C7DD v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+55645
+35: 00007FF68359FFBE v8::internal::Version::GetString+93598
+36: 00007FF68397871F v8::base::CPU::has_sse41+75263
+37: 00007FF6835A7F5E v8::internal::Version::GetString+126270
+38: 00007FF683ABFEA1 v8::Isolate::Initialize+433
+39: 00007FF6830217ED node::NewContext+413
+40: 00007FF682E0B566 RSA_meth_get_flags+184694
+41: 00007FF682E10155 RSA_meth_get_flags+204133
+42: 00007FF682E05A25 RSA_meth_get_flags+161333
+43: 00007FF683042323 uv_poll_stop+291
+44: 00007FF6847A066E inflateValidate+153502
+45: 00007FFD4CB3E8D7 BaseThreadInitThunk+23
+46: 00007FFD4D9AC48C RtlUserThreadStart+44
+ 1: 00007FF682FE20AD node::SetCppgcReference+17245
+ 2: 00007FF682F4A4D8 v8::base::CPU::num_virtual_address_bits+92376
+ 3: 00007FF683ACA1B1 v8::Isolate::ReportExternalAllocationLimitReached+65
+ 4: 00007FF683AB7096 v8::Function::Experimental_IsNopFunction+2790
+ 5: 00007FF683906920 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+31392
+ 6: 00007FF6838BF6C3 v8::PrimitiveArray::Length+130451
+ 7: 00007FF68390FA1C v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+68508
+ 8: 00007FF6839002E9 v8::internal::StrongRootAllocatorBase::StrongRootAllocatorBase+5225
+ 9: 00007FF6838FBCF5 v8::CpuProfileNode::GetScriptResourceNameStr+188069
+10: 00007FF6832813BD BIO_ssl_shutdown+189
+Error: Can't resolve 'tailwindcss' in 'C:\Users\USER\OneDrive\PortfolioProjects'
+    [2m[at finishWithoutResolve (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:587:18)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:679:14][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:27:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\DescriptionFilePlugin.js:89:43][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m
+    [2m[at eval (eval at create (C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\tapable\lib\HookCodeFactory.js:31:10), <anonymous>:15:1)][0m
+    [2m[at C:\Users\USER\OneDrive\PortfolioProjects\portfolia\node_modules\enhanced-resolve\lib\Resolver.js:740:5][0m {
+  details: "resolve 'tailwindcss' in 'C:\\Users\\USER\\OneDrive\\PortfolioProjects'\n" +
+    '  Parsed request is a module\n' +
+    '  using description file: C:\\Users\\USER\\package.json (relative path: ./OneDrive/PortfolioProjects)\n' +
+    '    resolve as module\n' +
+    "      C:\\Users\\USER\\OneDrive\\PortfolioProjects\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\Users\\USER\\OneDrive\\node_modules doesn't exist or is not a directory\n" +
+    '      looking for modules in C:\\Users\\USER\\node_modules\n' +
+    '        single file module\n' +
+    '          using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '            no extension\n' +
+    '              C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '            .css\n' +
+    "              C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '        existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '          using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '            using description file: C:\\Users\\USER\\package.json (relative path: ./node_modules/tailwindcss)\n' +
+    '              no extension\n' +
+    '                C:\\Users\\USER\\node_modules\\tailwindcss is not a file\n' +
+    '              .css\n' +
+    "                C:\\Users\\USER\\node_modules\\tailwindcss.css doesn't exist\n" +
+    '              as directory\n' +
+    '                existing directory C:\\Users\\USER\\node_modules\\tailwindcss\n' +
+    '                  using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: .)\n' +
+    '                    using path: C:\\Users\\USER\\node_modules\\tailwindcss\\index\n' +
+    '                      using description file: C:\\Users\\USER\\node_modules\\tailwindcss\\package.json (relative path: ./index)\n' +
+    '                        no extension\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index doesn't exist\n" +
+    '                        .css\n' +
+    "                          C:\\Users\\USER\\node_modules\\tailwindcss\\index.css doesn't exist\n" +
+    "      C:\\Users\\node_modules doesn't exist or is not a directory\n" +
+    "      C:\\node_modules doesn't exist or is not a directory"
+}
+
+-----
+[1m[31mFATAL[39m[0m: An unexpected Turbopack error occurred. A panic log has been written to C:\Users\USER\AppData\Local\Temp\next-panic-2994b5d2d9d203f16fbc29a20f08ea1d.log.
+
+To help make Turbopack better, report this error by clicking here: https://bugs.nextjs.org/search?category=turbopack-error-report&title=Turbopack%20Error%3A%20reading%20file%20C%3A%5CUsers%5CUSER%5COneDrive%5CPortfolioProjects%5Cportfolia%5C.next%5Cdev%5Cserver%5Cmiddleware.js&body=Turbopack%20version%3A%20%603e37bb42%60%0ANext.js%20version%3A%20%600.0.0%60%0A%0AError%20message%3A%0A%60%60%60%0Areading%20file%20C%3A%5CUsers%5CUSER%5COneDrive%5CPortfolioProjects%5Cportfolia%5C.next%5Cdev%5Cserver%5Cmiddleware.js%0A%0ACaused%20by%3A%0A-%20Insufficient%20system%20resources%20exist%20to%20complete%20the%20requested%20service.%20%28os%20error%201450%29%0A%60%60%60&labels=Turbopack,Turbopack%20Panic%20Backtrace
+-----
+

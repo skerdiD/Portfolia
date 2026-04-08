@@ -1,0 +1,240 @@
+@import "tailwindcss";
+
+:root {
+  --background: 223 33% 97%;
+  --foreground: 222 45% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 45% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 45% 11%;
+  --primary: 221 83% 53%;
+  --primary-foreground: 210 40% 98%;
+  --secondary: 214 32% 93%;
+  --secondary-foreground: 222 45% 18%;
+  --muted: 215 26% 92%;
+  --muted-foreground: 215 16% 45%;
+  --accent: 215 80% 96%;
+  --accent-foreground: 222 45% 16%;
+  --border: 216 26% 88%;
+  --input: 216 26% 88%;
+  --ring: 221 83% 53%;
+  --success: 142 72% 40%;
+  --success-foreground: 138 76% 97%;
+  --danger: 0 84% 60%;
+  --danger-foreground: 0 0% 100%;
+  --radius: 1rem;
+}
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-success: hsl(var(--success));
+  --color-success-foreground: hsl(var(--success-foreground));
+  --color-danger: hsl(var(--danger));
+  --color-danger-foreground: hsl(var(--danger-foreground));
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    background-image:
+      radial-gradient(circle at top left, rgba(37, 99, 235, 0.08), transparent 24rem),
+      radial-gradient(circle at top right, rgba(59, 130, 246, 0.08), transparent 22rem),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0.7));
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading), sans-serif;
+    letter-spacing: -0.03em;
+  }
+
+  p,
+  span,
+  button,
+  input,
+  label,
+  textarea,
+  select {
+    font-family: var(--font-body), sans-serif;
+  }
+
+  ::selection {
+    background: rgba(37, 99, 235, 0.18);
+    color: hsl(var(--foreground));
+  }
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-heading), sans-serif;
+  }
+
+  .font-body {
+    font-family: var(--font-body), sans-serif;
+  }
+
+  .surface {
+    border-width: 1px;
+    border-color: rgb(255 255 255 / 0.7);
+    background-color: rgb(255 255 255 / 0.85);
+    box-shadow: 0 10px 30px -16px rgba(15, 23, 42, 0.16);
+    backdrop-filter: blur(24px);
+  }
+
+  .surface-muted {
+    border-width: 1px;
+    border-color: rgb(255 255 255 / 0.7);
+    background-color: rgb(255 255 255 / 0.7);
+    box-shadow: 0 10px 30px -18px rgba(15, 23, 42, 0.12);
+    backdrop-filter: blur(24px);
+  }
+
+  .soft-ring {
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.05);
+  }
+
+  .grid-fade {
+    background-image:
+      linear-gradient(to right, rgba(148, 163, 184, 0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(148, 163, 184, 0.07) 1px, transparent 1px);
+    background-size: 32px 32px;
+    mask-image: radial-gradient(circle at center, black 42%, transparent 100%);
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .landing-line-area {
+    fill: url(#lineGradient);
+    opacity: 0.09;
+    animation: landing-area-breathe 4.4s ease-in-out infinite;
+  }
+
+  .landing-line-stroke {
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+    animation: landing-line-draw 1.8s ease-out forwards;
+  }
+
+  .landing-line-point {
+    fill: #2563eb;
+    filter: drop-shadow(0 0 6px rgba(37, 99, 235, 0.38));
+    opacity: 0;
+    animation: landing-point-pulse 2.4s ease-in-out infinite;
+  }
+
+  .landing-line-point-1 {
+    animation-delay: 0.35s;
+  }
+
+  .landing-line-point-2 {
+    animation-delay: 0.65s;
+  }
+
+  .landing-line-point-3 {
+    animation-delay: 0.95s;
+  }
+
+  .landing-donut {
+    animation: landing-donut-orbit 8s ease-in-out infinite;
+  }
+
+  .landing-donut-core {
+    animation: landing-core-breathe 4.8s ease-in-out infinite;
+  }
+}
+
+@keyframes landing-line-draw {
+  from {
+    stroke-dashoffset: 420;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes landing-point-pulse {
+  0%,
+  100% {
+    transform: scale(0.8);
+    opacity: 0.45;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+@keyframes landing-area-breathe {
+  0%,
+  100% {
+    opacity: 0.08;
+  }
+  50% {
+    opacity: 0.14;
+  }
+}
+
+@keyframes landing-donut-orbit {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(7deg);
+  }
+}
+
+@keyframes landing-core-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-line-area,
+  .landing-line-stroke,
+  .landing-line-point,
+  .landing-donut,
+  .landing-donut-core {
+    animation: none !important;
+  }
+}
