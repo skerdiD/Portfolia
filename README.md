@@ -36,8 +36,6 @@ Portfolia is a full-stack fintech-style web app built to help users track invest
 ### Settings
 ![Settings Account](./public/screenshoots/settings-account.png)
 
----
-
 ## What You Can Do
 
 - Sign in securely and access protected portfolio routes
