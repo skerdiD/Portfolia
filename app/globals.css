@@ -265,44 +265,32 @@
   }
 
   .reveal-up {
-    --reveal-duration: 720ms;
-    --reveal-delay: 0ms;
-    --reveal-distance: 14px;
-    --reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 700ms ease-out,
+      transform 700ms ease-out;
   }
 
   .reveal-delay-1 {
-    --reveal-delay: 90ms;
+    transition-delay: 120ms;
   }
 
   .reveal-delay-2 {
-    --reveal-delay: 170ms;
+    transition-delay: 240ms;
   }
 
   .reveal-delay-3 {
-    --reveal-delay: 250ms;
+    transition-delay: 360ms;
   }
 
   .landing-slow-reveal .reveal-up {
-    --reveal-duration: 860ms;
-    --reveal-distance: 16px;
-  }
-
-  .landing-slow-reveal.reveal-ready .reveal-up {
-    opacity: 0;
-    transform: translate3d(0, var(--reveal-distance), 0);
-    filter: saturate(0.98);
-    transition:
-      opacity var(--reveal-duration) var(--reveal-ease) var(--reveal-delay),
-      transform var(--reveal-duration) var(--reveal-ease) var(--reveal-delay),
-      filter var(--reveal-duration) ease-out var(--reveal-delay);
     will-change: opacity, transform;
   }
 
-  .landing-slow-reveal.reveal-ready .reveal-up.is-revealed {
+  .reveal-up.is-revealed {
     opacity: 1;
-    transform: translate3d(0, 0, 0);
-    filter: none;
+    transform: translateY(0);
   }
 }
 
@@ -436,10 +424,10 @@
     transition: none !important;
   }
 
-  .landing-slow-reveal.reveal-ready .reveal-up {
+  .reveal-up {
     opacity: 1 !important;
     transform: none !important;
-    filter: none !important;
+    transition: none !important;
   }
 
   .motion-card,

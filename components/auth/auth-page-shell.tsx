@@ -137,7 +137,7 @@ export function AuthPageShell({
 
             <div className="relative flex items-start justify-center lg:pt-1">
               <div className="absolute inset-x-12 top-10 -z-10 h-40 rounded-full bg-blue-500/14 blur-3xl dark:bg-cyan-500/18" />
-              <div className="w-full max-w-[36rem]">
+              <div className="w-full max-w-[33rem]">
                 <div className="mb-5 space-y-1 text-center lg:text-left">
                   <div className="text-sm font-semibold uppercase tracking-[0.16em] text-slate-500 dark:text-slate-400">
                     Portfolia access
@@ -145,8 +145,8 @@ export function AuthPageShell({
                   {footer ? <div className="pt-1">{footer}</div> : null}
                 </div>
 
-                <div className="rounded-[2.15rem] border border-white/70 bg-white/45 p-3 shadow-[0_30px_76px_-34px_rgba(15,23,42,0.28)] backdrop-blur-xl dark:border-slate-600/80 dark:bg-slate-900/45 sm:p-4">
-                  <div className="surface rounded-[1.7rem] border-white/80 px-2 py-3 shadow-[0_20px_55px_-28px_rgba(15,23,42,0.26)] dark:border-slate-700/80 sm:px-3 sm:py-4">
+                <div className="rounded-[2.15rem] border border-white/70 bg-white/45 py-2.5 pl-2 pr-3 shadow-[0_30px_76px_-34px_rgba(15,23,42,0.28)] backdrop-blur-xl dark:border-slate-600/80 dark:bg-slate-900/45 sm:py-3 sm:pl-2.5 sm:pr-3.5">
+                  <div className="surface rounded-[1.7rem] border-white/80 py-2.5 pl-1 pr-2 shadow-[0_20px_55px_-28px_rgba(15,23,42,0.26)] dark:border-slate-700/80 sm:py-3 sm:pl-1.5 sm:pr-2.5">
                     {children}
                   </div>
                 </div>

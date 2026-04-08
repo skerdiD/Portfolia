@@ -209,15 +209,10 @@ export function LandingPage() {
       return;
     }
 
-    const initialRevealBoundary = window.innerHeight * 0.92;
-    revealTargets.forEach((target) => {
-      const rect = target.getBoundingClientRect();
-      if (rect.top <= initialRevealBoundary) {
-        target.classList.add("is-revealed");
-      }
-    });
-
-    root.classList.add("reveal-ready");
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: "auto" });
 
     const observer = new IntersectionObserver(
       (entries, currentObserver) => {
@@ -229,18 +224,32 @@ export function LandingPage() {
         }
       },
       {
-        threshold: 0.14,
-        rootMargin: "0px 0px -10% 0px",
+        threshold: 0.2,
+        rootMargin: "0px 0px -8% 0px",
       },
     );
 
-    revealTargets
-      .filter((target) => !target.classList.contains("is-revealed"))
-      .forEach((target) => observer.observe(target));
+    revealTargets.forEach((target) => {
+      target.classList.remove("is-revealed");
+      observer.observe(target);
+    });
+
+    const handlePageShow = (event: PageTransitionEvent) => {
+      if (!event.persisted) return;
+
+      window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+      revealTargets.forEach((target) => target.classList.remove("is-revealed"));
+      revealTargets.forEach((target) => observer.observe(target));
+    };
+
+    window.addEventListener("pageshow", handlePageShow);
 
     return () => {
+      window.removeEventListener("pageshow", handlePageShow);
       observer.disconnect();
-      root.classList.remove("reveal-ready");
+      if ("scrollRestoration" in window.history) {
+        window.history.scrollRestoration = "auto";
+      }
     };
   }, []);
 
