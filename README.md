@@ -17,43 +17,43 @@ https://portfolia-wheat-gamma.vercel.app
 ### Dashboard Overview
 
 <<<<<<< HEAD
-![Dashboard Overview](./public/screenshoots/dashboard-overview.png)
+![Dashboard Overview](./public/screenshots/dashboard-overview.png)
 
 ### Dashboard Allocation
 
-![Dashboard Allocation](./public/screenshoots/dashboard-allocation.png)
+![Dashboard Allocation](./public/screenshots/dashboard-allocation.png)
 
 ### Holdings Table
 
-![Holdings Table](./public/screenshoots/holdings-table.png)
+![Holdings Table](./public/screenshots/holdings-table.png)
 
 ### Add Holding Dialog
 
-![Holdings Add Dialog](./public/screenshoots/holdings-add-dialog.png)
+![Holdings Add Dialog](./public/screenshots/holdings-add-dialog.png)
 
 ### Watchlist Table
 
-![Watchlist Table](./public/screenshoots/watchlist-table.png)
+![Watchlist Table](./public/screenshots/watchlist-table.png)
 
 ### Add Watchlist Asset Dialog
 
-![Watchlist Add Dialog](./public/screenshoots/watchlist-add-dialog.png)
+![Watchlist Add Dialog](./public/screenshots/watchlist-add-dialog.png)
 
 ### Analytics Performance
 
-![Analytics Performance](./public/screenshoots/analytics-performance.png)
+![Analytics Performance](./public/screenshots/analytics-performance.png)
 
 ### Analytics Allocation
 
-![Analytics Allocation](./public/screenshoots/analytics-allocation.png)
+![Analytics Allocation](./public/screenshots/analytics-allocation.png)
 
 ### Analytics Categories
 
-![Analytics Categories](./public/screenshoots/analytics-categories.png)
+![Analytics Categories](./public/screenshots/analytics-categories.png)
 
 ### Settings
 
-![Settings Account](./public/screenshoots/settings-account.png)
+![Settings Account](./public/screenshots/settings-account.png)
 =======
 ### Dashboard
 ![Dashboard Overview](./public/screenshots/dashboard-overview.png)
