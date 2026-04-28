@@ -16,7 +16,6 @@ https://portfolia-wheat-gamma.vercel.app
 
 ### Dashboard Overview
 
-<<<<<<< HEAD
 ![Dashboard Overview](./public/screenshots/dashboard-overview.png)
 
 ### Dashboard Allocation
@@ -54,27 +53,6 @@ https://portfolia-wheat-gamma.vercel.app
 ### Settings
 
 ![Settings Account](./public/screenshots/settings-account.png)
-=======
-### Dashboard
-![Dashboard Overview](./public/screenshots/dashboard-overview.png)
-![Dashboard Allocation](./public/screenshots/dashboard-allocation.png)
-
-### Holdings
-![Holdings Table](./public/screenshots/holdings-table.png)
-![Holdings Add Dialog](./public/screenshots/holdings-add-dialog.png)
-
-### Watchlist
-![Watchlist Table](./public/screenshots/watchlist-table.png)
-![Watchlist Add Dialog](./public/screenshots/watchlist-add-dialog.png)
-
-### Analytics
-![Analytics Performance](./public/screenshots/analytics-performance.png)
-![Analytics Allocation](./public/screenshots/analytics-allocation.png)
-![Analytics Categories](./public/screenshots/analytics-categories.png)
-
-### Settings
-![Settings Account](./public/screenshots/settings-account.png)
->>>>>>> 90c7f17 (fixed README file)
 
 ---
 
