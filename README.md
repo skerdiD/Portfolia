@@ -401,25 +401,6 @@ The strongest business value is not only the holdings table itself, but the syst
 
 ---
 
-## Future Improvements
-
-Possible improvements that could extend Portfolia into a larger fintech product:
-
-* Live market price integration
-* Portfolio performance over time
-* Profit/loss history
-* Dividend tracking
-* Crypto wallet integrations
-* Import holdings from CSV
-* Advanced filtering and sorting
-* AI-generated portfolio insights
-* Alerts for target prices
-* Multi-currency support
-* Stripe billing for premium plans
-* Admin dashboard
-
----
-
 ## Author
 
 Built by **skerdiD**.
