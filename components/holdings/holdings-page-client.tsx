@@ -67,6 +67,7 @@ export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
   const deferredQuery = useDeferredValue(query);
   const [category, setCategory] = useState<"all" | AssetCategory>("all");
   const addHoldingTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const quickAction = searchParams.get("quickAction");
 
   const filteredHoldings = useMemo(() => {
     return filterHoldingsByQueryAndCategory({
@@ -107,8 +108,6 @@ export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
   }, [filteredHoldings]);
 
   useEffect(() => {
-    const quickAction = searchParams.get("quickAction");
-
     if (!quickAction) {
       return;
     }
@@ -120,7 +119,7 @@ export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
     }
 
     router.replace("/holdings", { scroll: false });
-  }, [handleExportCsv, router, searchParams]);
+  }, [handleExportCsv, quickAction, router]);
 
   return (
     <div className="flex flex-col gap-6">

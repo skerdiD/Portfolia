@@ -25,6 +25,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { formatDate } from "@/lib/portfolio/formatters";
 
 const titleMap: Record<string, { title: string; description: string }> = {
   "/dashboard": {
@@ -64,11 +65,7 @@ export function AppTopbar({
   const current =
     Object.entries(titleMap).find(([route]) => pathname.startsWith(route))?.[1] ??
     titleMap["/dashboard"];
-  const today = new Intl.DateTimeFormat("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date());
+  const today = formatDate(new Date());
 
   return (
     <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-background/80 backdrop-blur-xl">

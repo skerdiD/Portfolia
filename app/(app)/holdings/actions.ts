@@ -6,7 +6,6 @@ import { protectMutationRequest } from "@/lib/security/arcjet";
 import {
   createHoldingForCurrentUser,
   deleteHoldingForCurrentUser,
-  getCurrentUserHoldingById,
   updateHoldingForCurrentUser,
 } from "@/lib/db/queries";
 import type { HoldingRecord } from "@/lib/portfolio/calculations";
@@ -112,6 +111,17 @@ function fromZodError(error: ZodError, message: string): HoldingActionState {
   };
 }
 
+function getHoldingActionErrorMessage(
+  error: unknown,
+  fallback: string,
+) {
+  if (error instanceof Error && error.message === "Unauthorized") {
+    return "You must be signed in to manage holdings.";
+  }
+
+  return fallback;
+}
+
 async function guardMutation() {
   const protection = await protectMutationRequest();
 
@@ -158,8 +168,7 @@ export async function createHoldingAction(
 
     return {
       status: "error",
-      message:
-        error instanceof Error ? error.message : "Unable to create holding.",
+      message: getHoldingActionErrorMessage(error, "Unable to create holding."),
     };
   }
 }
@@ -183,22 +192,13 @@ export async function updateHoldingAction(
       return fromZodError(parsed.error, "Please correct the highlighted fields.");
     }
 
-    const existingHolding = await getCurrentUserHoldingById(parsed.data.holdingId);
-
-    if (!existingHolding) {
-      return {
-        status: "error",
-        message: "Holding not found.",
-      };
-    }
-
     const { holdingId, ...updates } = parsed.data;
     const holding = await updateHoldingForCurrentUser(holdingId, updates);
 
     if (!holding) {
       return {
         status: "error",
-        message: "Holding not found or could not be updated.",
+        message: "Holding not found.",
       };
     }
 
@@ -216,8 +216,7 @@ export async function updateHoldingAction(
 
     return {
       status: "error",
-      message:
-        error instanceof Error ? error.message : "Unable to update holding.",
+      message: getHoldingActionErrorMessage(error, "Unable to update holding."),
     };
   }
 }
@@ -242,21 +241,12 @@ export async function deleteHoldingAction(
       };
     }
 
-    const existingHolding = await getCurrentUserHoldingById(parsed.data.holdingId);
-
-    if (!existingHolding) {
-      return {
-        status: "error",
-        message: "Holding not found.",
-      };
-    }
-
     const deleted = await deleteHoldingForCurrentUser(parsed.data.holdingId);
 
     if (!deleted) {
       return {
         status: "error",
-        message: "Holding not found or could not be deleted.",
+        message: "Holding not found.",
       };
     }
 
@@ -269,8 +259,7 @@ export async function deleteHoldingAction(
   } catch (error) {
     return {
       status: "error",
-      message:
-        error instanceof Error ? error.message : "Unable to delete holding.",
+      message: getHoldingActionErrorMessage(error, "Unable to delete holding."),
     };
   }
 }

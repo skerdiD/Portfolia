@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
+import { formatDate } from "@/lib/portfolio/formatters";
 import { cn } from "@/lib/utils";
 
 function SettingRow({
@@ -138,11 +139,7 @@ export default async function SettingsPage() {
                 label="Member since"
                 value={
                   user?.createdAt
-                    ? new Intl.DateTimeFormat("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      }).format(new Date(user.createdAt))
+                    ? formatDate(new Date(user.createdAt))
                     : "Unavailable"
                 }
               />

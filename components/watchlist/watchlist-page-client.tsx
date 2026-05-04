@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   Eye,
@@ -54,11 +54,13 @@ export function WatchlistPageClient({ initialItems }: WatchlistPageClientProps) 
   const searchParams = useSearchParams();
   const [items, setItems] = useState(initialItems);
   const [query, setQuery] = useState("");
+  const deferredQuery = useDeferredValue(query);
   const [category, setCategory] = useState<"all" | AssetCategory>("all");
   const addWatchlistTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const quickAction = searchParams.get("quickAction");
 
   const filteredItems = useMemo(() => {
-    const normalizedQuery = query.trim().toLowerCase();
+    const normalizedQuery = deferredQuery.trim().toLowerCase();
 
     return items.filter((item) => {
       const matchesCategory = category === "all" || item.category === category;
@@ -70,25 +72,28 @@ export function WatchlistPageClient({ initialItems }: WatchlistPageClientProps) 
 
       return matchesCategory && matchesQuery;
     });
-  }, [category, items, query]);
+  }, [category, deferredQuery, items]);
 
   const hasFilters = query.trim().length > 0 || category !== "all";
   const hasAnyItems = items.length > 0;
   const hasFilteredResults = filteredItems.length > 0;
 
   useEffect(() => {
-    const quickAction = searchParams.get("quickAction");
-
     if (quickAction !== "add") {
       return;
     }
 
     addWatchlistTriggerRef.current?.click();
     router.replace("/watchlist", { scroll: false });
-  }, [router, searchParams]);
+  }, [quickAction, router]);
 
-  const targetPriceCount = countWithTargetPrice(filteredItems);
-  const targetPriceAverage = averageTargetPrice(filteredItems);
+  const { targetPriceCount, targetPriceAverage } = useMemo(
+    () => ({
+      targetPriceCount: countWithTargetPrice(filteredItems),
+      targetPriceAverage: averageTargetPrice(filteredItems),
+    }),
+    [filteredItems],
+  );
 
   return (
     <div className="flex flex-col gap-6">

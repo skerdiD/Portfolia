@@ -45,6 +45,9 @@ import {
   type UpdateWatchlistItemInput,
 } from "@/lib/validations/watchlist";
 
+export const WATCHLIST_DUPLICATE_SYMBOL_MESSAGE =
+  "This symbol already exists in your watchlist.";
+
 async function requireAuthenticatedUserId() {
   const { userId } = await auth();
 
@@ -61,6 +64,15 @@ function mapHoldingRows(rows: Holding[]) {
 
 function mapWatchlistRows(rows: WatchlistItem[]) {
   return rows.map(mapWatchlistRowToRecord);
+}
+
+function isUniqueViolation(error: unknown) {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    error.code === "23505"
+  );
 }
 
 async function upsertPortfolioSnapshotForUserInternal(
@@ -343,22 +355,30 @@ export async function createWatchlistItemForUser(
   const existing = await getWatchlistItemBySymbolForUserCached(userId, normalized.symbol);
 
   if (existing) {
-    throw new Error("This symbol already exists in your watchlist.");
+    throw new Error(WATCHLIST_DUPLICATE_SYMBOL_MESSAGE);
   }
 
-  const [row] = await db
-    .insert(watchlistItems)
-    .values({
-      userId,
-      assetName: normalized.assetName,
-      symbol: normalized.symbol,
-      category: normalized.category,
-      targetPrice: normalized.targetPrice,
-      notes: normalized.notes,
-    })
-    .returning();
+  try {
+    const [row] = await db
+      .insert(watchlistItems)
+      .values({
+        userId,
+        assetName: normalized.assetName,
+        symbol: normalized.symbol,
+        category: normalized.category,
+        targetPrice: normalized.targetPrice,
+        notes: normalized.notes,
+      })
+      .returning();
 
-  return mapWatchlistRowToRecord(row);
+    return mapWatchlistRowToRecord(row);
+  } catch (error) {
+    if (isUniqueViolation(error)) {
+      throw new Error(WATCHLIST_DUPLICATE_SYMBOL_MESSAGE);
+    }
+
+    throw error;
+  }
 }
 
 export async function createWatchlistItemForCurrentUser(input: CreateWatchlistItemInput) {
@@ -391,7 +411,7 @@ export async function updateWatchlistItemForUser(
   if (parsed.symbol !== undefined) {
     const existing = await getWatchlistItemBySymbolForUserCached(userId, normalized.symbol);
     if (existing && existing.id !== watchlistItemId) {
-      throw new Error("This symbol already exists in your watchlist.");
+      throw new Error(WATCHLIST_DUPLICATE_SYMBOL_MESSAGE);
     }
     updateData.symbol = normalized.symbol;
   }
@@ -408,17 +428,25 @@ export async function updateWatchlistItemForUser(
     updateData.notes = normalized.notes;
   }
 
-  const [row] = await db
-    .update(watchlistItems)
-    .set(updateData)
-    .where(and(eq(watchlistItems.userId, userId), eq(watchlistItems.id, watchlistItemId)))
-    .returning();
+  try {
+    const [row] = await db
+      .update(watchlistItems)
+      .set(updateData)
+      .where(and(eq(watchlistItems.userId, userId), eq(watchlistItems.id, watchlistItemId)))
+      .returning();
 
-  if (!row) {
-    return null;
+    if (!row) {
+      return null;
+    }
+
+    return mapWatchlistRowToRecord(row);
+  } catch (error) {
+    if (isUniqueViolation(error)) {
+      throw new Error(WATCHLIST_DUPLICATE_SYMBOL_MESSAGE);
+    }
+
+    throw error;
   }
-
-  return mapWatchlistRowToRecord(row);
 }
 
 export async function updateWatchlistItemForCurrentUser(

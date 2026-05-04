@@ -31,6 +31,21 @@ describe("server action validation", () => {
     expect(parsed.success).toBe(false);
   });
 
+  it("rejects oversized holding numbers before they reach the database", () => {
+    const parsed = createHoldingSchema.safeParse({
+      assetName: "Apple Inc.",
+      symbol: "AAPL",
+      category: "stock",
+      quantity: "1000000000000",
+      averageBuyPrice: "150.123456789",
+      currentPrice: "170",
+      purchaseDate: "2026-01-10",
+      notes: "",
+    });
+
+    expect(parsed.success).toBe(false);
+  });
+
   it("validates delete action holding id", () => {
     const valid = deleteHoldingActionSchema.safeParse({
       holdingId: "11111111-1111-4111-8111-111111111111",

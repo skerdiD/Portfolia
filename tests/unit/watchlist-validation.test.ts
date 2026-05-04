@@ -28,4 +28,16 @@ describe("watchlist validation", () => {
 
     expect(parsed.success).toBe(true);
   });
+
+  it("rejects oversized or over-precision target prices", () => {
+    const parsed = createWatchlistItemSchema.safeParse({
+      assetName: "Bitcoin",
+      symbol: "BTC",
+      category: "crypto",
+      targetPrice: "1000000000000.123456789",
+      notes: "",
+    });
+
+    expect(parsed.success).toBe(false);
+  });
 });

@@ -1,52 +1,59 @@
 import arcjet, { tokenBucket } from "@arcjet/next";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
+
+export const dynamic = "force-dynamic";
 
 const arcjetKey = process.env.ARCJET_KEY;
 
-if (!arcjetKey) {
-  throw new Error("Missing ARCJET_KEY environment variable");
+const aj = arcjetKey
+  ? arcjet({
+      key: arcjetKey,
+      rules: [
+        tokenBucket({
+          mode: "LIVE",
+          characteristics: ["userId"],
+          refillRate: 5,
+          interval: 10,
+          capacity: 10,
+        }),
+      ],
+    })
+  : null;
+
+function privateJson(body: unknown, status = 200) {
+  return NextResponse.json(body, {
+    status,
+    headers: {
+      "Cache-Control": "private, no-store, max-age=0",
+    },
+  });
 }
 
-const aj = arcjet({
-  key: arcjetKey,
-  rules: [
-    tokenBucket({
-      mode: "LIVE",
-      characteristics: ["userId"],
-      refillRate: 5,
-      interval: 10,
-      capacity: 10,
-    }),
-  ],
-});
-
 export async function GET(req: Request) {
-  const user = await currentUser();
+  const { userId } = await auth();
 
-  if (!user) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  if (!userId) {
+    return privateJson({ error: "Unauthorized" }, 401);
   }
 
-  const decision = await aj.protect(req, { userId: user.id, requested: 1 });
+  if (!aj) {
+    return privateJson({ error: "Protection service unavailable" }, 503);
+  }
+
+  const decision = await aj.protect(req, { userId, requested: 1 });
 
   if (decision.isErrored()) {
-    return NextResponse.json(
-      { error: "Arcjet unavailable", reason: decision.reason },
-      { status: 503 },
-    );
+    return privateJson({ error: "Protection service unavailable" }, 503);
   }
 
   if (decision.isDenied()) {
-    return NextResponse.json(
-      { error: "Too Many Requests", reason: decision.reason },
-      { status: 429 },
-    );
+    return privateJson({ error: "Too Many Requests" }, 429);
   }
 
-  return NextResponse.json({
+  return privateJson({
     ok: true,
     message: "Private endpoint is working",
-    userId: user.id,
+    userId,
   });
 }

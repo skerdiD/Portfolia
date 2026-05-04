@@ -1,5 +1,11 @@
 import { z } from "zod";
 import { assetCategoryEnum } from "@/lib/db/schema";
+import {
+  hasAllowedFractionDigits,
+  hasAllowedIntegerDigits,
+  isNonNegativeDecimalString,
+  MAX_DB_DECIMAL_UPPER_BOUND,
+} from "@/lib/validations/decimal";
 
 const trimmedString = (min: number, max: number) =>
   z.string().trim().min(min).max(max);
@@ -9,7 +15,8 @@ const nonNegativeFiniteNumber = z.coerce
     message: "Enter a valid number",
   })
   .finite("Enter a valid number")
-  .min(0, "Value must be zero or greater");
+  .min(0, "Value must be zero or greater")
+  .refine((value) => value < MAX_DB_DECIMAL_UPPER_BOUND, "Value is too large");
 
 const nullableNonNegativeFiniteNumber = z.preprocess(
   (value) => {
@@ -36,9 +43,14 @@ export const watchlistFormSchema = z.object({
         return true;
       }
 
-      const parsed = Number(value);
-      return Number.isFinite(parsed) && parsed >= 0;
-    }, "Enter a valid target price"),
+      return isNonNegativeDecimalString(value);
+    }, "Enter a valid target price")
+    .refine((value) => value.length === 0 || hasAllowedFractionDigits(value, 8), {
+      message: "Use no more than 8 decimal places",
+    })
+    .refine((value) => value.length === 0 || hasAllowedIntegerDigits(value), {
+      message: "Value is too large",
+    }),
   notes: z.string().max(4000, "Notes must be 4000 characters or less"),
 });
 

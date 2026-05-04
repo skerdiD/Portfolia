@@ -6,8 +6,8 @@ import { protectMutationRequest } from "@/lib/security/arcjet";
 import {
   createWatchlistItemForCurrentUser,
   deleteWatchlistItemForCurrentUser,
-  getCurrentUserWatchlistItemById,
   updateWatchlistItemForCurrentUser,
+  WATCHLIST_DUPLICATE_SYMBOL_MESSAGE,
 } from "@/lib/db/queries";
 import type { WatchlistItemRecord } from "@/lib/watchlist/types";
 import {
@@ -92,6 +92,23 @@ function fromZodError(error: ZodError, message: string): WatchlistActionState {
   };
 }
 
+function getWatchlistActionErrorMessage(
+  error: unknown,
+  fallback: string,
+) {
+  if (error instanceof Error) {
+    if (error.message === "Unauthorized") {
+      return "You must be signed in to manage your watchlist.";
+    }
+
+    if (error.message === WATCHLIST_DUPLICATE_SYMBOL_MESSAGE) {
+      return WATCHLIST_DUPLICATE_SYMBOL_MESSAGE;
+    }
+  }
+
+  return fallback;
+}
+
 async function guardMutation() {
   const protection = await protectMutationRequest();
 
@@ -138,8 +155,7 @@ export async function createWatchlistItemAction(
 
     return {
       status: "error",
-      message:
-        error instanceof Error ? error.message : "Unable to add watchlist item.",
+      message: getWatchlistActionErrorMessage(error, "Unable to add watchlist item."),
     };
   }
 }
@@ -163,22 +179,13 @@ export async function updateWatchlistItemAction(
       return fromZodError(parsed.error, "Please correct the highlighted fields.");
     }
 
-    const existingItem = await getCurrentUserWatchlistItemById(parsed.data.watchlistItemId);
-
-    if (!existingItem) {
-      return {
-        status: "error",
-        message: "Watchlist item not found.",
-      };
-    }
-
     const { watchlistItemId, ...updates } = parsed.data;
     const watchlistItem = await updateWatchlistItemForCurrentUser(watchlistItemId, updates);
 
     if (!watchlistItem) {
       return {
         status: "error",
-        message: "Watchlist item not found or could not be updated.",
+        message: "Watchlist item not found.",
       };
     }
 
@@ -196,8 +203,10 @@ export async function updateWatchlistItemAction(
 
     return {
       status: "error",
-      message:
-        error instanceof Error ? error.message : "Unable to update watchlist item.",
+      message: getWatchlistActionErrorMessage(
+        error,
+        "Unable to update watchlist item.",
+      ),
     };
   }
 }
@@ -222,21 +231,12 @@ export async function deleteWatchlistItemAction(
       };
     }
 
-    const existingItem = await getCurrentUserWatchlistItemById(parsed.data.watchlistItemId);
-
-    if (!existingItem) {
-      return {
-        status: "error",
-        message: "Watchlist item not found.",
-      };
-    }
-
     const deleted = await deleteWatchlistItemForCurrentUser(parsed.data.watchlistItemId);
 
     if (!deleted) {
       return {
         status: "error",
-        message: "Watchlist item not found or could not be deleted.",
+        message: "Watchlist item not found.",
       };
     }
 
@@ -249,8 +249,10 @@ export async function deleteWatchlistItemAction(
   } catch (error) {
     return {
       status: "error",
-      message:
-        error instanceof Error ? error.message : "Unable to delete watchlist item.",
+      message: getWatchlistActionErrorMessage(
+        error,
+        "Unable to delete watchlist item.",
+      ),
     };
   }
 }

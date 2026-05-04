@@ -1,5 +1,11 @@
 import { z } from "zod";
 import { assetCategoryEnum } from "@/lib/db/schema";
+import {
+  hasAllowedFractionDigits,
+  hasAllowedIntegerDigits,
+  isNonNegativeDecimalString,
+  MAX_DB_DECIMAL_UPPER_BOUND,
+} from "@/lib/validations/decimal";
 
 const isoDatePattern = /^\d{4}-\d{2}-\d{2}$/;
 
@@ -20,16 +26,16 @@ const nonNegativeFiniteNumber = z.coerce
     message: "Enter a valid number",
   })
   .finite("Enter a valid number")
-  .min(0, "Value must be zero or greater");
+  .min(0, "Value must be zero or greater")
+  .refine((value) => value < MAX_DB_DECIMAL_UPPER_BOUND, "Value is too large");
 
 const nonNegativeNumberString = z
   .string()
   .trim()
   .min(1, "This field is required")
-  .refine((value) => {
-    const parsed = Number(value);
-    return Number.isFinite(parsed) && parsed >= 0;
-  }, "Enter a valid number");
+  .refine(isNonNegativeDecimalString, "Enter a valid number")
+  .refine((value) => hasAllowedFractionDigits(value, 8), "Use no more than 8 decimal places")
+  .refine(hasAllowedIntegerDigits, "Value is too large");
 
 export const holdingCategorySchema = z.enum(assetCategoryEnum.enumValues);
 
