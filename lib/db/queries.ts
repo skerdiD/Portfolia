@@ -46,6 +46,8 @@ import {
   type UpdateWatchlistItemInput,
 } from "@/lib/validations/watchlist";
 import {
+  defaultUserSettings,
+  isMissingUserSettingsStorage,
   mapUserSettingsRowToRecord,
   normalizeUserSettingsInput,
   type UserSettingsInput,
@@ -486,13 +488,21 @@ export async function deleteWatchlistItemForCurrentUser(watchlistItemId: string)
 
 const getUserSettingsByUserCached = cache(
   async (userId: string): Promise<UserSettingsRecord> => {
-    const [row] = await db
-      .select()
-      .from(userSettings)
-      .where(eq(userSettings.userId, userId))
-      .limit(1);
+    try {
+      const [row] = await db
+        .select()
+        .from(userSettings)
+        .where(eq(userSettings.userId, userId))
+        .limit(1);
 
-    return mapUserSettingsRowToRecord(row);
+      return mapUserSettingsRowToRecord(row);
+    } catch (error) {
+      if (isMissingUserSettingsStorage(error)) {
+        return defaultUserSettings;
+      }
+
+      throw error;
+    }
   },
 );
 
@@ -511,29 +521,37 @@ export async function upsertUserSettingsForUser(
 ): Promise<UserSettingsRecord> {
   const normalized = normalizeUserSettingsInput(input);
 
-  const [row] = await db
-    .insert(userSettings)
-    .values({
-      userId,
-      portfolioName: normalized.portfolioName,
-      defaultCurrency: normalized.defaultCurrency,
-      riskPreference: normalized.riskPreference,
-      dashboardView: normalized.dashboardView,
-      updatedAt: new Date(),
-    })
-    .onConflictDoUpdate({
-      target: userSettings.userId,
-      set: {
+  try {
+    const [row] = await db
+      .insert(userSettings)
+      .values({
+        userId,
         portfolioName: normalized.portfolioName,
         defaultCurrency: normalized.defaultCurrency,
         riskPreference: normalized.riskPreference,
         dashboardView: normalized.dashboardView,
         updatedAt: new Date(),
-      },
-    })
-    .returning();
+      })
+      .onConflictDoUpdate({
+        target: userSettings.userId,
+        set: {
+          portfolioName: normalized.portfolioName,
+          defaultCurrency: normalized.defaultCurrency,
+          riskPreference: normalized.riskPreference,
+          dashboardView: normalized.dashboardView,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
 
-  return mapUserSettingsRowToRecord(row);
+    return mapUserSettingsRowToRecord(row);
+  } catch (error) {
+    if (isMissingUserSettingsStorage(error)) {
+      throw new Error("Settings storage is not migrated yet. Run npm run db:migrate.");
+    }
+
+    throw error;
+  }
 }
 
 export async function upsertCurrentUserSettings(input: UserSettingsInput) {

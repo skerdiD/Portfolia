@@ -20,6 +20,12 @@ export const metadata: Metadata = {
   },
   description:
     "Portfolia is a modern portfolio tracking dashboard for monitoring holdings, allocation, and performance with cleaner investment visibility.",
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+  },
 };
 
 export default async function RootLayout({

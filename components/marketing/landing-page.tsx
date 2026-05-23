@@ -17,6 +17,7 @@ import {
   SunMedium,
   WandSparkles,
 } from "lucide-react";
+import { PortfoliaMark } from "@/components/brand/portfolia-logo";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
@@ -313,9 +314,7 @@ export function LandingPage() {
       <header className="sticky top-0 z-40 border-b border-slate-200/70 bg-background/80 backdrop-blur-xl dark:border-slate-800/80">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-8 lg:px-10">
           <Link href="/" className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-[0_14px_36px_-20px_rgba(6,182,212,0.75)]">
-              <Sparkles className="h-5 w-5" />
-            </div>
+            <PortfoliaMark className="shadow-[0_14px_36px_-20px_rgba(6,182,212,0.75)]" />
             <div>
               <p className="font-heading text-lg font-semibold tracking-tight text-slate-950 dark:text-slate-100">
                 Portfolia
@@ -959,9 +958,7 @@ export function LandingPage() {
         <div className="flex flex-col gap-8 sm:flex-row sm:items-start sm:justify-between">
           <div className="max-w-sm">
             <div className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white">
-                <Sparkles className="h-4 w-4" />
-              </div>
+              <PortfoliaMark className="h-9 w-9 rounded-xl shadow-none" iconClassName="h-5 w-5" />
               <p className="font-heading text-lg font-semibold text-slate-950 dark:text-slate-100">
                 Portfolia
               </p>

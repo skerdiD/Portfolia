@@ -85,6 +85,8 @@ export async function updateSettingsAction(
       message:
         error instanceof Error && error.message === "Unauthorized"
           ? "You must be signed in to update settings."
+          : error instanceof Error && error.message.includes("Settings storage")
+            ? error.message
           : "Unable to save settings.",
     };
   }

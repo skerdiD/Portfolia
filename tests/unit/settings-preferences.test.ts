@@ -2,6 +2,7 @@ import {
   defaultUserSettings,
   getDashboardViewLabel,
   getRiskPreferenceLabel,
+  isMissingUserSettingsStorage,
   mapUserSettingsRowToRecord,
   normalizeUserSettingsInput,
   userSettingsSchema,
@@ -45,5 +46,15 @@ describe("settings preferences", () => {
   it("formats preference labels for display", () => {
     expect(getRiskPreferenceLabel("conservative")).toBe("Conservative");
     expect(getDashboardViewLabel("compact")).toBe("Compact dashboard");
+  });
+
+  it("detects missing settings storage database errors", () => {
+    expect(isMissingUserSettingsStorage({ code: "42P01" })).toBe(true);
+    expect(
+      isMissingUserSettingsStorage({
+        message: 'relation "user_settings" does not exist',
+      }),
+    ).toBe(true);
+    expect(isMissingUserSettingsStorage({ code: "23505" })).toBe(false);
   });
 });

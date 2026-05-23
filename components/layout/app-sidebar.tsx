@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
   BarChart3,
-  CircleDollarSign,
   Eye,
   X,
   LayoutDashboard,
@@ -17,6 +16,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { PortfoliaMark } from "@/components/brand/portfolia-logo";
 import { cn } from "@/lib/utils";
 
 const navigation = [
@@ -81,9 +81,7 @@ export function AppSidebar({
           isCollapsed ? "justify-center px-2" : "items-center gap-3 px-5",
         )}
       >
-        <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white shadow-lg shadow-blue-500/20">
-          <CircleDollarSign className="h-5 w-5" />
-        </div>
+        <PortfoliaMark />
         {!isCollapsed ? (
           <div>
             <div className="font-heading text-xl font-semibold tracking-tight text-slate-950">

@@ -77,3 +77,25 @@ export function getRiskPreferenceLabel(value: RiskPreference) {
 export function getDashboardViewLabel(value: DashboardView) {
   return value === "compact" ? "Compact dashboard" : "Standard dashboard";
 }
+
+export function isMissingUserSettingsStorage(error: unknown) {
+  if (typeof error !== "object" || error === null) {
+    return false;
+  }
+
+  const code = "code" in error ? error.code : undefined;
+
+  if (code === "42P01" || code === "42704") {
+    return true;
+  }
+
+  const message =
+    "message" in error && typeof error.message === "string"
+      ? error.message.toLowerCase()
+      : "";
+
+  return (
+    message.includes("user_settings") &&
+    (message.includes("does not exist") || message.includes("relation"))
+  );
+}

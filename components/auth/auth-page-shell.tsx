@@ -2,11 +2,11 @@ import Link from "next/link";
 import {
   ArrowRight,
   BarChart3,
-  CircleDollarSign,
   Gauge,
   ShieldCheck,
   Sparkles,
 } from "lucide-react";
+import { PortfoliaMark } from "@/components/brand/portfolia-logo";
 
 const points = [
   {
@@ -52,9 +52,7 @@ export function AuthPageShell({
       <div className="relative z-10 mx-auto flex min-h-screen max-w-[84rem] flex-col px-5 py-6 sm:px-8 lg:px-10">
         <header className="flex items-center justify-between">
           <Link href="/" className="group flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-cyan-500 text-white shadow-lg shadow-blue-500/20">
-              <CircleDollarSign className="h-5 w-5" />
-            </div>
+            <PortfoliaMark className="h-10 w-10" iconClassName="h-6 w-6" />
             <div>
               <div className="font-heading text-xl font-semibold tracking-tight text-slate-950 transition group-hover:text-blue-700 dark:text-slate-100 dark:group-hover:text-cyan-300">
                 Portfolia
