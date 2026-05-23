@@ -15,6 +15,7 @@ import type {
   HoldingRecord,
   PortfolioSummaryData,
 } from "@/lib/portfolio/calculations";
+import { calculatePortfolioSummary } from "@/lib/portfolio/calculations";
 import { buildHoldingsCsvRows, toCsvContent } from "@/lib/portfolio/csv-export";
 import { filterHoldingsByQueryAndCategory } from "@/lib/portfolio/holdings-helpers";
 import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
@@ -44,21 +45,6 @@ const categoryOptions: Array<{ label: string; value: "all" | AssetCategory }> = 
   { label: "Other", value: "other" },
 ];
 
-function getSummaryFromHoldings(holdings: HoldingRecord[]): PortfolioSummaryData {
-  const investedAmount = holdings.reduce((sum, item) => sum + item.investedAmount, 0);
-  const currentValue = holdings.reduce((sum, item) => sum + item.currentValue, 0);
-  const gainLoss = currentValue - investedAmount;
-  const returnPercentage = investedAmount > 0 ? (gainLoss / investedAmount) * 100 : 0;
-
-  return {
-    holdingsCount: holdings.length,
-    investedAmount,
-    currentValue,
-    gainLoss,
-    returnPercentage,
-  };
-}
-
 export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -78,7 +64,7 @@ export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
   }, [category, deferredQuery, holdings]);
 
   const filteredSummary = useMemo(
-    () => getSummaryFromHoldings(filteredHoldings),
+    () => calculatePortfolioSummary(filteredHoldings),
     [filteredHoldings],
   );
 

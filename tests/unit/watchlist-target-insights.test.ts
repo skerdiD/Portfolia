@@ -63,6 +63,7 @@ describe("watchlist target insights", () => {
   it("normalizes optional watchlist prices for records and storage", () => {
     expect(toWatchlistPrice("123.456789876")).toBe(123.45678988);
     expect(toWatchlistPrice("")).toBeNull();
+    expect(toWatchlistPrice(" ")).toBeNull();
     expect(toWatchlistPriceStorage("12.5")).toBe("12.50000000");
   });
 });

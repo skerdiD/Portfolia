@@ -46,6 +46,21 @@ describe("server action validation", () => {
     expect(parsed.success).toBe(false);
   });
 
+  it("rejects blank numeric holding fields on the server", () => {
+    const parsed = createHoldingSchema.safeParse({
+      assetName: "Apple Inc.",
+      symbol: "AAPL",
+      category: "stock",
+      quantity: " ",
+      averageBuyPrice: "",
+      currentPrice: "170",
+      purchaseDate: "2026-01-10",
+      notes: "",
+    });
+
+    expect(parsed.success).toBe(false);
+  });
+
   it("validates delete action holding id", () => {
     const valid = deleteHoldingActionSchema.safeParse({
       holdingId: "11111111-1111-4111-8111-111111111111",

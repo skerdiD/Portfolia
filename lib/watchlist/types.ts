@@ -49,7 +49,11 @@ export type WatchlistTargetInsight = {
 export const WATCHLIST_NEAR_TARGET_THRESHOLD_PERCENT = 5;
 
 export function toWatchlistPrice(value: NumericLike) {
-  if (value === null || value === undefined || value === "") {
+  if (
+    value === null ||
+    value === undefined ||
+    (typeof value === "string" && value.trim().length === 0)
+  ) {
     return null;
   }
 

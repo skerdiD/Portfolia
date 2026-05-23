@@ -20,7 +20,11 @@ const nonNegativeFiniteNumber = z.coerce
 
 const nullableNonNegativeFiniteNumber = z.preprocess(
   (value) => {
-    if (value === "" || value === null || value === undefined) {
+    if (
+      (typeof value === "string" && value.trim().length === 0) ||
+      value === null ||
+      value === undefined
+    ) {
       return null;
     }
 

@@ -42,4 +42,21 @@ describe("watchlist validation", () => {
 
     expect(parsed.success).toBe(false);
   });
+
+  it("treats blank optional prices as unset instead of zero", () => {
+    const parsed = createWatchlistItemSchema.safeParse({
+      assetName: "Ethereum",
+      symbol: "ETH",
+      category: "crypto",
+      targetPrice: " ",
+      currentPrice: "",
+      notes: "",
+    });
+
+    expect(parsed.success).toBe(true);
+    if (parsed.success) {
+      expect(parsed.data.targetPrice).toBeNull();
+      expect(parsed.data.currentPrice).toBeNull();
+    }
+  });
 });

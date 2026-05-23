@@ -16,6 +16,10 @@ import type {
   PortfolioSummaryData,
 } from "@/lib/portfolio/calculations";
 import {
+  calculateAllocationByCategory,
+  calculatePortfolioSummary,
+} from "@/lib/portfolio/calculations";
+import {
   getRiskPreferenceLabel,
   type UserSettingsRecord,
 } from "@/lib/settings/preferences";
@@ -69,61 +73,6 @@ const AllocationDonutChart = dynamic(
   },
 );
 
-function calculateSummary(holdings: HoldingRecord[]): PortfolioSummaryData {
-  const investedAmount = holdings.reduce((sum, item) => sum + item.investedAmount, 0);
-  const currentValue = holdings.reduce((sum, item) => sum + item.currentValue, 0);
-  const gainLoss = currentValue - investedAmount;
-
-  return {
-    holdingsCount: holdings.length,
-    investedAmount,
-    currentValue,
-    gainLoss,
-    returnPercentage: investedAmount > 0 ? (gainLoss / investedAmount) * 100 : 0,
-  };
-}
-
-function calculateAllocation(holdings: HoldingRecord[]): AllocationPoint[] {
-  const grouped = new Map<
-    HoldingRecord["category"],
-    {
-      investedAmount: number;
-      currentValue: number;
-      gainLoss: number;
-    }
-  >();
-
-  for (const holding of holdings) {
-    const current = grouped.get(holding.category) ?? {
-      investedAmount: 0,
-      currentValue: 0,
-      gainLoss: 0,
-    };
-
-    current.investedAmount += holding.investedAmount;
-    current.currentValue += holding.currentValue;
-    current.gainLoss += holding.gainLoss;
-
-    grouped.set(holding.category, current);
-  }
-
-  const totalCurrentValue = Array.from(grouped.values()).reduce(
-    (sum, item) => sum + item.currentValue,
-    0,
-  );
-
-  return Array.from(grouped.entries())
-    .map(([category, values]) => ({
-      category,
-      investedAmount: values.investedAmount,
-      currentValue: values.currentValue,
-      gainLoss: values.gainLoss,
-      percentage:
-        totalCurrentValue > 0 ? (values.currentValue / totalCurrentValue) * 100 : 0,
-    }))
-    .sort((a, b) => b.currentValue - a.currentValue);
-}
-
 function filterHistoryByRange(
   history: PerformanceHistoryPoint[],
   range: TimeRange,
@@ -172,7 +121,7 @@ export function DashboardPageClient({
       return summary;
     }
 
-    return calculateSummary(filteredHoldings);
+    return calculatePortfolioSummary(filteredHoldings);
   }, [category, filteredHoldings, summary]);
 
   const filteredAllocation = useMemo(() => {
@@ -180,7 +129,7 @@ export function DashboardPageClient({
       return allocation;
     }
 
-    return calculateAllocation(filteredHoldings);
+    return calculateAllocationByCategory(filteredHoldings);
   }, [allocation, category, filteredHoldings]);
 
   const filteredPerformanceHistory = useMemo(() => {

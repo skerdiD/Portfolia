@@ -21,6 +21,14 @@ function isValidIsoDate(value: string) {
 const trimmedString = (min: number, max: number) =>
   z.string().trim().min(min).max(max);
 
+const normalizeRequiredNumberInput = (value: unknown) => {
+  if (typeof value === "string" && value.trim().length === 0) {
+    return undefined;
+  }
+
+  return value;
+};
+
 const nonNegativeFiniteNumber = z.coerce
   .number({
     message: "Enter a valid number",
@@ -57,9 +65,9 @@ export const holdingInputSchema = z.object({
   assetName: trimmedString(1, 160),
   symbol: trimmedString(1, 32),
   category: holdingCategorySchema,
-  quantity: nonNegativeFiniteNumber,
-  averageBuyPrice: nonNegativeFiniteNumber,
-  currentPrice: nonNegativeFiniteNumber,
+  quantity: z.preprocess(normalizeRequiredNumberInput, nonNegativeFiniteNumber),
+  averageBuyPrice: z.preprocess(normalizeRequiredNumberInput, nonNegativeFiniteNumber),
+  currentPrice: z.preprocess(normalizeRequiredNumberInput, nonNegativeFiniteNumber),
   purchaseDate: z
     .string()
     .trim()
