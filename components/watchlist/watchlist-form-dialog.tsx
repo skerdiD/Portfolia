@@ -44,6 +44,7 @@ function defaultValuesFromWatchlistItem(watchlistItem?: WatchlistItemRecord): Wa
       symbol: "",
       category: "stock",
       targetPrice: "",
+      currentPrice: "",
       notes: "",
     };
   }
@@ -53,6 +54,7 @@ function defaultValuesFromWatchlistItem(watchlistItem?: WatchlistItemRecord): Wa
     symbol: watchlistItem.symbol,
     category: watchlistItem.category,
     targetPrice: watchlistItem.targetPrice === null ? "" : String(watchlistItem.targetPrice),
+    currentPrice: watchlistItem.currentPrice === null ? "" : String(watchlistItem.currentPrice),
     notes: watchlistItem.notes ?? "",
   };
 }
@@ -97,7 +99,7 @@ export function WatchlistFormDialog({
   const description =
     mode === "create"
       ? "Track an asset you are interested in before adding it as an actual portfolio holding."
-      : "Update watchlist details, category context, target price, or notes.";
+      : "Update watchlist details, price context, target price, or notes.";
 
   async function onSubmit(values: WatchlistFormValues) {
     setServerMessage(null);
@@ -113,6 +115,7 @@ export function WatchlistFormDialog({
       formData.set("symbol", values.symbol);
       formData.set("category", values.category);
       formData.set("targetPrice", values.targetPrice ?? "");
+      formData.set("currentPrice", values.currentPrice ?? "");
       formData.set("notes", values.notes ?? "");
 
       const result =
@@ -201,6 +204,14 @@ export function WatchlistFormDialog({
                 inputMode="decimal"
                 placeholder="200"
                 {...form.register("targetPrice")}
+              />
+            </FormField>
+
+            <FormField label="Current price (optional)" error={form.formState.errors.currentPrice?.message}>
+              <Input
+                inputMode="decimal"
+                placeholder="185"
+                {...form.register("currentPrice")}
               />
             </FormField>
           </div>

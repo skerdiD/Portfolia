@@ -10,8 +10,10 @@ import {
   X,
 } from "lucide-react";
 import type { AssetCategory } from "@/lib/db/schema";
-import type { WatchlistItemRecord } from "@/lib/watchlist/types";
-import { formatCurrency } from "@/lib/portfolio/formatters";
+import {
+  calculateWatchlistTargetInsight,
+  type WatchlistItemRecord,
+} from "@/lib/watchlist/types";
 import { WatchlistFormDialog } from "@/components/watchlist/watchlist-form-dialog";
 import { WatchlistTable } from "@/components/watchlist/watchlist-table";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -39,14 +41,14 @@ function countWithTargetPrice(items: WatchlistItemRecord[]) {
   return items.filter((item) => item.targetPrice !== null).length;
 }
 
-function averageTargetPrice(items: WatchlistItemRecord[]) {
-  const withTarget = items.filter((item) => item.targetPrice !== null);
-  if (withTarget.length === 0) {
-    return null;
-  }
-
-  const total = withTarget.reduce((sum, item) => sum + (item.targetPrice ?? 0), 0);
-  return total / withTarget.length;
+function countNearTarget(items: WatchlistItemRecord[]) {
+  return items.filter(
+    (item) =>
+      calculateWatchlistTargetInsight({
+        currentPrice: item.currentPrice,
+        targetPrice: item.targetPrice,
+      }).isNearTarget,
+  ).length;
 }
 
 export function WatchlistPageClient({ initialItems }: WatchlistPageClientProps) {
@@ -87,10 +89,10 @@ export function WatchlistPageClient({ initialItems }: WatchlistPageClientProps) 
     router.replace("/watchlist", { scroll: false });
   }, [quickAction, router]);
 
-  const { targetPriceCount, targetPriceAverage } = useMemo(
+  const { targetPriceCount, nearTargetCount } = useMemo(
     () => ({
       targetPriceCount: countWithTargetPrice(filteredItems),
-      targetPriceAverage: averageTargetPrice(filteredItems),
+      nearTargetCount: countNearTarget(filteredItems),
     }),
     [filteredItems],
   );
@@ -136,11 +138,11 @@ export function WatchlistPageClient({ initialItems }: WatchlistPageClientProps) 
           detail="Items with a target price set"
         />
         <StatCard
-          title="Avg Target Price"
-          value={targetPriceAverage !== null ? formatCurrency(targetPriceAverage) : "N/A"}
+          title="Near Target"
+          value={String(nearTargetCount)}
           icon={TrendingUp}
-          tone="primary"
-          detail="Average across target-priced items"
+          tone={nearTargetCount > 0 ? "success" : "primary"}
+          detail="Within 5% of target price"
         />
         <StatCard
           title="Category Scope"

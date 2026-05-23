@@ -10,6 +10,7 @@ describe("watchlist validation", () => {
       symbol: "nvda",
       category: "stock",
       targetPrice: "1000",
+      currentPrice: "950",
       notes: " wait for dip ",
     });
 
@@ -17,6 +18,7 @@ describe("watchlist validation", () => {
     if (parsed.success) {
       expect(parsed.data.notes).toBe("wait for dip");
       expect(parsed.data.targetPrice).toBe(1000);
+      expect(parsed.data.currentPrice).toBe(950);
     }
   });
 

@@ -35,7 +35,13 @@ export const watchlistFormSchema = z.object({
   assetName: trimmedString(1, 160),
   symbol: trimmedString(1, 32),
   category: watchlistCategorySchema,
-  targetPrice: z
+  targetPrice: priceStringSchema("target price"),
+  currentPrice: priceStringSchema("current price"),
+  notes: z.string().max(4000, "Notes must be 4000 characters or less"),
+});
+
+function priceStringSchema(label: string) {
+  return z
     .string()
     .trim()
     .refine((value) => {
@@ -44,21 +50,21 @@ export const watchlistFormSchema = z.object({
       }
 
       return isNonNegativeDecimalString(value);
-    }, "Enter a valid target price")
+    }, `Enter a valid ${label}`)
     .refine((value) => value.length === 0 || hasAllowedFractionDigits(value, 8), {
       message: "Use no more than 8 decimal places",
     })
     .refine((value) => value.length === 0 || hasAllowedIntegerDigits(value), {
       message: "Value is too large",
-    }),
-  notes: z.string().max(4000, "Notes must be 4000 characters or less"),
-});
+    });
+}
 
 export const watchlistInputSchema = z.object({
   assetName: trimmedString(1, 160),
   symbol: trimmedString(1, 32),
   category: watchlistCategorySchema,
   targetPrice: nullableNonNegativeFiniteNumber.optional(),
+  currentPrice: nullableNonNegativeFiniteNumber.optional(),
   notes: z
     .string()
     .trim()

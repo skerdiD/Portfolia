@@ -80,6 +80,7 @@ export const watchlistItems = pgTable(
     symbol: text("symbol").notNull(),
     category: assetCategoryEnum("category").notNull(),
     targetPrice: numeric("target_price", { precision: 20, scale: 8 }),
+    currentPrice: numeric("current_price", { precision: 20, scale: 8 }),
     notes: text("notes"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at").defaultNow().notNull(),

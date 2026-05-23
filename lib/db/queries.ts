@@ -367,6 +367,7 @@ export async function createWatchlistItemForUser(
         symbol: normalized.symbol,
         category: normalized.category,
         targetPrice: normalized.targetPrice,
+        currentPrice: normalized.currentPrice,
         notes: normalized.notes,
       })
       .returning();
@@ -397,6 +398,7 @@ export async function updateWatchlistItemForUser(
     symbol: parsed.symbol ?? "",
     category: parsed.category ?? "other",
     targetPrice: parsed.targetPrice,
+    currentPrice: parsed.currentPrice,
     notes: parsed.notes,
   });
 
@@ -422,6 +424,10 @@ export async function updateWatchlistItemForUser(
 
   if (parsed.targetPrice !== undefined) {
     updateData.targetPrice = normalized.targetPrice;
+  }
+
+  if (parsed.currentPrice !== undefined) {
+    updateData.currentPrice = normalized.currentPrice;
   }
 
   if (parsed.notes !== undefined) {

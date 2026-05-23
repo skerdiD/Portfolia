@@ -17,7 +17,16 @@ import {
 } from "@/lib/validations/watchlist";
 
 type WatchlistFieldErrors = Partial<
-  Record<"assetName" | "symbol" | "category" | "targetPrice" | "notes" | "watchlistItemId", string[]>
+  Record<
+    | "assetName"
+    | "symbol"
+    | "category"
+    | "targetPrice"
+    | "currentPrice"
+    | "notes"
+    | "watchlistItemId",
+    string[]
+  >
 >;
 
 export type WatchlistActionState = {
@@ -50,6 +59,7 @@ function toCreatePayload(formData: FormData) {
     symbol: getStringValue(formData.get("symbol")),
     category: getStringValue(formData.get("category")),
     targetPrice: getStringValue(formData.get("targetPrice")),
+    currentPrice: getStringValue(formData.get("currentPrice")),
     notes: getStringValue(formData.get("notes")) || null,
   };
 }
@@ -61,6 +71,7 @@ function toUpdatePayload(formData: FormData) {
     symbol: getStringValue(formData.get("symbol")),
     category: getStringValue(formData.get("category")),
     targetPrice: formData.has("targetPrice") ? getStringValue(formData.get("targetPrice")) : undefined,
+    currentPrice: formData.has("currentPrice") ? getStringValue(formData.get("currentPrice")) : undefined,
     notes: formData.has("notes") ? getStringValue(formData.get("notes")) : undefined,
   };
 }
@@ -80,6 +91,7 @@ function normalizePartialUpdatePayload(
     ...(input.symbol !== "" ? { symbol: input.symbol } : {}),
     ...(input.category !== "" ? { category: input.category } : {}),
     ...(input.targetPrice !== undefined ? { targetPrice: input.targetPrice } : {}),
+    ...(input.currentPrice !== undefined ? { currentPrice: input.currentPrice } : {}),
     ...(input.notes !== undefined ? { notes: input.notes } : {}),
   };
 }

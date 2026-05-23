@@ -22,6 +22,13 @@
       "when": 1774459000000,
       "tag": "0002_query_performance_indexes",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1779528300000,
+      "tag": "0003_watchlist_current_price",
+      "breakpoints": true
     }
   ]
 }
