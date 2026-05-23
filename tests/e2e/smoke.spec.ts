@@ -37,7 +37,7 @@ test("guest is blocked from protected route", async ({ page }) => {
 test("signed-in user can open dashboard", async ({ context, page }) => {
   await signInForE2E(context);
   await page.goto("/dashboard");
-  await expect(page.getByRole("heading", { name: "Investment dashboard" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "My Portfolio" })).toBeVisible();
 });
 
 test("signed-in user can open holdings", async ({ context, page }) => {
