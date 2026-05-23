@@ -108,6 +108,9 @@ export function SettingsPreferencesForm({
                 defaultValue={currentSettings.portfolioName}
                 placeholder="My Portfolio"
               />
+              <p className="text-sm leading-6 text-slate-500">
+                Used as the dashboard heading. If no saved setting exists, Portfolia falls back to My Portfolio.
+              </p>
               <FieldMessage messages={state.fieldErrors?.portfolioName} />
             </div>
 
@@ -117,6 +120,7 @@ export function SettingsPreferencesForm({
               label="Default currency"
               defaultValue={currentSettings.defaultCurrency}
               error={state.fieldErrors?.defaultCurrency?.[0]}
+              helper="Controls display formatting only. Values are not converted."
             >
               {currencyOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -131,6 +135,7 @@ export function SettingsPreferencesForm({
               label="Risk preference"
               defaultValue={currentSettings.riskPreference}
               error={state.fieldErrors?.riskPreference?.[0]}
+              helper="Saved as neutral profile context for your workspace."
             >
               {riskOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -145,6 +150,7 @@ export function SettingsPreferencesForm({
               label="Dashboard view"
               defaultValue={currentSettings.dashboardView}
               error={state.fieldErrors?.dashboardView?.[0]}
+              helper="Compact view keeps the dashboard tighter by hiding recent activity."
             >
               {dashboardViewOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -198,6 +204,7 @@ function SelectField({
   label,
   defaultValue,
   error,
+  helper,
   children,
 }: {
   id: string;
@@ -205,6 +212,7 @@ function SelectField({
   label: string;
   defaultValue: string;
   error?: string;
+  helper?: string;
   children: React.ReactNode;
 }) {
   return (
@@ -220,6 +228,7 @@ function SelectField({
       >
         {children}
       </select>
+      {helper ? <p className="text-sm leading-6 text-slate-500">{helper}</p> : null}
       <FieldMessage messages={error ? [error] : undefined} />
     </div>
   );

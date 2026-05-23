@@ -1,14 +1,12 @@
 import Link from "next/link";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import {
-  Globe2,
   Lock,
   ShieldCheck,
   UserCircle2,
 } from "lucide-react";
 import { getCurrentUserSettings } from "@/lib/db/queries";
 import { protectPageRequest } from "@/lib/security/arcjet";
-import { getDashboardViewLabel, getRiskPreferenceLabel } from "@/lib/settings/preferences";
 import { PageHeader } from "@/components/shared/page-header";
 import { SettingsPreferencesForm } from "@/components/settings/settings-preferences-form";
 import { Badge } from "@/components/ui/badge";
@@ -53,7 +51,7 @@ export default async function SettingsPage() {
     throw new Error(protection.message);
   }
 
-  const [{ userId }, user, settings] = await Promise.all([
+  const [, user, settings] = await Promise.all([
     auth(),
     currentUser(),
     getCurrentUserSettings(),
@@ -76,6 +74,10 @@ export default async function SettingsPage() {
       />
 
       <div className="grid gap-6 xl:grid-cols-2">
+        <div className="xl:col-span-2">
+          <SettingsPreferencesForm settings={settings} />
+        </div>
+
         <Card className="surface motion-card rounded-[1.75rem]">
           <CardHeader className="flex flex-row items-center gap-3 space-y-0">
             <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
@@ -104,9 +106,9 @@ export default async function SettingsPage() {
 
             <div className="grid gap-4 sm:grid-cols-2">
               <SettingRow
-                label="User ID"
-                value={userId || "Unknown"}
-                valueClassName="break-all font-mono text-[0.95rem] sm:text-sm"
+                label="Account source"
+                value="Clerk"
+                helper="Read-only sign-in identity"
               />
               <SettingRow
                 label="Member since"
@@ -128,8 +130,6 @@ export default async function SettingsPage() {
             </div>
           </CardContent>
         </Card>
-
-        <SettingsPreferencesForm settings={settings} />
 
         <Card className="surface motion-card rounded-[1.75rem]">
           <CardHeader className="flex flex-row items-center gap-3 space-y-0">
@@ -185,25 +185,6 @@ export default async function SettingsPage() {
           </CardContent>
         </Card>
       </div>
-
-      <Card className="surface motion-card rounded-[1.75rem]">
-        <CardContent className="flex flex-col gap-3 p-5 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-slate-100 text-slate-600">
-              <Globe2 className="h-5 w-5" />
-            </div>
-            <div>
-              <div className="font-medium text-slate-950">Environment health</div>
-              <div className="text-sm text-slate-600">
-                {settings.portfolioName} uses {settings.defaultCurrency} labels, {getRiskPreferenceLabel(settings.riskPreference).toLowerCase()} risk context, and {getDashboardViewLabel(settings.dashboardView).toLowerCase()}.
-              </div>
-            </div>
-          </div>
-          <Badge variant="outline" className="w-fit border-slate-200 bg-white px-3 py-1.5">
-            Fintech-ready baseline
-          </Badge>
-        </CardContent>
-      </Card>
     </div>
   );
 }
