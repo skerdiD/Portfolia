@@ -7,6 +7,7 @@ import { db } from "@/lib/db";
 import {
   holdings,
   portfolioSnapshots,
+  userSettings,
   watchlistItems,
   type Holding,
   type WatchlistItem,
@@ -44,6 +45,12 @@ import {
   type CreateWatchlistItemInput,
   type UpdateWatchlistItemInput,
 } from "@/lib/validations/watchlist";
+import {
+  mapUserSettingsRowToRecord,
+  normalizeUserSettingsInput,
+  type UserSettingsInput,
+  type UserSettingsRecord,
+} from "@/lib/settings/preferences";
 
 export const WATCHLIST_DUPLICATE_SYMBOL_MESSAGE =
   "This symbol already exists in your watchlist.";
@@ -475,6 +482,63 @@ export async function deleteWatchlistItemForUser(userId: string, watchlistItemId
 export async function deleteWatchlistItemForCurrentUser(watchlistItemId: string) {
   const userId = await requireAuthenticatedUserId();
   return deleteWatchlistItemForUser(userId, watchlistItemId);
+}
+
+const getUserSettingsByUserCached = cache(
+  async (userId: string): Promise<UserSettingsRecord> => {
+    const [row] = await db
+      .select()
+      .from(userSettings)
+      .where(eq(userSettings.userId, userId))
+      .limit(1);
+
+    return mapUserSettingsRowToRecord(row);
+  },
+);
+
+export async function getUserSettingsByUser(userId: string) {
+  return getUserSettingsByUserCached(userId);
+}
+
+export async function getCurrentUserSettings() {
+  const userId = await requireAuthenticatedUserId();
+  return getUserSettingsByUserCached(userId);
+}
+
+export async function upsertUserSettingsForUser(
+  userId: string,
+  input: UserSettingsInput,
+): Promise<UserSettingsRecord> {
+  const normalized = normalizeUserSettingsInput(input);
+
+  const [row] = await db
+    .insert(userSettings)
+    .values({
+      userId,
+      portfolioName: normalized.portfolioName,
+      defaultCurrency: normalized.defaultCurrency,
+      riskPreference: normalized.riskPreference,
+      dashboardView: normalized.dashboardView,
+      updatedAt: new Date(),
+    })
+    .onConflictDoUpdate({
+      target: userSettings.userId,
+      set: {
+        portfolioName: normalized.portfolioName,
+        defaultCurrency: normalized.defaultCurrency,
+        riskPreference: normalized.riskPreference,
+        dashboardView: normalized.dashboardView,
+        updatedAt: new Date(),
+      },
+    })
+    .returning();
+
+  return mapUserSettingsRowToRecord(row);
+}
+
+export async function upsertCurrentUserSettings(input: UserSettingsInput) {
+  const userId = await requireAuthenticatedUserId();
+  return upsertUserSettingsForUser(userId, input);
 }
 
 export async function upsertPortfolioSnapshotForUser(

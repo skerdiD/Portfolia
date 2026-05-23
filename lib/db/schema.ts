@@ -18,7 +18,27 @@ export const assetCategoryEnum = pgEnum("asset_category", [
   "other",
 ]);
 
+export const displayCurrencyEnum = pgEnum("display_currency", [
+  "USD",
+  "EUR",
+  "GBP",
+]);
+
+export const riskPreferenceEnum = pgEnum("risk_preference", [
+  "conservative",
+  "balanced",
+  "aggressive",
+]);
+
+export const dashboardViewEnum = pgEnum("dashboard_view", [
+  "standard",
+  "compact",
+]);
+
 export type AssetCategory = (typeof assetCategoryEnum.enumValues)[number];
+export type DisplayCurrency = (typeof displayCurrencyEnum.enumValues)[number];
+export type RiskPreference = (typeof riskPreferenceEnum.enumValues)[number];
+export type DashboardView = (typeof dashboardViewEnum.enumValues)[number];
 
 export const holdings = pgTable(
   "holdings",
@@ -98,9 +118,28 @@ export const watchlistItems = pgTable(
   }),
 );
 
+export const userSettings = pgTable(
+  "user_settings",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: text("user_id").notNull(),
+    portfolioName: text("portfolio_name").default("My Portfolio").notNull(),
+    defaultCurrency: displayCurrencyEnum("default_currency").default("USD").notNull(),
+    riskPreference: riskPreferenceEnum("risk_preference").default("balanced").notNull(),
+    dashboardView: dashboardViewEnum("dashboard_view").default("standard").notNull(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+    updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  },
+  (table) => ({
+    userIdUnique: uniqueIndex("user_settings_user_id_unique").on(table.userId),
+  }),
+);
+
 export type Holding = typeof holdings.$inferSelect;
 export type NewHolding = typeof holdings.$inferInsert;
 export type PortfolioSnapshot = typeof portfolioSnapshots.$inferSelect;
 export type NewPortfolioSnapshot = typeof portfolioSnapshots.$inferInsert;
 export type WatchlistItem = typeof watchlistItems.$inferSelect;
 export type NewWatchlistItem = typeof watchlistItems.$inferInsert;
+export type UserSettings = typeof userSettings.$inferSelect;
+export type NewUserSettings = typeof userSettings.$inferInsert;

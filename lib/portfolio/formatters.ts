@@ -1,9 +1,6 @@
-const currencyFormatter = new Intl.NumberFormat("en-US", {
-  style: "currency",
-  currency: "USD",
-  minimumFractionDigits: 2,
-  maximumFractionDigits: 2,
-});
+import type { DisplayCurrency } from "@/lib/db/schema";
+
+const currencyFormatterCache = new Map<DisplayCurrency, Intl.NumberFormat>();
 
 const dateFormatter = new Intl.DateTimeFormat("en-US", {
   month: "short",
@@ -13,8 +10,23 @@ const dateFormatter = new Intl.DateTimeFormat("en-US", {
 
 const numberFormatterCache = new Map<number, Intl.NumberFormat>();
 
-export function formatCurrency(value: number) {
-  return currencyFormatter.format(value);
+export function formatCurrency(value: number, currency: DisplayCurrency = "USD") {
+  const cached = currencyFormatterCache.get(currency);
+
+  if (cached) {
+    return cached.format(value);
+  }
+
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency,
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+
+  currencyFormatterCache.set(currency, formatter);
+
+  return formatter.format(value);
 }
 
 export function formatPercentage(value: number) {

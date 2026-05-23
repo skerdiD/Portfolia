@@ -1,19 +1,19 @@
 import Link from "next/link";
 import { auth, currentUser } from "@clerk/nextjs/server";
 import {
-  Bell,
   Globe2,
   Lock,
   ShieldCheck,
-  SlidersHorizontal,
   UserCircle2,
 } from "lucide-react";
+import { getCurrentUserSettings } from "@/lib/db/queries";
 import { protectPageRequest } from "@/lib/security/arcjet";
+import { getDashboardViewLabel, getRiskPreferenceLabel } from "@/lib/settings/preferences";
 import { PageHeader } from "@/components/shared/page-header";
+import { SettingsPreferencesForm } from "@/components/settings/settings-preferences-form";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { formatDate } from "@/lib/portfolio/formatters";
 import { cn } from "@/lib/utils";
 
@@ -46,37 +46,6 @@ function SettingRow({
   );
 }
 
-function PolicyRow({
-  title,
-  description,
-  status,
-}: {
-  title: string;
-  description: string;
-  status: "active" | "off" | "limited";
-}) {
-  const statusLabel =
-    status === "active" ? "Active" : status === "limited" ? "Limited" : "Off";
-  const statusStyle =
-    status === "active"
-      ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-      : status === "limited"
-        ? "border-amber-200 bg-amber-50 text-amber-700"
-        : "border-slate-200 bg-slate-100 text-slate-600";
-
-  return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-slate-200/80 bg-white/90 px-4 py-4 sm:flex-row sm:items-start sm:justify-between">
-      <div>
-        <div className="font-medium text-slate-950">{title}</div>
-        <div className="mt-1 text-sm leading-6 text-slate-600">{description}</div>
-      </div>
-      <Badge variant="outline" className={cn("border", statusStyle)}>
-        {statusLabel}
-      </Badge>
-    </div>
-  );
-}
-
 export default async function SettingsPage() {
   const protection = await protectPageRequest();
 
@@ -84,7 +53,11 @@ export default async function SettingsPage() {
     throw new Error(protection.message);
   }
 
-  const [{ userId }, user] = await Promise.all([auth(), currentUser()]);
+  const [{ userId }, user, settings] = await Promise.all([
+    auth(),
+    currentUser(),
+    getCurrentUserSettings(),
+  ]);
   const primaryEmail = user?.emailAddresses.find(
     (entry) => entry.id === user?.primaryEmailAddressId,
   )?.emailAddress;
@@ -94,10 +67,10 @@ export default async function SettingsPage() {
       <PageHeader
         eyebrow="Workspace preferences"
         title="Settings"
-        description="Manage account identity, portfolio defaults, alert policies, and security posture for your investment workspace."
+        description="Manage account identity, portfolio display defaults, risk context, and security posture for your investment workspace."
         actions={
           <Badge variant="secondary" className="rounded-full px-3 py-1.5">
-            Synced with Clerk
+            {settings.defaultCurrency} workspace
           </Badge>
         }
       />
@@ -156,79 +129,7 @@ export default async function SettingsPage() {
           </CardContent>
         </Card>
 
-        <Card className="surface motion-card rounded-[1.75rem]">
-          <CardHeader className="flex flex-row items-center gap-3 space-y-0">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-cyan-50 text-cyan-700">
-              <SlidersHorizontal className="h-5 w-5" />
-            </div>
-            <div>
-              <CardTitle className="text-xl font-semibold text-slate-950">
-                Portfolio defaults
-              </CardTitle>
-              <p className="text-sm text-muted-foreground">
-                Display preferences applied across dashboard, holdings, and analytics.
-              </p>
-            </div>
-          </CardHeader>
-          <CardContent className="grid gap-4">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <div className="space-y-2">
-                <label htmlFor="base-currency" className="text-sm font-medium text-slate-700">
-                  Base currency
-                </label>
-                <Input id="base-currency" defaultValue="USD" readOnly />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="default-range" className="text-sm font-medium text-slate-700">
-                  Default analytics range
-                </label>
-                <Input id="default-range" defaultValue="90D" readOnly />
-              </div>
-            </div>
-
-            <div className="grid gap-4 sm:grid-cols-2">
-              <SettingRow label="Number precision" value="Currency: 2 | Quantity: 8" />
-              <SettingRow label="Timezone" value="Europe/Berlin" helper="Detected from workspace" />
-            </div>
-
-            <div className="rounded-2xl border border-slate-200/80 bg-slate-50/70 px-4 py-3 text-sm text-slate-600">
-              Defaults shown here reflect the current workspace profile used across charts and table formatting.
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card className="surface motion-card rounded-[1.75rem]">
-          <CardHeader className="flex flex-row items-center gap-3 space-y-0">
-            <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-amber-50 text-amber-700">
-              <Bell className="h-5 w-5" />
-            </div>
-            <div>
-              <CardTitle className="text-xl font-semibold text-slate-950">
-                Alert policies
-              </CardTitle>
-              <p className="text-sm text-muted-foreground">
-                Notification preferences for account events and portfolio changes.
-              </p>
-            </div>
-          </CardHeader>
-          <CardContent className="grid gap-3">
-            <PolicyRow
-              title="Price movement alerts"
-              description="Send alerts when tracked assets move beyond configured thresholds."
-              status="active"
-            />
-            <PolicyRow
-              title="Weekly portfolio digest"
-              description="Summary email with return, allocation changes, and top movers."
-              status="limited"
-            />
-            <PolicyRow
-              title="Marketing announcements"
-              description="Non-critical release updates and educational campaign emails."
-              status="off"
-            />
-          </CardContent>
-        </Card>
+        <SettingsPreferencesForm settings={settings} />
 
         <Card className="surface motion-card rounded-[1.75rem]">
           <CardHeader className="flex flex-row items-center gap-3 space-y-0">
@@ -294,7 +195,7 @@ export default async function SettingsPage() {
             <div>
               <div className="font-medium text-slate-950">Environment health</div>
               <div className="text-sm text-slate-600">
-                App shell, protected routes, and data fetches are configured for production use.
+                {settings.portfolioName} uses {settings.defaultCurrency} labels, {getRiskPreferenceLabel(settings.riskPreference).toLowerCase()} risk context, and {getDashboardViewLabel(settings.dashboardView).toLowerCase()}.
               </div>
             </div>
           </div>

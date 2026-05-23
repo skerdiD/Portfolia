@@ -15,6 +15,10 @@ import type {
   PerformanceHistoryPoint,
   PortfolioSummaryData,
 } from "@/lib/portfolio/calculations";
+import {
+  getRiskPreferenceLabel,
+  type UserSettingsRecord,
+} from "@/lib/settings/preferences";
 import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
 import { PageHeader } from "@/components/shared/page-header";
 import { StatCard } from "@/components/shared/stat-card";
@@ -33,6 +37,7 @@ type DashboardPageClientProps = {
   summary: PortfolioSummaryData;
   allocation: AllocationPoint[];
   performanceHistory: PerformanceHistoryPoint[];
+  settings: UserSettingsRecord;
 };
 
 type TimeRange = "all" | "90d" | "30d" | "7d";
@@ -149,6 +154,7 @@ export function DashboardPageClient({
   summary,
   allocation,
   performanceHistory,
+  settings,
 }: DashboardPageClientProps) {
   const [timeRange, setTimeRange] = useState<TimeRange>("all");
   const [category, setCategory] = useState<CategoryFilter>("all");
@@ -201,13 +207,16 @@ export function DashboardPageClient({
   );
 
   const hasHoldings = holdings.length > 0;
+  const isCompactDashboard = settings.dashboardView === "compact";
+  const currency = settings.defaultCurrency;
+  const riskLabel = getRiskPreferenceLabel(settings.riskPreference).toLowerCase();
 
   return (
     <div className="flex flex-col gap-5">
       <PageHeader
         eyebrow="Portfolio overview"
-        title="Investment dashboard"
-        description="Monitor portfolio value, allocation, and performance through a polished analytics workspace designed like a real fintech product."
+        title={settings.portfolioName}
+        description={`Monitor value, allocation, and performance for your ${riskLabel} portfolio profile.`}
         density="compact"
         actions={
           <div className="flex flex-wrap items-center gap-2">
@@ -252,14 +261,14 @@ export function DashboardPageClient({
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             <StatCard
               title="Portfolio Value"
-              value={formatCurrency(filteredSummary.currentValue)}
+              value={formatCurrency(filteredSummary.currentValue, currency)}
               icon={BadgeDollarSign}
               tone="success"
-              detail="Current total market value"
+              detail={`Current total market value in ${currency}`}
             />
             <StatCard
               title="Invested Capital"
-              value={formatCurrency(filteredSummary.investedAmount)}
+              value={formatCurrency(filteredSummary.investedAmount, currency)}
               icon={Wallet2}
               tone="primary"
               detail="Capital deployed across holdings"
@@ -268,6 +277,7 @@ export function DashboardPageClient({
               title="Unrealized P&L"
               value={`${filteredSummary.gainLoss >= 0 ? "+" : "-"}${formatCurrency(
                 Math.abs(filteredSummary.gainLoss),
+                currency,
               )}`}
               icon={ArrowUpRight}
               tone={filteredSummary.gainLoss >= 0 ? "success" : "danger"}
@@ -333,7 +343,7 @@ export function DashboardPageClient({
             />
           </div>
 
-          <RecentActivityCard holdings={filteredHoldings} />
+          {isCompactDashboard ? null : <RecentActivityCard holdings={filteredHoldings} />}
         </>
       ) : (
         <EmptyDashboardState />

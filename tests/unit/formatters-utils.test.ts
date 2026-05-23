@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 describe("formatters and utils", () => {
   it("formats currency and percentage", () => {
     expect(formatCurrency(1234.5)).toBe("$1,234.50");
+    expect(formatCurrency(1234.5, "EUR")).toBe("€1,234.50");
     expect(formatPercentage(2.345)).toBe("+2.35%");
     expect(formatPercentage(-2.345)).toBe("-2.35%");
   });

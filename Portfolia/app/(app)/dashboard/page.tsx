@@ -1,7 +1,12 @@
 import { protectPageRequest } from "@/lib/security/arcjet";
-import { getCurrentUserAnalyticsChartData, listCurrentUserHoldings } from "@/lib/db/queries";
+import {
+  getCurrentUserAnalyticsChartData,
+  getCurrentUserSettings,
+  listCurrentUserHoldings,
+} from "@/lib/db/queries";
 import { DashboardPageClient } from "@/components/dashboard/dashboard-page-client";
 import { e2eMockHoldings, getE2EAnalyticsData } from "@/lib/testing/e2e-mocks";
+import { defaultUserSettings } from "@/lib/settings/preferences";
 
 export default async function DashboardPage() {
   if (process.env.E2E_TEST_MODE === "1") {
@@ -13,6 +18,7 @@ export default async function DashboardPage() {
         summary={analytics.summary}
         allocation={analytics.allocation}
         performanceHistory={analytics.performanceHistory}
+        settings={defaultUserSettings}
       />
     );
   }
@@ -23,9 +29,10 @@ export default async function DashboardPage() {
     throw new Error(protection.message);
   }
 
-  const [holdings, analytics] = await Promise.all([
+  const [holdings, analytics, settings] = await Promise.all([
     listCurrentUserHoldings(),
     getCurrentUserAnalyticsChartData(),
+    getCurrentUserSettings(),
   ]);
 
   return (
@@ -34,6 +41,7 @@ export default async function DashboardPage() {
       summary={analytics.summary}
       allocation={analytics.allocation}
       performanceHistory={analytics.performanceHistory}
+      settings={settings}
     />
   );
 }
