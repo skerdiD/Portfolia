@@ -19,6 +19,11 @@ import type {
   PerformanceHistoryPoint,
   PortfolioSummaryData,
 } from "@/lib/portfolio/calculations";
+import {
+  calculateAllocationByCategory,
+  calculateAssetPerformanceInsights,
+  calculatePortfolioSummary,
+} from "@/lib/portfolio/calculations";
 import { filterHoldingsByQueryAndCategory } from "@/lib/portfolio/holdings-helpers";
 import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
 import { PageHeader } from "@/components/shared/page-header";
@@ -109,60 +114,6 @@ function filterHistoryByRange(
   });
 }
 
-function buildSummary(holdings: HoldingRecord[]): PortfolioSummaryData {
-  const investedAmount = holdings.reduce((sum, item) => sum + item.investedAmount, 0);
-  const currentValue = holdings.reduce((sum, item) => sum + item.currentValue, 0);
-  const gainLoss = currentValue - investedAmount;
-
-  return {
-    holdingsCount: holdings.length,
-    investedAmount,
-    currentValue,
-    gainLoss,
-    returnPercentage: investedAmount > 0 ? (gainLoss / investedAmount) * 100 : 0,
-  };
-}
-
-function buildAllocation(holdings: HoldingRecord[]): AllocationPoint[] {
-  const grouped = new Map<
-    HoldingRecord["category"],
-    {
-      investedAmount: number;
-      currentValue: number;
-      gainLoss: number;
-    }
-  >();
-
-  for (const holding of holdings) {
-    const current = grouped.get(holding.category) ?? {
-      investedAmount: 0,
-      currentValue: 0,
-      gainLoss: 0,
-    };
-
-    current.investedAmount += holding.investedAmount;
-    current.currentValue += holding.currentValue;
-    current.gainLoss += holding.gainLoss;
-
-    grouped.set(holding.category, current);
-  }
-
-  const totalCurrentValue = Array.from(grouped.values()).reduce(
-    (sum, item) => sum + item.currentValue,
-    0,
-  );
-
-  return Array.from(grouped.entries())
-    .map(([category, value]) => ({
-      category,
-      investedAmount: value.investedAmount,
-      currentValue: value.currentValue,
-      gainLoss: value.gainLoss,
-      percentage: totalCurrentValue > 0 ? (value.currentValue / totalCurrentValue) * 100 : 0,
-    }))
-    .sort((a, b) => b.currentValue - a.currentValue);
-}
-
 function categoryLabel(category: CategoryFilter) {
   if (category === "all") return "All assets";
   if (category === "etf") return "ETFs";
@@ -196,7 +147,7 @@ export function AnalyticsPageClient({
       return summary;
     }
 
-    return buildSummary(filteredHoldings);
+    return calculatePortfolioSummary(filteredHoldings);
   }, [category, filteredHoldings, hasActiveAssetQuery, summary]);
 
   const filteredAllocation = useMemo(() => {
@@ -204,7 +155,7 @@ export function AnalyticsPageClient({
       return allocation;
     }
 
-    return buildAllocation(filteredHoldings);
+    return calculateAllocationByCategory(filteredHoldings);
   }, [allocation, category, filteredHoldings, hasActiveAssetQuery]);
 
   const filteredPerformance = useMemo(() => {
@@ -223,26 +174,10 @@ export function AnalyticsPageClient({
     }));
   }, [category, filteredSummary, hasActiveAssetQuery, performanceHistory, timeRange]);
 
-  const { bestPerformer, worstPerformer } = useMemo(() => {
-    if (filteredHoldings.length === 0) {
-      return { bestPerformer: null, worstPerformer: null };
-    }
-
-    let best = filteredHoldings[0];
-    let worst = filteredHoldings[0];
-
-    for (const holding of filteredHoldings) {
-      if (holding.returnPercentage > best.returnPercentage) {
-        best = holding;
-      }
-
-      if (holding.returnPercentage < worst.returnPercentage) {
-        worst = holding;
-      }
-    }
-
-    return { bestPerformer: best, worstPerformer: worst };
-  }, [filteredHoldings]);
+  const { bestPerformer, worstPerformer } = useMemo(
+    () => calculateAssetPerformanceInsights(filteredHoldings),
+    [filteredHoldings],
+  );
 
   if (holdings.length === 0) {
     return <EmptyDashboardState />;

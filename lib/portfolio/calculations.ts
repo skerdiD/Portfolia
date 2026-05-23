@@ -57,6 +57,11 @@ export type PerformanceHistoryPoint = {
   returnPercentage: number;
 };
 
+export type AssetPerformanceInsights = {
+  bestPerformer: HoldingRecord | null;
+  worstPerformer: HoldingRecord | null;
+};
+
 export function toNumber(value: NumericLike) {
   if (typeof value === "number") {
     return Number.isFinite(value) ? value : 0;
@@ -216,6 +221,57 @@ export function calculateAllocationByCategory(
           : 0,
     }))
     .sort((a, b) => b.currentValue - a.currentValue);
+}
+
+function getComparableReturn(holding: HoldingRecord) {
+  return Number.isFinite(holding.returnPercentage)
+    ? holding.returnPercentage
+    : 0;
+}
+
+function comparePerformerStrength(a: HoldingRecord, b: HoldingRecord) {
+  const returnDifference = getComparableReturn(a) - getComparableReturn(b);
+
+  if (returnDifference !== 0) {
+    return returnDifference;
+  }
+
+  const gainLossDifference = a.gainLoss - b.gainLoss;
+
+  if (gainLossDifference !== 0) {
+    return gainLossDifference;
+  }
+
+  return a.currentValue - b.currentValue;
+}
+
+export function calculateAssetPerformanceInsights(
+  holdings: HoldingRecord[],
+): AssetPerformanceInsights {
+  if (holdings.length === 0) {
+    return {
+      bestPerformer: null,
+      worstPerformer: null,
+    };
+  }
+
+  let bestPerformer = holdings[0];
+  let worstPerformer = holdings[0];
+
+  for (const holding of holdings) {
+    if (comparePerformerStrength(holding, bestPerformer) > 0) {
+      bestPerformer = holding;
+    }
+
+    if (comparePerformerStrength(holding, worstPerformer) < 0) {
+      worstPerformer = holding;
+    }
+  }
+
+  return {
+    bestPerformer,
+    worstPerformer,
+  };
 }
 
 export function buildPerformanceHistoryFromSnapshots(

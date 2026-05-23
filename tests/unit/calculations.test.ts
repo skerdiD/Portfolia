@@ -1,4 +1,5 @@
 import {
+  calculateAssetPerformanceInsights,
   buildPerformanceHistory,
   calculateAllocationByCategory,
   calculateHoldingDerivedValues,
@@ -22,6 +23,21 @@ describe("portfolio calculations", () => {
     });
   });
 
+  it("returns zero return percentage when cost basis is unavailable", () => {
+    const result = calculateHoldingDerivedValues({
+      quantity: "10",
+      averageBuyPrice: "0",
+      currentPrice: "12",
+    });
+
+    expect(result).toEqual({
+      investedAmount: 0,
+      currentValue: 120,
+      gainLoss: 120,
+      returnPercentage: 0,
+    });
+  });
+
   it("calculates portfolio summary totals", () => {
     const summary = calculatePortfolioSummary(holdingFixtures);
 
@@ -40,6 +56,48 @@ describe("portfolio calculations", () => {
     expect(allocation.map((item) => item.category)).toEqual(["crypto", "stock", "etf"]);
     expect(allocation[0].currentValue).toBe(4500);
     expect(allocation[0].percentage).toBe(68.6);
+  });
+
+  it("identifies best and worst asset performers by return percentage", () => {
+    const insights = calculateAssetPerformanceInsights(holdingFixtures);
+
+    expect(insights.bestPerformer?.symbol).toBe("AAPL");
+    expect(insights.bestPerformer?.returnPercentage).toBe(20);
+    expect(insights.bestPerformer?.gainLoss).toBe(200);
+    expect(insights.worstPerformer?.symbol).toBe("BTC");
+    expect(insights.worstPerformer?.returnPercentage).toBe(-10);
+    expect(insights.worstPerformer?.gainLoss).toBe(-500);
+  });
+
+  it("uses gain loss as a tie-breaker for asset performer insights", () => {
+    const insights = calculateAssetPerformanceInsights([
+      {
+        ...holdingFixtures[0],
+        id: "asset-1",
+        symbol: "AAA",
+        returnPercentage: 10,
+        gainLoss: 50,
+        currentValue: 550,
+      },
+      {
+        ...holdingFixtures[1],
+        id: "asset-2",
+        symbol: "BBB",
+        returnPercentage: 10,
+        gainLoss: 75,
+        currentValue: 825,
+      },
+    ]);
+
+    expect(insights.bestPerformer?.symbol).toBe("BBB");
+    expect(insights.worstPerformer?.symbol).toBe("AAA");
+  });
+
+  it("returns empty performer insights when there are no holdings", () => {
+    expect(calculateAssetPerformanceInsights([])).toEqual({
+      bestPerformer: null,
+      worstPerformer: null,
+    });
   });
 
   it("falls back to derived history when snapshots are too sparse", () => {
