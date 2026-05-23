@@ -1,14 +1,16 @@
 "use client";
 
 import type { HoldingRecord } from "@/lib/portfolio/calculations";
+import type { DisplayCurrency } from "@/lib/db/schema";
 import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 type TopHoldingsCardProps = {
   holdings: HoldingRecord[];
+  currency?: DisplayCurrency;
 };
 
-export function TopHoldingsCard({ holdings }: TopHoldingsCardProps) {
+export function TopHoldingsCard({ holdings, currency }: TopHoldingsCardProps) {
   return (
     <Card className="surface motion-card rounded-[1.75rem]">
       <CardHeader>
@@ -34,7 +36,7 @@ export function TopHoldingsCard({ holdings }: TopHoldingsCardProps) {
 
               <div className="text-right">
                 <div className="font-semibold text-slate-950">
-                  {formatCurrency(holding.currentValue)}
+                  {formatCurrency(holding.currentValue, currency)}
                 </div>
                 <div
                   className={`mt-1 text-sm font-medium ${

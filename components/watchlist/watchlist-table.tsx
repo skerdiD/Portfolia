@@ -1,8 +1,12 @@
 "use client";
 
 import { Pencil, Trash2 } from "lucide-react";
-import type { AssetCategory } from "@/lib/db/schema";
-import { formatCurrency, formatDate } from "@/lib/portfolio/formatters";
+import type { AssetCategory, DisplayCurrency } from "@/lib/db/schema";
+import {
+  BASE_CURRENCY,
+  formatCurrency,
+  formatDate,
+} from "@/lib/portfolio/formatters";
 import {
   calculateWatchlistTargetInsight,
   type WatchlistItemRecord,
@@ -26,6 +30,7 @@ import { cn } from "@/lib/utils";
 
 type WatchlistTableProps = {
   items: WatchlistItemRecord[];
+  displayCurrency?: DisplayCurrency;
   onItemUpdated?: (item: WatchlistItemRecord) => void;
   onItemDeleted?: (watchlistItemId: string) => void;
 };
@@ -53,8 +58,11 @@ const targetStatusBadgeStyle: Record<WatchlistTargetStatus, string> = {
   above: "border-amber-200 bg-amber-50 text-amber-700",
 };
 
-function formatSignedCurrency(value: number) {
-  return `${value >= 0 ? "+" : "-"}${formatCurrency(Math.abs(value))}`;
+function formatSignedCurrency(value: number, displayCurrency: DisplayCurrency) {
+  return `${value >= 0 ? "+" : "-"}${formatCurrency(
+    Math.abs(value),
+    displayCurrency,
+  )}`;
 }
 
 function formatUnsignedPercentage(value: number) {
@@ -63,8 +71,10 @@ function formatUnsignedPercentage(value: number) {
 
 function TargetProgress({
   insight,
+  displayCurrency,
 }: {
   insight: WatchlistTargetInsight;
+  displayCurrency: DisplayCurrency;
 }) {
   if (insight.progressPercentage === null) {
     return (
@@ -89,7 +99,7 @@ function TargetProgress({
       <div className="mt-1 flex items-center justify-between gap-3 text-xs text-slate-500">
         <span>{formatUnsignedPercentage(insight.progressPercentage)} of target</span>
         {insight.priceGap !== null ? (
-          <span>{formatSignedCurrency(insight.priceGap)} vs target</span>
+          <span>{formatSignedCurrency(insight.priceGap, displayCurrency)} vs target</span>
         ) : null}
       </div>
     </div>
@@ -120,9 +130,11 @@ function TargetStatusBadge({
 
 function WatchlistTargetSummary({
   item,
+  displayCurrency,
   align = "right",
 }: {
   item: WatchlistItemRecord;
+  displayCurrency: DisplayCurrency;
   align?: "left" | "right";
 }) {
   const insight = calculateWatchlistTargetInsight({
@@ -134,23 +146,30 @@ function WatchlistTargetSummary({
     <div className={cn(align === "right" ? "text-right" : "text-left")}>
       <div className="grid gap-1 text-sm">
         <div className="font-semibold text-slate-950">
-          {item.currentPrice === null ? "Current N/A" : formatCurrency(item.currentPrice)}
+          {item.currentPrice === null
+            ? "Current N/A"
+            : formatCurrency(item.currentPrice, displayCurrency)}
         </div>
         <div className="text-xs text-slate-500">
-          Target {item.targetPrice === null ? "not set" : formatCurrency(item.targetPrice)}
+          Target{" "}
+          {item.targetPrice === null
+            ? "not set"
+            : formatCurrency(item.targetPrice, displayCurrency)}
         </div>
       </div>
-      <TargetProgress insight={insight} />
+      <TargetProgress insight={insight} displayCurrency={displayCurrency} />
     </div>
   );
 }
 
 function WatchlistActions({
   item,
+  displayCurrency,
   onItemUpdated,
   onItemDeleted,
 }: {
   item: WatchlistItemRecord;
+  displayCurrency?: DisplayCurrency;
   onItemUpdated?: (item: WatchlistItemRecord) => void;
   onItemDeleted?: (watchlistItemId: string) => void;
 }) {
@@ -175,6 +194,7 @@ function WatchlistActions({
 
       <DeleteWatchlistItemDialog
         watchlistItem={item}
+        displayCurrency={displayCurrency}
         onDeleted={(watchlistItemId) => {
           onItemDeleted?.(watchlistItemId);
         }}
@@ -197,6 +217,7 @@ function WatchlistActions({
 
 export function WatchlistTable({
   items,
+  displayCurrency = BASE_CURRENCY,
   onItemUpdated,
   onItemDeleted,
 }: WatchlistTableProps) {
@@ -244,7 +265,10 @@ export function WatchlistTable({
                     </Badge>
                   </TableCell>
                   <TableCell className="w-[270px] px-5 py-4 align-top">
-                    <WatchlistTargetSummary item={item} />
+                    <WatchlistTargetSummary
+                      item={item}
+                      displayCurrency={displayCurrency}
+                    />
                   </TableCell>
                   <TableCell className="px-5 py-4 text-right align-top">
                     <TargetStatusBadge insight={insight} />
@@ -255,6 +279,7 @@ export function WatchlistTable({
                   <TableCell className="px-5 py-4 text-right align-top">
                     <WatchlistActions
                       item={item}
+                      displayCurrency={displayCurrency}
                       onItemUpdated={onItemUpdated}
                       onItemDeleted={onItemDeleted}
                     />
@@ -299,7 +324,11 @@ export function WatchlistTable({
                   <TargetStatusBadge insight={insight} />
                 </div>
                 <div className="mt-3">
-                  <WatchlistTargetSummary item={item} align="left" />
+                  <WatchlistTargetSummary
+                    item={item}
+                    displayCurrency={displayCurrency}
+                    align="left"
+                  />
                 </div>
               </div>
 
@@ -325,6 +354,7 @@ export function WatchlistTable({
               <div className="mt-4">
                 <WatchlistActions
                   item={item}
+                  displayCurrency={displayCurrency}
                   onItemUpdated={onItemUpdated}
                   onItemDeleted={onItemDeleted}
                 />

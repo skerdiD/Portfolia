@@ -11,11 +11,18 @@ import {
   YAxis,
 } from "recharts";
 import type { PerformanceHistoryPoint } from "@/lib/portfolio/calculations";
+import type { DisplayCurrency } from "@/lib/db/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
+import {
+  BASE_CURRENCY,
+  formatCompactCurrency,
+  formatCurrency,
+  formatPercentage,
+} from "@/lib/portfolio/formatters";
 
 type AdvancedPerformanceChartProps = {
   data: PerformanceHistoryPoint[];
+  displayCurrency?: DisplayCurrency;
 };
 
 const axisDateFormatter = new Intl.DateTimeFormat("en-US", {
@@ -28,27 +35,14 @@ function formatAxisDate(value: string) {
   return axisDateFormatter.format(date);
 }
 
-function formatYAxisValue(value: number | string) {
+function formatYAxisValue(value: number | string, displayCurrency: DisplayCurrency) {
   const numericValue = typeof value === "number" ? value : Number(value ?? 0);
-  const absolute = Math.abs(numericValue);
-
-  if (absolute >= 1_000_000) {
-    return `$${(numericValue / 1_000_000).toFixed(1)}m`;
-  }
-
-  if (absolute >= 10_000) {
-    return `$${Math.round(numericValue / 1_000)}k`;
-  }
-
-  if (absolute >= 1_000) {
-    return `$${(numericValue / 1_000).toFixed(1)}k`;
-  }
-
-  return `$${Math.round(numericValue)}`;
+  return formatCompactCurrency(numericValue, displayCurrency);
 }
 
 export function AdvancedPerformanceChart({
   data,
+  displayCurrency = BASE_CURRENCY,
 }: AdvancedPerformanceChartProps) {
   return (
     <Card className="surface chart-entrance rounded-[1.75rem]">
@@ -70,7 +64,7 @@ export function AdvancedPerformanceChart({
                   Latest Value
                 </div>
                 <div className="mt-1 text-lg font-semibold text-slate-950">
-                  {formatCurrency(data[data.length - 1].totalValue)}
+                  {formatCurrency(data[data.length - 1].totalValue, displayCurrency)}
                 </div>
               </div>
 
@@ -113,7 +107,7 @@ export function AdvancedPerformanceChart({
                     tickLine={false}
                     axisLine={false}
                     width={82}
-                    tickFormatter={formatYAxisValue}
+                    tickFormatter={(value) => formatYAxisValue(value, displayCurrency)}
                     tick={{ fill: "#64748b", fontSize: 12 }}
                   />
 
@@ -133,14 +127,23 @@ export function AdvancedPerformanceChart({
                       const metricName = String(name ?? "");
 
                       if (metricName === "gainLoss") {
-                        return [formatCurrency(numericValue), "Gain / Loss"];
+                        return [
+                          formatCurrency(numericValue, displayCurrency),
+                          "Gain / Loss",
+                        ];
                       }
 
                       if (metricName === "investedAmount") {
-                        return [formatCurrency(numericValue), "Invested Capital"];
+                        return [
+                          formatCurrency(numericValue, displayCurrency),
+                          "Invested Capital",
+                        ];
                       }
 
-                      return [formatCurrency(numericValue), "Portfolio Value"];
+                      return [
+                        formatCurrency(numericValue, displayCurrency),
+                        "Portfolio Value",
+                      ];
                     }}
                   />
 

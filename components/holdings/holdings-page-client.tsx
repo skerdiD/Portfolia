@@ -10,7 +10,7 @@ import {
   Wallet2,
   X,
 } from "lucide-react";
-import type { AssetCategory } from "@/lib/db/schema";
+import type { AssetCategory, DisplayCurrency } from "@/lib/db/schema";
 import type {
   HoldingRecord,
   PortfolioSummaryData,
@@ -18,7 +18,11 @@ import type {
 import { calculatePortfolioSummary } from "@/lib/portfolio/calculations";
 import { buildHoldingsCsvRows, toCsvContent } from "@/lib/portfolio/csv-export";
 import { filterHoldingsByQueryAndCategory } from "@/lib/portfolio/holdings-helpers";
-import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
+import {
+  BASE_CURRENCY,
+  formatCurrency,
+  formatPercentage,
+} from "@/lib/portfolio/formatters";
 import { PageHeader } from "@/components/shared/page-header";
 import { StatCard } from "@/components/shared/stat-card";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -34,6 +38,7 @@ type HoldingsPageClientProps = {
     holdings: HoldingRecord[];
     summary: PortfolioSummaryData;
   };
+  displayCurrency?: DisplayCurrency;
 };
 
 const categoryOptions: Array<{ label: string; value: "all" | AssetCategory }> = [
@@ -45,7 +50,10 @@ const categoryOptions: Array<{ label: string; value: "all" | AssetCategory }> = 
   { label: "Other", value: "other" },
 ];
 
-export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
+export function HoldingsPageClient({
+  initialData,
+  displayCurrency = BASE_CURRENCY,
+}: HoldingsPageClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [holdings, setHoldings] = useState(initialData.holdings);
@@ -162,14 +170,14 @@ export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
         />
         <StatCard
           title="Invested Capital"
-          value={formatCurrency(filteredSummary.investedAmount)}
+          value={formatCurrency(filteredSummary.investedAmount, displayCurrency)}
           icon={BadgeDollarSign}
           tone="primary"
           detail="Total capital deployed"
         />
         <StatCard
           title="Current Value"
-          value={formatCurrency(filteredSummary.currentValue)}
+          value={formatCurrency(filteredSummary.currentValue, displayCurrency)}
           icon={ArrowUpRight}
           tone="success"
           detail="Live portfolio valuation"
@@ -181,8 +189,11 @@ export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
           tone={filteredSummary.gainLoss >= 0 ? "success" : "danger"}
           detail={
             filteredSummary.gainLoss >= 0
-              ? `${formatCurrency(filteredSummary.gainLoss)} unrealized gain`
-              : `${formatCurrency(Math.abs(filteredSummary.gainLoss))} unrealized loss`
+              ? `${formatCurrency(filteredSummary.gainLoss, displayCurrency)} unrealized gain`
+              : `${formatCurrency(
+                  Math.abs(filteredSummary.gainLoss),
+                  displayCurrency,
+                )} unrealized loss`
           }
         />
       </div>
@@ -295,6 +306,7 @@ export function HoldingsPageClient({ initialData }: HoldingsPageClientProps) {
       ) : (
         <HoldingsTable
           holdings={filteredHoldings}
+          displayCurrency={displayCurrency}
           onHoldingUpdated={(updatedHolding) => {
             setHoldings((current) =>
               current.map((holding) =>

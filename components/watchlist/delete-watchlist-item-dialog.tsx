@@ -1,21 +1,24 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import type { DisplayCurrency } from "@/lib/db/schema";
 import type { WatchlistItemRecord } from "@/lib/watchlist/types";
 import { deleteWatchlistItemAction } from "@/app/(app)/watchlist/actions";
-import { formatCurrency } from "@/lib/portfolio/formatters";
+import { BASE_CURRENCY, formatCurrency } from "@/lib/portfolio/formatters";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Dialog } from "@/components/ui/dialog";
 
 type DeleteWatchlistItemDialogProps = {
   watchlistItem: WatchlistItemRecord;
+  displayCurrency?: DisplayCurrency;
   trigger: React.ReactNode;
   onDeleted?: (watchlistItemId: string) => void;
 };
 
 export function DeleteWatchlistItemDialog({
   watchlistItem,
+  displayCurrency = BASE_CURRENCY,
   trigger,
   onDeleted,
 }: DeleteWatchlistItemDialogProps) {
@@ -73,7 +76,7 @@ export function DeleteWatchlistItemDialog({
               Target price:{" "}
               <span className="font-semibold text-slate-900">
                 {watchlistItem.targetPrice !== null
-                  ? formatCurrency(watchlistItem.targetPrice)
+                  ? formatCurrency(watchlistItem.targetPrice, displayCurrency)
                   : "Not set"}
               </span>
             </div>

@@ -2,11 +2,17 @@
 
 import { useMemo } from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import type { DisplayCurrency } from "@/lib/db/schema";
 import type { AllocationPoint } from "@/lib/portfolio/calculations";
-import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
+import {
+  BASE_CURRENCY,
+  formatCurrency,
+  formatPercentage,
+} from "@/lib/portfolio/formatters";
 
 type AllocationDonutChartProps = {
   data: AllocationPoint[];
+  displayCurrency?: DisplayCurrency;
 };
 
 const colorMap: Record<AllocationPoint["category"], string> = {
@@ -25,7 +31,10 @@ const labelMap: Record<AllocationPoint["category"], string> = {
   other: "Other",
 };
 
-export function AllocationDonutChart({ data }: AllocationDonutChartProps) {
+export function AllocationDonutChart({
+  data,
+  displayCurrency = BASE_CURRENCY,
+}: AllocationDonutChartProps) {
   const totalValue = useMemo(
     () => data.reduce((sum, item) => sum + item.currentValue, 0),
     [data],
@@ -79,7 +88,10 @@ export function AllocationDonutChart({ data }: AllocationDonutChartProps) {
               formatter={(value) => {
                 const numericValue =
                   typeof value === "number" ? value : Number(value ?? 0);
-                return [formatCurrency(numericValue), "Current Value"];
+                return [
+                  formatCurrency(numericValue, displayCurrency),
+                  "Current Value",
+                ];
               }}
               labelFormatter={(label) => {
                 const key = String(label ?? "") as AllocationPoint["category"];
@@ -93,7 +105,7 @@ export function AllocationDonutChart({ data }: AllocationDonutChartProps) {
       <div className="rounded-[1.5rem] border border-slate-200/80 bg-slate-50/70 p-4">
         <div className="text-sm font-medium text-slate-500">Total allocation value</div>
         <div className="mt-1 text-2xl font-semibold tracking-tight text-slate-950">
-          {formatCurrency(totalValue)}
+          {formatCurrency(totalValue, displayCurrency)}
         </div>
       </div>
 
@@ -111,7 +123,7 @@ export function AllocationDonutChart({ data }: AllocationDonutChartProps) {
               <div>
                 <div className="font-medium text-slate-900">{labelMap[item.category]}</div>
                 <div className="text-sm text-slate-500">
-                  {formatCurrency(item.currentValue)}
+                  {formatCurrency(item.currentValue, displayCurrency)}
                 </div>
               </div>
             </div>
@@ -126,7 +138,7 @@ export function AllocationDonutChart({ data }: AllocationDonutChartProps) {
                 }`}
               >
                 {item.gainLoss >= 0 ? "+" : "-"}
-                {formatCurrency(Math.abs(item.gainLoss))}
+                {formatCurrency(Math.abs(item.gainLoss), displayCurrency)}
               </div>
             </div>
           </div>

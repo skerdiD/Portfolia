@@ -19,13 +19,18 @@ import type {
   PerformanceHistoryPoint,
   PortfolioSummaryData,
 } from "@/lib/portfolio/calculations";
+import type { DisplayCurrency } from "@/lib/db/schema";
 import {
   calculateAllocationByCategory,
   calculateAssetPerformanceInsights,
   calculatePortfolioSummary,
 } from "@/lib/portfolio/calculations";
 import { filterHoldingsByQueryAndCategory } from "@/lib/portfolio/holdings-helpers";
-import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
+import {
+  BASE_CURRENCY,
+  formatCurrency,
+  formatPercentage,
+} from "@/lib/portfolio/formatters";
 import { PageHeader } from "@/components/shared/page-header";
 import { StatCard } from "@/components/shared/stat-card";
 import { EmptyDashboardState } from "@/components/dashboard/empty-dashboard-state";
@@ -41,6 +46,7 @@ type AnalyticsPageClientProps = {
   summary: PortfolioSummaryData;
   allocation: AllocationPoint[];
   performanceHistory: PerformanceHistoryPoint[];
+  displayCurrency?: DisplayCurrency;
 };
 
 type TimeRange = "all" | "90d" | "30d" | "7d";
@@ -125,6 +131,7 @@ export function AnalyticsPageClient({
   summary,
   allocation,
   performanceHistory,
+  displayCurrency = BASE_CURRENCY,
 }: AnalyticsPageClientProps) {
   const [timeRange, setTimeRange] = useState<TimeRange>("all");
   const [category, setCategory] = useState<CategoryFilter>("all");
@@ -276,14 +283,14 @@ export function AnalyticsPageClient({
       <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <StatCard
           title="Portfolio Value"
-          value={formatCurrency(filteredSummary.currentValue)}
+          value={formatCurrency(filteredSummary.currentValue, displayCurrency)}
           icon={ChartColumnBig}
           tone="success"
           detail={`Filtered view: ${categoryLabel(category)}`}
         />
         <StatCard
           title="Invested Capital"
-          value={formatCurrency(filteredSummary.investedAmount)}
+          value={formatCurrency(filteredSummary.investedAmount, displayCurrency)}
           icon={SlidersHorizontal}
           tone="primary"
           detail="Cost basis across selected positions"
@@ -292,6 +299,7 @@ export function AnalyticsPageClient({
           title="Gain / Loss"
           value={`${filteredSummary.gainLoss >= 0 ? "+" : "-"}${formatCurrency(
             Math.abs(filteredSummary.gainLoss),
+            displayCurrency,
           )}`}
           icon={filteredSummary.gainLoss >= 0 ? ArrowUpRight : ArrowDownRight}
           tone={filteredSummary.gainLoss >= 0 ? "success" : "danger"}
@@ -330,10 +338,19 @@ export function AnalyticsPageClient({
       ) : (
         <div className="grid gap-6 xl:grid-cols-[1.4fr_1fr]">
           <div className="grid content-start gap-6">
-            <AdvancedPerformanceChart data={filteredPerformance} />
-            <BestWorstCategoryCard allocation={filteredAllocation} />
+            <AdvancedPerformanceChart
+              data={filteredPerformance}
+              displayCurrency={displayCurrency}
+            />
+            <BestWorstCategoryCard
+              allocation={filteredAllocation}
+              displayCurrency={displayCurrency}
+            />
           </div>
-          <CategoryAnalysisCards allocation={filteredAllocation} />
+          <CategoryAnalysisCards
+            allocation={filteredAllocation}
+            displayCurrency={displayCurrency}
+          />
         </div>
       )}
 
@@ -342,8 +359,12 @@ export function AnalyticsPageClient({
           <PerformerSpotlight
             bestPerformer={bestPerformer}
             worstPerformer={worstPerformer}
+            displayCurrency={displayCurrency}
           />
-          <AssetPerformanceTable holdings={filteredHoldings} />
+          <AssetPerformanceTable
+            holdings={filteredHoldings}
+            displayCurrency={displayCurrency}
+          />
         </div>
       ) : null}
     </div>

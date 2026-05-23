@@ -1,7 +1,11 @@
 import { protectPageRequest } from "@/lib/security/arcjet";
-import { getCurrentUserAnalyticsChartDataWithHoldings } from "@/lib/db/queries";
+import {
+  getCurrentUserAnalyticsChartDataWithHoldings,
+  getCurrentUserSettings,
+} from "@/lib/db/queries";
 import { AnalyticsPageClient } from "./analytics-page-client";
 import { e2eMockHoldings, getE2EAnalyticsData } from "@/lib/testing/e2e-mocks";
+import { defaultUserSettings } from "@/lib/settings/preferences";
 
 export default async function AnalyticsPage() {
   if (process.env.E2E_TEST_MODE === "1") {
@@ -13,6 +17,7 @@ export default async function AnalyticsPage() {
         summary={analytics.summary}
         allocation={analytics.allocation}
         performanceHistory={analytics.performanceHistory}
+        displayCurrency={defaultUserSettings.defaultCurrency}
       />
     );
   }
@@ -23,7 +28,10 @@ export default async function AnalyticsPage() {
     throw new Error(protection.message);
   }
 
-  const analytics = await getCurrentUserAnalyticsChartDataWithHoldings();
+  const [analytics, settings] = await Promise.all([
+    getCurrentUserAnalyticsChartDataWithHoldings(),
+    getCurrentUserSettings(),
+  ]);
 
   return (
     <AnalyticsPageClient
@@ -31,6 +39,7 @@ export default async function AnalyticsPage() {
       summary={analytics.summary}
       allocation={analytics.allocation}
       performanceHistory={analytics.performanceHistory}
+      displayCurrency={settings.defaultCurrency}
     />
   );
 }

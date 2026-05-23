@@ -44,6 +44,9 @@ function fromZodError(error: ZodError): SettingsActionState {
 function revalidateSettingsPaths() {
   revalidatePath("/settings");
   revalidatePath("/dashboard");
+  revalidatePath("/analytics");
+  revalidatePath("/holdings");
+  revalidatePath("/watchlist");
 }
 
 export async function updateSettingsAction(

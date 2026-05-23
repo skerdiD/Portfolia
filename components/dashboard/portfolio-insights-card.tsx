@@ -7,8 +7,13 @@ import type {
   HoldingRecord,
   PortfolioSummaryData,
 } from "@/lib/portfolio/calculations";
+import type { DisplayCurrency } from "@/lib/db/schema";
 import { buttonVariants } from "@/components/ui/button";
-import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
+import {
+  BASE_CURRENCY,
+  formatCurrency,
+  formatPercentage,
+} from "@/lib/portfolio/formatters";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
@@ -16,12 +21,14 @@ type PortfolioInsightsCardProps = {
   summary: PortfolioSummaryData;
   holdings: HoldingRecord[];
   allocation: AllocationPoint[];
+  displayCurrency?: DisplayCurrency;
 };
 
 function getInsightItems({
   summary,
   holdings,
   allocation,
+  displayCurrency,
 }: PortfolioInsightsCardProps) {
   const items: string[] = [];
 
@@ -46,7 +53,10 @@ function getInsightItems({
     items.push(
       `${bestHolding.assetName} is your strongest performer so far at ${formatPercentage(
         bestHolding.returnPercentage,
-      )}, with ${formatCurrency(bestHolding.gainLoss)} in unrealized gain/loss impact.`,
+      )}, with ${formatCurrency(
+        bestHolding.gainLoss,
+        displayCurrency,
+      )} in unrealized gain/loss impact.`,
     );
   }
 
@@ -54,6 +64,7 @@ function getInsightItems({
     items.push(
       `${largestHolding.assetName} is your biggest position at ${formatCurrency(
         largestHolding.currentValue,
+        displayCurrency,
       )}, which means it has the highest portfolio-level influence.`,
     );
   }
@@ -62,7 +73,10 @@ function getInsightItems({
     items.push(
       `Your overall portfolio return stands at ${formatPercentage(
         summary.returnPercentage,
-      )}, based on ${formatCurrency(summary.investedAmount)} invested capital.`,
+      )}, based on ${formatCurrency(
+        summary.investedAmount,
+        displayCurrency,
+      )} invested capital.`,
     );
   }
 
@@ -70,7 +84,10 @@ function getInsightItems({
 }
 
 export function PortfolioInsightsCard(props: PortfolioInsightsCardProps) {
-  const insights = getInsightItems(props);
+  const insights = getInsightItems({
+    ...props,
+    displayCurrency: props.displayCurrency ?? BASE_CURRENCY,
+  });
 
   return (
     <Card className="surface motion-card rounded-[1.75rem]">

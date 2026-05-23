@@ -1,14 +1,20 @@
 "use client";
 
 import { ArrowDownRight, ArrowUpRight, Layers3 } from "lucide-react";
+import type { DisplayCurrency } from "@/lib/db/schema";
 import type { AllocationPoint } from "@/lib/portfolio/calculations";
 import { findBestAndWorstCategory } from "@/lib/portfolio/category-extremes";
-import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
+import {
+  BASE_CURRENCY,
+  formatCurrency,
+  formatPercentage,
+} from "@/lib/portfolio/formatters";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
 
 type BestWorstCategoryCardProps = {
   allocation: AllocationPoint[];
+  displayCurrency?: DisplayCurrency;
 };
 
 const categoryLabel: Record<AllocationPoint["category"], string> = {
@@ -25,12 +31,14 @@ function CategoryPerformanceTile({
   positive,
   returnPercentage,
   gainLoss,
+  displayCurrency,
 }: {
   label: string;
   title: string;
   positive: boolean;
   returnPercentage: number;
   gainLoss: number;
+  displayCurrency: DisplayCurrency;
 }) {
   return (
     <div className="rounded-[1.25rem] border border-slate-200/80 bg-white/85 px-4 py-4 shadow-sm">
@@ -61,13 +69,16 @@ function CategoryPerformanceTile({
       </div>
       <div className={cn("mt-1 text-sm", gainLoss >= 0 ? "text-emerald-600" : "text-rose-600")}>
         {gainLoss >= 0 ? "+" : "-"}
-        {formatCurrency(Math.abs(gainLoss))}
+        {formatCurrency(Math.abs(gainLoss), displayCurrency)}
       </div>
     </div>
   );
 }
 
-export function BestWorstCategoryCard({ allocation }: BestWorstCategoryCardProps) {
+export function BestWorstCategoryCard({
+  allocation,
+  displayCurrency = BASE_CURRENCY,
+}: BestWorstCategoryCardProps) {
   const { bestCategory, worstCategory } = findBestAndWorstCategory(allocation);
 
   return (
@@ -90,6 +101,7 @@ export function BestWorstCategoryCard({ allocation }: BestWorstCategoryCardProps
               positive
               returnPercentage={bestCategory.returnPercentage}
               gainLoss={bestCategory.gainLoss}
+              displayCurrency={displayCurrency}
             />
             {worstCategory ? (
               <CategoryPerformanceTile
@@ -98,6 +110,7 @@ export function BestWorstCategoryCard({ allocation }: BestWorstCategoryCardProps
                 positive={false}
                 returnPercentage={worstCategory.returnPercentage}
                 gainLoss={worstCategory.gainLoss}
+                displayCurrency={displayCurrency}
               />
             ) : (
               <div className="rounded-[1.25rem] border border-slate-200/80 bg-slate-50/70 px-4 py-4 text-sm text-slate-600">

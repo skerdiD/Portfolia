@@ -9,7 +9,7 @@ import {
   TrendingUp,
   X,
 } from "lucide-react";
-import type { AssetCategory } from "@/lib/db/schema";
+import type { AssetCategory, DisplayCurrency } from "@/lib/db/schema";
 import {
   calculateWatchlistTargetInsight,
   type WatchlistItemRecord,
@@ -23,9 +23,11 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
+import { BASE_CURRENCY } from "@/lib/portfolio/formatters";
 
 type WatchlistPageClientProps = {
   initialItems: WatchlistItemRecord[];
+  displayCurrency?: DisplayCurrency;
 };
 
 const categoryOptions: Array<{ label: string; value: "all" | AssetCategory }> = [
@@ -51,7 +53,10 @@ function countNearTarget(items: WatchlistItemRecord[]) {
   ).length;
 }
 
-export function WatchlistPageClient({ initialItems }: WatchlistPageClientProps) {
+export function WatchlistPageClient({
+  initialItems,
+  displayCurrency = BASE_CURRENCY,
+}: WatchlistPageClientProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [items, setItems] = useState(initialItems);
@@ -256,6 +261,7 @@ export function WatchlistPageClient({ initialItems }: WatchlistPageClientProps) 
       ) : (
         <WatchlistTable
           items={filteredItems}
+          displayCurrency={displayCurrency}
           onItemUpdated={(updatedItem) => {
             setItems((current) =>
               current

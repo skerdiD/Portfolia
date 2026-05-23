@@ -258,7 +258,10 @@ export function DashboardPageClient({
                   </Badge>
                 </CardHeader>
                 <CardContent className="pt-6">
-                  <PerformanceAreaChart data={filteredPerformanceHistory} />
+                  <PerformanceAreaChart
+                    data={filteredPerformanceHistory}
+                    displayCurrency={currency}
+                  />
                 </CardContent>
               </Card>
 
@@ -278,17 +281,21 @@ export function DashboardPageClient({
                 <PieChart className="h-5 w-5 text-slate-400" />
               </CardHeader>
               <CardContent className="pt-6">
-                <AllocationDonutChart data={filteredAllocation} />
+                <AllocationDonutChart
+                  data={filteredAllocation}
+                  displayCurrency={currency}
+                />
               </CardContent>
             </Card>
           </div>
 
           <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
-            <TopHoldingsCard holdings={topHoldings} />
+            <TopHoldingsCard holdings={topHoldings} currency={currency} />
             <PortfolioInsightsCard
               summary={filteredSummary}
               holdings={filteredHoldings}
               allocation={filteredAllocation}
+              displayCurrency={currency}
             />
           </div>
 

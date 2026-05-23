@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { useMemo } from "react";
 import { CandlestickChart } from "lucide-react";
+import type { DisplayCurrency } from "@/lib/db/schema";
 import type { HoldingRecord } from "@/lib/portfolio/calculations";
 import { buttonVariants } from "@/components/ui/button";
 import {
+  BASE_CURRENCY,
   formatCurrency,
   formatNumber,
   formatPercentage,
@@ -15,12 +17,16 @@ import { cn } from "@/lib/utils";
 
 type AssetPerformanceTableProps = {
   holdings: HoldingRecord[];
+  displayCurrency?: DisplayCurrency;
 };
 
 const desktopGridColumns =
   "grid-cols-[minmax(0,1.25fr)_72px_minmax(0,1.2fr)_minmax(0,1.05fr)]";
 
-export function AssetPerformanceTable({ holdings }: AssetPerformanceTableProps) {
+export function AssetPerformanceTable({
+  holdings,
+  displayCurrency = BASE_CURRENCY,
+}: AssetPerformanceTableProps) {
   const sorted = useMemo(
     () => [...holdings].sort((a, b) => b.currentValue - a.currentValue),
     [holdings],
@@ -72,10 +78,10 @@ export function AssetPerformanceTable({ holdings }: AssetPerformanceTableProps) 
 
                 <div className="text-right">
                   <div className="font-semibold text-slate-950">
-                    {formatCurrency(holding.currentValue)}
+                    {formatCurrency(holding.currentValue, displayCurrency)}
                   </div>
                   <div className="mt-1 text-xs text-slate-500">
-                    Invested {formatCurrency(holding.investedAmount)}
+                    Invested {formatCurrency(holding.investedAmount, displayCurrency)}
                   </div>
                 </div>
 
@@ -87,7 +93,7 @@ export function AssetPerformanceTable({ holdings }: AssetPerformanceTableProps) 
                     )}
                   >
                     {holding.gainLoss >= 0 ? "+" : "-"}
-                    {formatCurrency(Math.abs(holding.gainLoss))}
+                    {formatCurrency(Math.abs(holding.gainLoss), displayCurrency)}
                   </div>
                   <div
                     className={cn(
@@ -159,14 +165,14 @@ export function AssetPerformanceTable({ holdings }: AssetPerformanceTableProps) 
                   <div className="rounded-2xl bg-slate-50/80 px-4 py-3">
                     <div className="text-sm text-slate-500">Current Value</div>
                     <div className="mt-1 font-semibold text-slate-950">
-                      {formatCurrency(holding.currentValue)}
+                      {formatCurrency(holding.currentValue, displayCurrency)}
                     </div>
                   </div>
 
                   <div className="rounded-2xl bg-slate-50/80 px-4 py-3">
                     <div className="text-sm text-slate-500">Invested</div>
                     <div className="mt-1 font-semibold text-slate-950">
-                      {formatCurrency(holding.investedAmount)}
+                      {formatCurrency(holding.investedAmount, displayCurrency)}
                     </div>
                   </div>
 
@@ -179,7 +185,7 @@ export function AssetPerformanceTable({ holdings }: AssetPerformanceTableProps) 
                       )}
                     >
                       {holding.gainLoss >= 0 ? "+" : "-"}
-                      {formatCurrency(Math.abs(holding.gainLoss))}
+                      {formatCurrency(Math.abs(holding.gainLoss), displayCurrency)}
                     </div>
                   </div>
                 </div>

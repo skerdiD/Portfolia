@@ -10,10 +10,16 @@ import {
   YAxis,
 } from "recharts";
 import type { PerformanceHistoryPoint } from "@/lib/portfolio/calculations";
-import { formatCurrency } from "@/lib/portfolio/formatters";
+import type { DisplayCurrency } from "@/lib/db/schema";
+import {
+  BASE_CURRENCY,
+  formatCompactCurrency,
+  formatCurrency,
+} from "@/lib/portfolio/formatters";
 
 type PerformanceAreaChartProps = {
   data: PerformanceHistoryPoint[];
+  displayCurrency?: DisplayCurrency;
 };
 
 const axisDateFormatter = new Intl.DateTimeFormat("en-US", {
@@ -26,26 +32,15 @@ function formatAxisDate(value: string) {
   return axisDateFormatter.format(date);
 }
 
-function formatYAxisValue(value: number | string) {
+function formatYAxisValue(value: number | string, displayCurrency: DisplayCurrency) {
   const numericValue = typeof value === "number" ? value : Number(value ?? 0);
-  const absolute = Math.abs(numericValue);
-
-  if (absolute >= 1_000_000) {
-    return `$${(numericValue / 1_000_000).toFixed(1)}m`;
-  }
-
-  if (absolute >= 10_000) {
-    return `$${Math.round(numericValue / 1_000)}k`;
-  }
-
-  if (absolute >= 1_000) {
-    return `$${(numericValue / 1_000).toFixed(1)}k`;
-  }
-
-  return `$${Math.round(numericValue)}`;
+  return formatCompactCurrency(numericValue, displayCurrency);
 }
 
-export function PerformanceAreaChart({ data }: PerformanceAreaChartProps) {
+export function PerformanceAreaChart({
+  data,
+  displayCurrency = BASE_CURRENCY,
+}: PerformanceAreaChartProps) {
   if (data.length === 0) {
     return (
       <div className="flex h-[360px] items-center justify-center rounded-[1.5rem] border border-slate-200/80 bg-slate-50/70">
@@ -95,7 +90,7 @@ export function PerformanceAreaChart({ data }: PerformanceAreaChartProps) {
             tickLine={false}
             axisLine={false}
             width={84}
-            tickFormatter={formatYAxisValue}
+            tickFormatter={(value) => formatYAxisValue(value, displayCurrency)}
             tick={{ fill: "#64748b", fontSize: 12 }}
           />
 
@@ -113,7 +108,7 @@ export function PerformanceAreaChart({ data }: PerformanceAreaChartProps) {
                 typeof value === "number" ? value : Number(value ?? 0);
               const metricName = String(name ?? "");
               return [
-                formatCurrency(numericValue),
+                formatCurrency(numericValue, displayCurrency),
                 metricName === "totalValue" ? "Portfolio Value" : "Invested Capital",
               ];
             }}

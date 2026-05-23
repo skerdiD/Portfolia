@@ -1,13 +1,19 @@
 "use client";
 
 import { Layers3 } from "lucide-react";
+import type { DisplayCurrency } from "@/lib/db/schema";
 import type { AllocationPoint } from "@/lib/portfolio/calculations";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
+import {
+  BASE_CURRENCY,
+  formatCurrency,
+  formatPercentage,
+} from "@/lib/portfolio/formatters";
 import { cn } from "@/lib/utils";
 
 type CategoryAnalysisCardsProps = {
   allocation: AllocationPoint[];
+  displayCurrency?: DisplayCurrency;
 };
 
 const categoryLabels: Record<AllocationPoint["category"], string> = {
@@ -28,6 +34,7 @@ const accentStyles: Record<AllocationPoint["category"], string> = {
 
 export function CategoryAnalysisCards({
   allocation,
+  displayCurrency = BASE_CURRENCY,
 }: CategoryAnalysisCardsProps) {
   return (
     <Card className="surface motion-card rounded-[1.75rem]">
@@ -58,7 +65,7 @@ export function CategoryAnalysisCards({
                     {categoryLabels[item.category]}
                   </div>
                   <div className="mt-3 text-lg font-semibold text-slate-950">
-                    {formatCurrency(item.currentValue)}
+                    {formatCurrency(item.currentValue, displayCurrency)}
                   </div>
                   <div className="mt-1 text-sm text-slate-500">
                     Current category value
@@ -77,7 +84,7 @@ export function CategoryAnalysisCards({
                 <div className="rounded-2xl bg-slate-50/80 px-4 py-3">
                   <div className="text-sm text-slate-500">Invested Amount</div>
                   <div className="mt-1 font-semibold text-slate-950">
-                    {formatCurrency(item.investedAmount)}
+                    {formatCurrency(item.investedAmount, displayCurrency)}
                   </div>
                 </div>
 
@@ -90,7 +97,7 @@ export function CategoryAnalysisCards({
                     )}
                   >
                     {item.gainLoss >= 0 ? "+" : "-"}
-                    {formatCurrency(Math.abs(item.gainLoss))}
+                    {formatCurrency(Math.abs(item.gainLoss), displayCurrency)}
                   </div>
                 </div>
               </div>

@@ -1,9 +1,10 @@
 "use client";
 
 import { Pencil, Trash2 } from "lucide-react";
-import type { AssetCategory } from "@/lib/db/schema";
+import type { AssetCategory, DisplayCurrency } from "@/lib/db/schema";
 import type { HoldingRecord } from "@/lib/portfolio/calculations";
 import {
+  BASE_CURRENCY,
   formatCurrency,
   formatDate,
   formatNumber,
@@ -26,6 +27,7 @@ import { cn } from "@/lib/utils";
 
 type HoldingsTableProps = {
   holdings: HoldingRecord[];
+  displayCurrency?: DisplayCurrency;
   onHoldingUpdated?: (holding: HoldingRecord) => void;
   onHoldingDeleted?: (holdingId: string) => void;
 };
@@ -60,10 +62,12 @@ function getPnlClassName(value: number) {
 
 function HoldingsActions({
   holding,
+  displayCurrency,
   onHoldingUpdated,
   onHoldingDeleted,
 }: {
   holding: HoldingRecord;
+  displayCurrency?: DisplayCurrency;
   onHoldingUpdated?: (holding: HoldingRecord) => void;
   onHoldingDeleted?: (holdingId: string) => void;
 }) {
@@ -88,6 +92,7 @@ function HoldingsActions({
 
       <DeleteHoldingDialog
         holding={holding}
+        displayCurrency={displayCurrency}
         onDeleted={(holdingId) => {
           onHoldingDeleted?.(holdingId);
         }}
@@ -110,6 +115,7 @@ function HoldingsActions({
 
 export function HoldingsTable({
   holdings,
+  displayCurrency = BASE_CURRENCY,
   onHoldingUpdated,
   onHoldingDeleted,
 }: HoldingsTableProps) {
@@ -156,18 +162,18 @@ export function HoldingsTable({
                 </TableCell>
                 <TableCell className="px-4 py-4 text-right align-top">
                   <div className="text-sm font-semibold text-slate-900">
-                    {formatCurrency(holding.currentPrice)}
+                    {formatCurrency(holding.currentPrice, displayCurrency)}
                   </div>
                   <div className="mt-1 text-xs text-slate-500">
-                    Avg {formatCurrency(holding.averageBuyPrice)}
+                    Avg {formatCurrency(holding.averageBuyPrice, displayCurrency)}
                   </div>
                 </TableCell>
                 <TableCell className="px-4 py-4 text-right align-top">
                   <div className="text-sm font-semibold text-slate-900">
-                    {formatCurrency(holding.currentValue)}
+                    {formatCurrency(holding.currentValue, displayCurrency)}
                   </div>
                   <div className="mt-1 text-xs text-slate-500">
-                    Invested {formatCurrency(holding.investedAmount)}
+                    Invested {formatCurrency(holding.investedAmount, displayCurrency)}
                   </div>
                 </TableCell>
                 <TableCell className="px-4 py-4 text-right align-top">
@@ -176,7 +182,7 @@ export function HoldingsTable({
                   </div>
                   <div className={cn("mt-1 text-xs", getPnlClassName(holding.gainLoss))}>
                     {holding.gainLoss >= 0 ? "+" : ""}
-                    {formatCurrency(holding.gainLoss)}
+                    {formatCurrency(holding.gainLoss, displayCurrency)}
                   </div>
                 </TableCell>
                 <TableCell className="px-4 py-4 text-right align-top text-sm text-slate-600">
@@ -185,6 +191,7 @@ export function HoldingsTable({
                 <TableCell className="px-5 py-4 text-right align-top">
                   <HoldingsActions
                     holding={holding}
+                    displayCurrency={displayCurrency}
                     onHoldingUpdated={onHoldingUpdated}
                     onHoldingDeleted={onHoldingDeleted}
                   />
@@ -228,7 +235,7 @@ export function HoldingsTable({
                   Current Value
                 </div>
                 <div className="mt-1 font-semibold text-slate-950">
-                  {formatCurrency(holding.currentValue)}
+                  {formatCurrency(holding.currentValue, displayCurrency)}
                 </div>
               </div>
               <div className="rounded-2xl bg-slate-50/80 px-4 py-3">
@@ -236,7 +243,7 @@ export function HoldingsTable({
                   Invested
                 </div>
                 <div className="mt-1 font-semibold text-slate-950">
-                  {formatCurrency(holding.investedAmount)}
+                  {formatCurrency(holding.investedAmount, displayCurrency)}
                 </div>
               </div>
               <div className="rounded-2xl bg-slate-50/80 px-4 py-3">
@@ -261,6 +268,7 @@ export function HoldingsTable({
             <div className="mt-4">
               <HoldingsActions
                 holding={holding}
+                displayCurrency={displayCurrency}
                 onHoldingUpdated={onHoldingUpdated}
                 onHoldingDeleted={onHoldingDeleted}
               />

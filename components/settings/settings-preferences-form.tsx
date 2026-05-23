@@ -120,7 +120,7 @@ export function SettingsPreferencesForm({
               label="Default currency"
               defaultValue={currentSettings.defaultCurrency}
               error={state.fieldErrors?.defaultCurrency?.[0]}
-              helper="Controls display formatting only. Values are not converted."
+              helper="Controls display conversion only. Stored portfolio values stay unchanged."
             >
               {currencyOptions.map((option) => (
                 <option key={option.value} value={option.value}>

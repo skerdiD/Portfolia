@@ -1,23 +1,31 @@
 "use client";
 
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
+import type { DisplayCurrency } from "@/lib/db/schema";
 import type { HoldingRecord } from "@/lib/portfolio/calculations";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
+import {
+  BASE_CURRENCY,
+  formatCurrency,
+  formatPercentage,
+} from "@/lib/portfolio/formatters";
 
 type PerformerSpotlightProps = {
   bestPerformer: HoldingRecord | null;
   worstPerformer: HoldingRecord | null;
+  displayCurrency?: DisplayCurrency;
 };
 
 function PerformerCard({
   title,
   holding,
   positive,
+  displayCurrency,
 }: {
   title: string;
   holding: HoldingRecord | null;
   positive: boolean;
+  displayCurrency: DisplayCurrency;
 }) {
   return (
     <div className="rounded-[1.35rem] border border-slate-200/80 bg-white/85 p-5 shadow-sm">
@@ -52,7 +60,7 @@ function PerformerCard({
           <div className="rounded-2xl bg-slate-50/80 px-4 py-3">
             <div className="text-sm text-slate-500">Current Value</div>
             <div className="mt-1 font-semibold text-slate-950">
-              {formatCurrency(holding.currentValue)}
+              {formatCurrency(holding.currentValue, displayCurrency)}
             </div>
           </div>
 
@@ -75,7 +83,7 @@ function PerformerCard({
               }`}
             >
               {holding.gainLoss >= 0 ? "+" : "-"}
-              {formatCurrency(Math.abs(holding.gainLoss))}
+              {formatCurrency(Math.abs(holding.gainLoss), displayCurrency)}
             </div>
           </div>
         </div>
@@ -87,6 +95,7 @@ function PerformerCard({
 export function PerformerSpotlight({
   bestPerformer,
   worstPerformer,
+  displayCurrency = BASE_CURRENCY,
 }: PerformerSpotlightProps) {
   return (
     <Card className="surface motion-card rounded-[1.75rem]">
@@ -104,11 +113,13 @@ export function PerformerSpotlight({
           title="Best Performer"
           holding={bestPerformer}
           positive
+          displayCurrency={displayCurrency}
         />
         <PerformerCard
           title="Worst Performer"
           holding={worstPerformer}
           positive={false}
+          displayCurrency={displayCurrency}
         />
       </CardContent>
     </Card>

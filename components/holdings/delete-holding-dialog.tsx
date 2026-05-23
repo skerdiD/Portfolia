@@ -1,21 +1,28 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import type { DisplayCurrency } from "@/lib/db/schema";
 import type { HoldingRecord } from "@/lib/portfolio/calculations";
 import { deleteHoldingAction } from "@/app/(app)/holdings/actions";
-import { formatCurrency, formatPercentage } from "@/lib/portfolio/formatters";
+import {
+  BASE_CURRENCY,
+  formatCurrency,
+  formatPercentage,
+} from "@/lib/portfolio/formatters";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Dialog } from "@/components/ui/dialog";
 
 type DeleteHoldingDialogProps = {
   holding: HoldingRecord;
+  displayCurrency?: DisplayCurrency;
   trigger: React.ReactNode;
   onDeleted?: (holdingId: string) => void;
 };
 
 export function DeleteHoldingDialog({
   holding,
+  displayCurrency = BASE_CURRENCY,
   trigger,
   onDeleted,
 }: DeleteHoldingDialogProps) {
@@ -75,13 +82,13 @@ export function DeleteHoldingDialog({
               <div>
                 <div className="text-sm text-slate-500">Invested</div>
                 <div className="mt-1 font-semibold text-slate-950">
-                  {formatCurrency(holding.investedAmount)}
+                  {formatCurrency(holding.investedAmount, displayCurrency)}
                 </div>
               </div>
               <div>
                 <div className="text-sm text-slate-500">Current Value</div>
                 <div className="mt-1 font-semibold text-slate-950">
-                  {formatCurrency(holding.currentValue)}
+                  {formatCurrency(holding.currentValue, displayCurrency)}
                 </div>
               </div>
               <div>
