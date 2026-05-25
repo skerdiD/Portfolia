@@ -187,3 +187,94 @@ Security and Quality Layer
   |-- Playwright
   |-- GitHub Actions CI
 ```
+
+---
+
+## Getting Started
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/skerdiD/Portfolia.git
+cd Portfolia
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Create environment variables
+
+Create a `.env.local` file in the root of the project.
+
+```env
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+
+DATABASE_URL=
+
+ARCJET_KEY=
+```
+
+### 4. Push the database schema
+
+```bash
+npm run db:push
+```
+
+### 5. Start the development server
+
+```bash
+npm run dev
+```
+
+Open the app at:
+
+```txt
+http://localhost:3000
+```
+
+---
+
+## Available Scripts
+
+```bash
+npm run dev          # Start the development server
+npm run build        # Create a production build
+npm run start        # Start the production server
+npm run lint         # Run ESLint
+npm run typecheck    # Run TypeScript checks
+npm run test         # Run Vitest tests
+npm run test:e2e     # Run Playwright E2E tests
+npm run db:push      # Push schema changes to the database
+```
+
+---
+
+## Project Highlights
+
+Portfolia shows experience with more than static dashboard UI.
+
+It demonstrates:
+
+- Full-stack fintech dashboard development
+- Authenticated user experiences
+- Protected application routes
+- User-scoped portfolio data
+- Holdings and watchlist workflows
+- Data visualization with charts
+- CSV export functionality
+- Reusable component architecture
+- Clean table, card, and dialog UX
+- Production-ready UI polish
+- Testing and deployment preparation
+
+---
+
+## Author
+
+Built by **skerdiD**.
+
+GitHub: [@skerdiD](https://github.com/skerdiD)
