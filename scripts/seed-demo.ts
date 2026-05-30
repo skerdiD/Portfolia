@@ -7,8 +7,8 @@ import {
   watchlistItems,
 } from "@/lib/db/schema";
 import {
-  DEMO_USER_PASSWORD,
   getDemoUserEmail,
+  getDemoUserPassword,
 } from "@/lib/auth/demo-account";
 import {
   getDemoUserIdByEmail,
@@ -108,10 +108,11 @@ const demoSnapshots = [
 async function seedDemoData() {
   const { db } = await import("@/lib/db");
   const email = getDemoUserEmail();
+  const password = getDemoUserPassword();
   const userId = await getDemoUserIdByEmail(email);
 
   console.log(`Seeding demo data for ${email} (${userId})...`);
-  await updateDemoUserPassword(userId, DEMO_USER_PASSWORD);
+  await updateDemoUserPassword(userId, password);
   console.log("Updated Clerk demo user password.");
 
   await db.delete(portfolioSnapshots).where(eq(portfolioSnapshots.userId, userId));
