@@ -1,0 +1,55 @@
+[33m123c18b[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mbackup-before-reset[m[33m)[m Improve demo sign-in credential helper
+[33mc93ffeb[m 6. Setup/migration docs have inconsistency
+[33mf13eeef[m improved README and screenshots for project
+[33mc24aac9[m docs: update README screenshots and deployment link
+[33mf6ffdc3[m Fix display currency conversion across portfolio views
+[33m0d66ca4[m Harden validation and reuse portfolio calculations
+[33mfdf8480[m Polish settings perferences page
+[33m7f3fe4c[m Fix dashboard smoke test heading
+[33m328432d[m Add Portfolia branding, clean generated files, and harden settings fallback
+[33mdbde7ca[m Clean generated artifacts and update gitignore
+[33mbd1c0b5[m Add functional portfolio settings
+[33m21cb1a4[m Improve watchlist target tracking
+[33m52dc858[m Improve analytics performance insights
+[33m84dad0a[m harden auth flows, input validation, and production reliability
+[33m73c3999[m Remove Future Improvements section from README
+[33m7bba9bd[m Fixed ReadMe file
+[33m6bd7e48[m updated README of project
+[33m15336b7[m fixed README file
+[33m7ef6691[m Revise README for clarity and detail
+[33m2057520[m improve README
+[33m6d79da9[m improve README and added proper screenshoots
+[33m040c71a[m improved landing page and authentication page
+[33m2612b22[m fix: convert Portfolia submodule to regular directory
+[33m11f954c[m update landing page and improved UI/UX
+[33m28277ba[m improved landing page with a better UI/UX
+[33ma75ff04[m Stop tracking env files and ignore secrets
+[33m1951fd4[m improved fade-up reveal animation on landing page
+[33m89ded32[m improved dark mode theme smooth functionality
+[33mf16e075[m improved landing page with important sections
+[33m5f19a46[m Readme improvement
+[33m0f2941c[m Fix readme
+[33mf95de6d[m implement Charts enhancments
+[33ma61514d[m improved navbar
+[33m4ed96f4[m added chart animations
+[33m2d17652[m enhanced app performance
+[33m689514a[m improved authentication page and aded some animations
+[33me445a92[m add quick actions
+[33mbd849ad[m implement landing page enhancments and small general fixes
+[33mb1f740c[m implement contribution to portfolio feature
+[33mb94a3a7[m implement some ui/ux fixes
+[33m71e65a9[m Added watchlist feature
+[33mbb97ed6[m Added download CSV option, collise sidebar option and empty states
+[33m2b35bee[m finalized MVP
+[33mfa9a63e[m add CI tests and optimized performance
+[33m5416025[m implemented last UI/UX fix
+[33mc1069ef[m add production security, route protection, Arcjet middleware, caching, and optimized data layer
+[33mb82bc74[m add analytics page with portfolio performance charts and asset analysis
+[33m4441312[m add premium dashboard with analytics charts, portfolio insights, and real user-driven metrics
+[33mf46667e[m implement holdings CRUD actions, validation, queries, and portfolio calculations
+[33mbbbe168[m implemented better data layers
+[33md41d3b9[m implement database schema and data layer for holdings and portfolio snapshots with Drizzle
+[33mb389406[m add Clerk authentication flow with protected app shell and public homepage
+[33m0b32c16[m implement: complete premium app foundation
+[33m23e3d4d[m feat: initial commit
+[33me33dd44[m Initial commit from Create Next App

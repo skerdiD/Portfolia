@@ -253,25 +253,7 @@ npm run db:push      # Push schema changes to the database
 
 ---
 
-## Project Highlights
 
-Portfolia shows experience with more than static dashboard UI.
-
-It demonstrates:
-
-- Full-stack fintech dashboard development
-- Authenticated user experiences
-- Protected application routes
-- User-scoped portfolio data
-- Holdings and watchlist workflows
-- Data visualization with charts
-- CSV export functionality
-- Reusable component architecture
-- Clean table, card, and dialog UX
-- Production-ready UI polish
-- Testing and deployment preparation
-
----
 
 ## Author
 
