@@ -249,14 +249,3 @@ npm run typecheck    # Run TypeScript checks
 npm run test         # Run Vitest tests
 npm run test:e2e     # Run Playwright E2E tests
 npm run db:push      # Push schema changes to the database
-```
-
----
-
-
-
-## Author
-
-Built by **skerdiD**.
-
-GitHub: [@skerdiD](https://github.com/skerdiD)
