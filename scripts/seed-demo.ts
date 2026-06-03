@@ -7,15 +7,42 @@ import {
   watchlistItems,
 } from "@/lib/db/schema";
 import {
-  getDemoUserEmail,
-  getDemoUserPassword,
+  getOptionalDemoUserPassword,
 } from "@/lib/auth/demo-account";
 import {
-  getDemoUserIdByEmail,
+  ensureDemoUserByEmail,
   updateDemoUserPassword,
 } from "@/lib/auth/demo-user-lookup";
 
 dotenv.config({ path: ".env.local" });
+
+const DEFAULT_SEED_EMAIL = "mirejemi896@gmail.com";
+
+function getArgValue(name: string) {
+  const prefix = `--${name}=`;
+  const inlineValue = process.argv.find((arg) => arg.startsWith(prefix));
+
+  if (inlineValue) {
+    return inlineValue.slice(prefix.length).trim();
+  }
+
+  const index = process.argv.indexOf(`--${name}`);
+  const value = index >= 0 ? process.argv[index + 1] : undefined;
+
+  return value && !value.startsWith("--") ? value.trim() : undefined;
+}
+
+function getSeedEmail() {
+  return (
+    getArgValue("email") ||
+    process.env.DEMO_USER_EMAIL?.trim().toLowerCase() ||
+    DEFAULT_SEED_EMAIL
+  );
+}
+
+function getSeedPassword() {
+  return getArgValue("password") || getOptionalDemoUserPassword();
+}
 
 const demoHoldings = [
   {
@@ -107,13 +134,22 @@ const demoSnapshots = [
 
 async function seedDemoData() {
   const { db } = await import("@/lib/db");
-  const email = getDemoUserEmail();
-  const password = getDemoUserPassword();
-  const userId = await getDemoUserIdByEmail(email);
+  const email = getSeedEmail();
+  const password = getSeedPassword();
+  const { userId, created } = await ensureDemoUserByEmail(email, password);
 
-  console.log(`Seeding demo data for ${email} (${userId})...`);
-  await updateDemoUserPassword(userId, password);
-  console.log("Updated Clerk demo user password.");
+  console.log(
+    `${created ? "Created" : "Found"} Clerk user for ${email} (${userId}).`,
+  );
+
+  if (password && !created) {
+    await updateDemoUserPassword(userId, password);
+    console.log("Updated Clerk demo user password.");
+  } else if (!password) {
+    console.log("No DEMO_USER_PASSWORD provided; leaving Clerk password unchanged.");
+  }
+
+  console.log(`Seeding portfolio data for ${email}...`);
 
   await db.delete(portfolioSnapshots).where(eq(portfolioSnapshots.userId, userId));
   await db.delete(watchlistItems).where(eq(watchlistItems.userId, userId));

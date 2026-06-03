@@ -6,8 +6,12 @@ export function getDemoUserEmail() {
   );
 }
 
+export function getOptionalDemoUserPassword() {
+  return process.env.DEMO_USER_PASSWORD?.trim() || undefined;
+}
+
 export function getDemoUserPassword() {
-  const password = process.env.DEMO_USER_PASSWORD?.trim();
+  const password = getOptionalDemoUserPassword();
 
   if (!password) {
     throw new Error("DEMO_USER_PASSWORD is not set");

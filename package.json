@@ -11,6 +11,7 @@
     "test": "vitest run",
     "test:unit": "vitest run",
     "test:e2e": "playwright test",
+    "seed:demo": "tsx scripts/seed-demo.ts",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push"
